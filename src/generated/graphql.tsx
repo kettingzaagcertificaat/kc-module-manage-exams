@@ -869,7 +869,7 @@ export type GetMyQuery = (
 );
 
 export type SearchLocationsQueryVariables = Exact<{
-  VakgroepID: Scalars['Int'];
+  ExamenInstellingID: Scalars['Int'];
 }>;
 
 
@@ -893,7 +893,7 @@ export type SearchOrganizersQuery = (
 );
 
 export type SpecialtiesQueryVariables = Exact<{
-  vakgroepId: Scalars['Int'];
+  examenInstellingId: Scalars['Int'];
 }>;
 
 
@@ -988,8 +988,8 @@ export type GetMyQueryHookResult = ReturnType<typeof useGetMyQuery>;
 export type GetMyLazyQueryHookResult = ReturnType<typeof useGetMyLazyQuery>;
 export type GetMyQueryResult = Apollo.QueryResult<GetMyQuery, GetMyQueryVariables>;
 export const SearchLocationsDocument = gql`
-    query SearchLocations($VakgroepID: Int!) {
-  SearchLocations(input: {VakgroepID: $VakgroepID}) {
+    query SearchLocations($ExamenInstellingID: Int!) {
+  SearchLocations(input: {ExamenInstellingID: $ExamenInstellingID}) {
     Text: Naam
     Value: LocatieID
   }
@@ -1008,7 +1008,7 @@ export const SearchLocationsDocument = gql`
  * @example
  * const { data, loading, error } = useSearchLocationsQuery({
  *   variables: {
- *      VakgroepID: // value for 'VakgroepID'
+ *      ExamenInstellingID: // value for 'ExamenInstellingID'
  *   },
  * });
  */
@@ -1055,8 +1055,8 @@ export type SearchOrganizersQueryHookResult = ReturnType<typeof useSearchOrganiz
 export type SearchOrganizersLazyQueryHookResult = ReturnType<typeof useSearchOrganizersLazyQuery>;
 export type SearchOrganizersQueryResult = Apollo.QueryResult<SearchOrganizersQuery, SearchOrganizersQueryVariables>;
 export const SpecialtiesDocument = gql`
-    query Specialties($vakgroepId: Int!) {
-  Specialties(input: {examenInstellingId: $vakgroepId}) {
+    query Specialties($examenInstellingId: Int!) {
+  Specialties(input: {examenInstellingId: $examenInstellingId}) {
     VakID
     Afkorting
     Code
@@ -1090,7 +1090,7 @@ export const SpecialtiesDocument = gql`
  * @example
  * const { data, loading, error } = useSpecialtiesQuery({
  *   variables: {
- *      vakgroepId: // value for 'vakgroepId'
+ *      examenInstellingId: // value for 'examenInstellingId'
  *   },
  * });
  */

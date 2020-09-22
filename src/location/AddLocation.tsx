@@ -21,7 +21,7 @@ import {
 const AddLocation: React.FC<{
   onHide: (LocatieID?: number) => void;
   visible: boolean;
-  vakgroepId?: number;
+  examenInstellingId?: number;
 }> = (props) => {
   const { showGrowl } = useGrowlContext();
   const { width, height } = useWindowDimensions();
@@ -51,12 +51,12 @@ const AddLocation: React.FC<{
       }
       const locations: any = cache.readQuery<SearchLocationsQuery>({
         query: SearchLocationsDocument,
-        variables: { VakgroepID: parseInt(props.vakgroepId as any, 10) },
+        variables: { ExamenInstellingID: parseInt(props.examenInstellingId as any, 10) },
       });
 
       cache.writeQuery<SearchLocationsQuery>({
         query: SearchLocationsDocument,
-        variables: { VakgroepID: parseInt(props.vakgroepId as any, 10) },
+        variables: { ExamenInstellingID: parseInt(props.examenInstellingId as any, 10) },
         data: {
           SearchLocations: [
             { Text: location.Naam, Value: location.LocatieID, __typename: 'Locatie' },
@@ -70,14 +70,14 @@ const AddLocation: React.FC<{
   const onSubmitLocation = async (values: any, actions: FormikHelpers<any>) => {
     await addLocation({
       variables: {
-        input: { ...values, VakgroepID: parseInt(props.vakgroepId as any, 10) },
+        input: { ...values, ExamenInstellingID: parseInt(props.examenInstellingId as any, 10) },
       },
     });
 
     actions.setSubmitting(false);
   };
 
-  if (!props.vakgroepId && props.visible) {
+  if (!props.examenInstellingId && props.visible) {
     return <Alert>Selecteer eerst een kennisaanbod</Alert>;
   }
 

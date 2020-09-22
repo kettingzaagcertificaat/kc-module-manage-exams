@@ -7,8 +7,8 @@ query getMy {
   }
 }
 
-query SearchLocations($VakgroepID: Int!) {
-  SearchLocations(input: { VakgroepID: $VakgroepID }) {
+query SearchLocations($ExamenInstellingID: Int!) {
+  SearchLocations(input: { ExamenInstellingID: $ExamenInstellingID }) {
     Text: Naam
     Value: LocatieID
   }
@@ -21,8 +21,8 @@ query SearchOrganizers {
   }
 }
 
-query Specialties($vakgroepId: Int!) {
-  Specialties(input: { examenInstellingId: $vakgroepId }) {
+query Specialties($examenInstellingId: Int!) {
+  Specialties(input: { examenInstellingId: $examenInstellingId }) {
     VakID
     Afkorting
     Code
@@ -39,7 +39,6 @@ query Specialties($vakgroepId: Int!) {
       Code
     }
     Promotietekst
-    DigitaalAanbod
   }
 }
 

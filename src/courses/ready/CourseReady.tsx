@@ -8,13 +8,9 @@ import { Link } from 'react-router-dom';
 
 const CourseReady: React.FC<{}> = (props) => {
   return (
-    <Panel title="Nieuwe bijeenkomst maken en plannen">
+    <Panel title="Nieuw examen maken en plannen">
       <Link to="/nieuw">
-        <Button
-          label={'Nog een bijeenkomst maken'}
-          icon="pi pi-plus"
-          className={styles.firstButton}
-        />
+        <Button label={'Nog een examen maken'} icon="pi pi-plus" className={styles.firstButton} />
       </Link>
 
       {/* <Link to="/overzicht">

@@ -40,9 +40,9 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
     onError() {
       showGrowl({
         severity: 'error',
-        summary: 'Kennisaanbod ophalen',
+        summary: 'Examenvakken ophalen',
         sticky: true,
-        detail: `Er is een fout opgetreden bij het ophalen van het kennisaanbod. Controleer uw invoer of neem contact op met Bureau Erkenningen`,
+        detail: `Er is een fout opgetreden bij het ophalen van de examenvakken. Controleer uw invoer of neem contact met ons op.`,
       });
     },
   });
@@ -51,17 +51,17 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
     onCompleted(data) {
       showGrowl({
         severity: 'success',
-        summary: 'Bijeenkomst aangemaakt',
-        detail: 'De bijeenkomst is succesvol aangemaakt.',
+        summary: 'Examen aangemaakt',
+        detail: 'Het examen is succesvol aangemaakt.',
       });
       history.push('/gereed');
     },
     onError(e) {
       showGrowl({
         severity: 'error',
-        summary: 'Bijeenkomst niet aangemaakt',
+        summary: 'Examen niet aangemaakt',
         sticky: true,
-        detail: `Er is een fout opgetreden bij het aanmaken van de bijeenkomst: ${e.message} Controleer uw invoer of neem contact op met Bureau Erkenningen`,
+        detail: `Er is een fout opgetreden bij het aanmaken van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
       });
     },
   });
@@ -152,7 +152,7 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
       >
         {(formikProps: FormikProps<any>) => (
           <>
-            <Panel title="Bijeenkomst" className="form-horizontal">
+            <Panel title="Examen" className="form-horizontal">
               <p>
                 Kennisaanbod geldig van {toDutchDate(specialty.Specialty?.MinimumDatum)} t/m{' '}
                 {toDutchDate(specialty.Specialty?.MaximumDatum)}
@@ -205,7 +205,7 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
                 formControlClassName="col-sm-5"
                 filter={true}
                 gqlQuery={SearchLocationsDocument}
-                variables={{ VakgroepID: specialty.Specialty?.ExamenInstellingID }}
+                variables={{ ExamenInstellingID: specialty.Specialty?.ExamenInstellingID }}
               >
                 <Button
                   className="mr-2"
@@ -229,7 +229,7 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
       <AddLocation
         onHide={handleAddLocation}
         visible={showAddLocationDialog}
-        vakgroepId={specialty?.Specialty.ExamenInstellingID}
+        examenInstellingId={specialty?.Specialty.ExamenInstellingID}
       />
     </>
   );

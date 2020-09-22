@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-
-import { FormikProps } from 'formik';
-import * as yup from 'yup';
-
-import { Panel } from '@erkenningen/ui/layout/panel';
 import { FormSelect } from '@erkenningen/ui/components/form';
-import { Spinner } from '@erkenningen/ui/components/spinner';
-import { toDutchDate } from '@erkenningen/ui/utils';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
-
-import FormSelectGql from 'components/FormSelectGql';
+import { Spinner } from '@erkenningen/ui/components/spinner';
+import { Panel } from '@erkenningen/ui/layout/panel';
+import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
+import FormSelectGql from 'components/FormSelectGql';
+import { FormikProps } from 'formik';
+import { SpecialtiesDocument, useSearchOrganizersQuery } from 'generated/graphql';
+import React, { useContext, useState } from 'react';
+import { hasRole, Roles, UserContext } from 'shared/Auth';
+import * as yup from 'yup';
 import CourseEdit from './CourseEdit';
-import { useSearchOrganizersQuery, SpecialtiesDocument } from 'generated/graphql';
 
 const CourseNew: React.FC<{}> = () => {
   const { showGrowl } = useGrowlContext();
+  const user = useContext(UserContext);
   const { loading: organizersLoading, data: organizers } = useSearchOrganizersQuery({
     onError() {
       showGrowl({
@@ -40,7 +39,7 @@ const CourseNew: React.FC<{}> = () => {
     <>
       <Form
         schema={{
-          VakgroepID: [null, yup.number().required()],
+          ExamenInstellingID: [null, yup.number().required()],
           VakID: [null, yup.number().required()],
         }}
         onSubmit={async (values: any, actions: any) => {
@@ -49,13 +48,13 @@ const CourseNew: React.FC<{}> = () => {
       >
         {(formikProps: FormikProps<any>) => (
           <>
-            <Panel title="Nieuwe bijeenkomst maken en plannen">
-              {organizers.SearchOrganizers && organizers.SearchOrganizers.length > 1 && (
+            <Panel title="Nieuw examen maken en plannen">
+              {hasRole(Roles.Rector, user?.Roles) && (
                 <FormSelect
                   labelClassNames="col-sm-12 text-left"
-                  placeholder={'Selecteer een kennisaanbieder'}
-                  name={'VakgroepID'}
-                  label={'Kies de kennisaanbieder waarvoor u een nieuwe cursus wilt maken'}
+                  placeholder={'Selecteer een exameninstelling'}
+                  name={'ExamenInstellingID'}
+                  label={'Kies de exameninstelling waarvoor u een nieuw examen wilt maken'}
                   filter={true}
                   options={
                     organizers.SearchOrganizers?.map((item: any) => ({
@@ -69,27 +68,27 @@ const CourseNew: React.FC<{}> = () => {
                   }}
                 />
               )}
-              {(formikProps.values.VakgroepID || organizers.SearchOrganizers?.length === 1) && (
+              {(formikProps.values.ExamenInstellingID || !hasRole(Roles.Rector, user?.Roles)) && (
                 <FormSelectGql
                   labelClassNames="col-sm-12 text-left"
-                  placeholder={'Selecteer een kennisaanbod'}
+                  placeholder={'Selecteer een examenvak'}
                   name={'VakID'}
-                  label={'Kies het kennisaanbod waarop u de nieuwe bijeenkomst wilt baseren:'}
+                  label={'Kies het examenvak waarop u het nieuwe examen wilt baseren::'}
                   filter={true}
                   gqlQuery={SpecialtiesDocument}
                   mapResult={(data: any) =>
                     data.Specialties.map((item: any) => ({
                       label: `${item.VakID} | geldig tot: ${toDutchDate(
                         new Date(item.MaximumDatum),
-                      )} | ${item.Titel} | ${item.Competenties[0]?.Code} | ${item.Themas[0]?.Code}${
-                        item.DigitaalAanbod ? ' | Digitaal aanbod' : ''
+                      )} | ${item.Titel} | ${item.Competenties[0]?.Code || ''} | ${
+                        item.Themas[0]?.Code || ''
                       }`,
                       value: item.VakID,
                     }))
                   }
                   variables={{
-                    vakgroepId:
-                      +formikProps.values.VakgroepID ||
+                    examenInstellingId:
+                      +formikProps.values.ExamenInstellingID ||
                       +(
                         (organizers.SearchOrganizers?.length &&
                           organizers.SearchOrganizers[0].Value) ||
