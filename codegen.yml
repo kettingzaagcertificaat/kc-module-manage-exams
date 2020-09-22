@@ -1,0 +1,14 @@
+overwrite: true
+schema: http://localhost:3040/graphql
+documents: './src/operation.graphql'
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      maybeValue: T
+      defaultMapper: DeepPartial<{T}>
+      scalars:
+        ID: number
