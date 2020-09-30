@@ -56,6 +56,34 @@ query Specialty($vakId: Int!) {
   }
 }
 
+query Exams($input: examsInput!) {
+  Exams(input: $input) {
+    CursusID
+    VakID
+    Titel
+    CursusCode
+    Sessies {
+      SessieID
+      Datum
+      Locatie {
+        LocatieID
+        Naam
+        Contactgegevens {
+          ContactgegevensID
+          Woonplaats
+        }
+      }
+    }
+  }
+}
+
+query SearchExamVersions($input: searchExamVersionsInput!) {
+  SearchExamVersions(input: $input) {
+    Value: ExamenVersieID
+    Text: ExamenOmschrijving
+  }
+}
+
 mutation createCourse($input: CreateCourseInput!) {
   createCourse(input: $input) {
     CursusID

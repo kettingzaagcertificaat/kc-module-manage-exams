@@ -1,42 +1,43 @@
-import React, { useState, useContext } from 'react';
-
+import { Alert } from '@erkenningen/ui/components/alert';
 import { Button } from '@erkenningen/ui/components/button';
-import { FormikProps, FormikHelpers } from 'formik';
-import { addDays, addYears, subDays } from 'date-fns';
-import * as yup from 'yup';
-import { useHistory } from 'react-router-dom';
-
 import {
-  FormText,
   FormCalendar,
   FormCheckbox,
   FormCurrency,
   FormItem,
+  FormText,
 } from '@erkenningen/ui/components/form';
+import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
 import { Panel } from '@erkenningen/ui/layout/panel';
-import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { toDutchDate } from '@erkenningen/ui/utils';
-
-import AddLocation from 'location/AddLocation';
-import FormSelectGql from 'components/FormSelectGql';
-import { hasRole, Roles, UserContext } from 'shared/Auth';
 import Form from 'components/Form';
+import FormSelectGql from 'components/FormSelectGql';
+import { addDays, addYears, subDays } from 'date-fns';
+import { FormikHelpers, FormikProps } from 'formik';
 import {
+  SearchExamVersionsDocument,
   SearchLocationsDocument,
-  useSpecialtyQuery,
   useCreateCourseMutation,
+  useSpecialtyQuery,
 } from 'generated/graphql';
+import AddLocation from 'location/AddLocation';
+import React, { useContext, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { hasRole, Roles, UserContext } from 'shared/Auth';
+import * as yup from 'yup';
 
-const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
+const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
   const [showAddLocationDialog, setShowAddLocationDialog] = useState<boolean>(false);
   const [currentForm, setCurrentForm] = useState<FormikProps<any>>();
   const { clearGrowl, showGrowl } = useGrowlContext();
   const user = useContext(UserContext);
   const history = useHistory();
 
+  const { id: courseId } = useParams<any>();
+
   const { loading: specialtyLoading, data: specialty } = useSpecialtyQuery({
-    variables: { vakId: props.specialtyId },
+    variables: { vakId: props.specialtyId || -1 },
     onError() {
       showGrowl({
         severity: 'error',
@@ -65,6 +66,10 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
       });
     },
   });
+
+  if (!props.specialtyId && !courseId) {
+    return <Alert type="danger">Er is geen vak of examen gekozen</Alert>;
+  }
 
   const onNewLocationClick = (formikProps: FormikProps<any>) => {
     setCurrentForm(formikProps);
@@ -122,6 +127,7 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
               }),
           ],
           Docent: ['', yup.string()],
+          ExamenVersieID: [null, yup.number().required()],
         }}
         onSubmit={async (values, actions: FormikHelpers<any>) => {
           if (!specialty.Specialty) {
@@ -145,6 +151,7 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd),
                 LocatieID: parseInt(values.LocatieID),
                 Docent: values.Docent,
+                ExamenVersieID: +values.ExamenVersieID,
               },
             },
           });
@@ -219,6 +226,22 @@ const CourseEdit: React.FC<{ specialtyId: number }> = (props) => {
                 label={'Docent(en)'}
                 placeholder={'Voer optioneel docenten in'}
               />
+              {formikProps.values.Datum && (
+                <FormSelectGql
+                  name={'ExamenVersieID'}
+                  label={'Examen versie *'}
+                  placeholder={'Selecteer een examenversie'}
+                  formControlClassName="col-sm-5"
+                  filter={true}
+                  gqlQuery={SearchExamVersionsDocument}
+                  variables={{
+                    input: {
+                      VakID: +(specialty.Specialty?.VakID || 0),
+                      ExamDate: formikProps.values.Datum,
+                    },
+                  }}
+                />
+              )}
               <FormItem label={' '}>
                 <Button label={'Opslaan'} buttonType="submit" icon="pi pi-check" />
               </FormItem>

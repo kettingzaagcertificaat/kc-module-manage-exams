@@ -28,7 +28,9 @@ export type Query = {
   Competenties: Array<Maybe<Competentie>>;
   Contactgegevens?: Maybe<Contactgegevens>;
   CursusSessies?: Maybe<Array<Maybe<CursusSessie>>>;
+  Exams?: Maybe<Array<Maybe<Cursus>>>;
   ExamenInstellingen: Array<Maybe<ExamenInstelling>>;
+  SearchExamVersions?: Maybe<Array<Maybe<ExamenVersie>>>;
   /**
    * Get unpaid invoices.
    * Optionally filter by status. And apply pagination with pageSize, pageNumber and orderBy (default: createdOn, DESC)
@@ -71,9 +73,19 @@ export type QueryCursusSessiesArgs = {
 };
 
 
+export type QueryExamsArgs = {
+  input: ExamsInput;
+};
+
+
 export type QueryExamenInstellingenArgs = {
   isActive?: Maybe<Scalars['Boolean']>;
   findById?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySearchExamVersionsArgs = {
+  input: SearchExamVersionsInput;
 };
 
 
@@ -249,6 +261,119 @@ export type LocationAddress = {
   Website?: Maybe<Scalars['String']>;
 };
 
+export type ExamsInput = {
+  /** Filter on part of exam code */
+  examCode?: Maybe<Scalars['SafeString']>;
+  /** Filter on part of title */
+  title?: Maybe<Scalars['SafeString']>;
+  /** Date range, from */
+  from?: Maybe<Scalars['Date']>;
+  /** Date range, to */
+  to?: Maybe<Scalars['Date']>;
+  /** Filter on LocatieID */
+  locationId?: Maybe<Scalars['Int']>;
+};
+
+
+export type Cursus = {
+  __typename?: 'Cursus';
+  CursusID: Scalars['ID'];
+  VakID?: Maybe<Scalars['Int']>;
+  CursusleiderID?: Maybe<Scalars['Int']>;
+  Prijs?: Maybe<Scalars['Float']>;
+  Titel?: Maybe<Scalars['String']>;
+  Promotietekst?: Maybe<Scalars['String']>;
+  IsBesloten?: Maybe<Scalars['Boolean']>;
+  MaximumCursisten?: Maybe<Scalars['Int']>;
+  Opmerkingen?: Maybe<Scalars['String']>;
+  Status?: Maybe<Scalars['String']>;
+  CursusCode?: Maybe<Scalars['String']>;
+  AocKenmerk?: Maybe<Scalars['String']>;
+  ExamenCursusID?: Maybe<Scalars['Int']>;
+  DatumAangemaakt?: Maybe<Scalars['Date']>;
+  DatumGewijzigd?: Maybe<Scalars['Date']>;
+  PersoonIDAangemaakt?: Maybe<Scalars['Int']>;
+  PersoonIDGewijzigd?: Maybe<Scalars['Int']>;
+  Sessies?: Maybe<Array<Maybe<Sessie>>>;
+  Vak: Vak;
+};
+
+export type Sessie = {
+  __typename?: 'Sessie';
+  SessieID: Scalars['ID'];
+  CursusID: Scalars['ID'];
+  LocatieID: Scalars['ID'];
+  LocatieToevoeging: Scalars['String'];
+  Datum: Scalars['Date'];
+  Begintijd: Scalars['Date'];
+  Eindtijd: Scalars['Date'];
+  Docent: Scalars['String'];
+  Opmerkingen: Scalars['String'];
+  SessieType: Scalars['String'];
+  DigitaalExamenId?: Maybe<Scalars['Int']>;
+  DatumAangemaakt?: Maybe<Scalars['Date']>;
+  DatumGewijzigd?: Maybe<Scalars['Date']>;
+  PersoonIDAangemaakt?: Maybe<Scalars['Int']>;
+  PersoonIDGewijzigd?: Maybe<Scalars['Int']>;
+  Locatie?: Maybe<Locatie>;
+};
+
+export type Locatie = {
+  __typename?: 'Locatie';
+  LocatieID: Scalars['ID'];
+  VakgroepID?: Maybe<Scalars['Int']>;
+  ExamenInstellingID?: Maybe<Scalars['Int']>;
+  ContactgegevensID?: Maybe<Scalars['Int']>;
+  Naam: Scalars['String'];
+  Routebeschrijving: Scalars['String'];
+  IsActief: Scalars['Boolean'];
+  Contactgegevens: Contactgegevens;
+};
+
+export type Vak = {
+  __typename?: 'Vak';
+  VakID: Scalars['ID'];
+  VakgroepID?: Maybe<Scalars['Int']>;
+  ExamenInstellingID?: Maybe<Scalars['Int']>;
+  Afkorting?: Maybe<Scalars['String']>;
+  Code?: Maybe<Scalars['String']>;
+  Titel?: Maybe<Scalars['String']>;
+  Kosten?: Maybe<Scalars['Float']>;
+  DatumAangemaakt?: Maybe<Scalars['Date']>;
+  Promotietekst?: Maybe<Scalars['String']>;
+  GewijzigdDatum?: Maybe<Scalars['Date']>;
+  DigitaalAanbod?: Maybe<Scalars['Boolean']>;
+  MinimumDatum?: Maybe<Scalars['Date']>;
+  MaximumDatum?: Maybe<Scalars['Date']>;
+  MaximumCursisten?: Maybe<Scalars['Int']>;
+  Competenties?: Maybe<Array<Maybe<Competentie>>>;
+  Themas?: Maybe<Array<Maybe<Thema>>>;
+  Vakgroep?: Maybe<Vakgroep>;
+  ExamenInstelling?: Maybe<ExamenInstelling>;
+};
+
+export type Thema = {
+  __typename?: 'Thema';
+  ThemaID: Scalars['ID'];
+  UniversiteitID?: Maybe<Scalars['Int']>;
+  Naam: Scalars['String'];
+  Code: Scalars['String'];
+};
+
+export type Vakgroep = {
+  __typename?: 'Vakgroep';
+  VakgroepID: Scalars['ID'];
+  UniversiteitID: Scalars['Int'];
+  ContactgegevensID: Scalars['Int'];
+  Naam: Scalars['String'];
+  Code: Scalars['String'];
+  IsBtwPlichtig: Scalars['Boolean'];
+  IsActief: Scalars['Boolean'];
+  WebserviceEnabled: Scalars['Boolean'];
+  ApiKey?: Maybe<Scalars['String']>;
+  Contactgegevens: Contactgegevens;
+};
+
 export type ExamenInstelling = {
   __typename?: 'ExamenInstelling';
   ExamenInstellingID: Scalars['ID'];
@@ -261,6 +386,21 @@ export type ExamenInstelling = {
   ContactgegevensID: Scalars['Int'];
   WebserviceEnabled: Scalars['Boolean'];
   ApiKey?: Maybe<Scalars['String']>;
+};
+
+export type SearchExamVersionsInput = {
+  VakID?: Maybe<Scalars['Int']>;
+  ExamDate?: Maybe<Scalars['Date']>;
+};
+
+export type ExamenVersie = {
+  __typename?: 'ExamenVersie';
+  ExamenVersieID: Scalars['ID'];
+  ExamenType: Scalars['String'];
+  ExamenVersieCode: Scalars['String'];
+  ExamenOmschrijving: Scalars['String'];
+  StartDatum?: Maybe<Scalars['Date']>;
+  EindDatum?: Maybe<Scalars['Date']>;
 };
 
 export type OrderByArgs = {
@@ -298,7 +438,6 @@ export enum PaymentStatusEnum {
   NotPaid = 'notPaid',
   Paid = 'paid'
 }
-
 
 
 export enum InvoiceCollectionsFilterEnum {
@@ -388,18 +527,6 @@ export type SearchLocationsInput = {
   ExamenInstellingID?: Maybe<Scalars['Int']>;
 };
 
-export type Locatie = {
-  __typename?: 'Locatie';
-  LocatieID: Scalars['ID'];
-  VakgroepID?: Maybe<Scalars['Int']>;
-  ExamenInstellingID?: Maybe<Scalars['Int']>;
-  ContactgegevensID?: Maybe<Scalars['Int']>;
-  Naam: Scalars['String'];
-  Routebeschrijving: Scalars['String'];
-  IsActief: Scalars['Boolean'];
-  Contactgegevens: Contactgegevens;
-};
-
 export type My = {
   __typename?: 'My';
   Persoon: Persoon;
@@ -469,20 +596,6 @@ export type VakgroepLink = {
   Vakgroep?: Maybe<Vakgroep>;
 };
 
-export type Vakgroep = {
-  __typename?: 'Vakgroep';
-  VakgroepID: Scalars['ID'];
-  UniversiteitID: Scalars['Int'];
-  ContactgegevensID: Scalars['Int'];
-  Naam: Scalars['String'];
-  Code: Scalars['String'];
-  IsBtwPlichtig: Scalars['Boolean'];
-  IsActief: Scalars['Boolean'];
-  WebserviceEnabled: Scalars['Boolean'];
-  ApiKey?: Maybe<Scalars['String']>;
-  Contactgegevens: Contactgegevens;
-};
-
 export type ExamenInstellingLink = {
   __typename?: 'ExamenInstellingLink';
   ExaminatorID: Scalars['ID'];
@@ -507,36 +620,6 @@ export type SearchOrganizerResult = {
 export type SpecialtiesInput = {
   /** ExamenInstellingID to filter on organizers */
   examenInstellingId: Scalars['Int'];
-};
-
-export type Vak = {
-  __typename?: 'Vak';
-  VakID: Scalars['ID'];
-  VakgroepID?: Maybe<Scalars['Int']>;
-  ExamenInstellingID?: Maybe<Scalars['Int']>;
-  Afkorting?: Maybe<Scalars['String']>;
-  Code?: Maybe<Scalars['String']>;
-  Titel?: Maybe<Scalars['String']>;
-  Kosten?: Maybe<Scalars['Float']>;
-  DatumAangemaakt?: Maybe<Scalars['Date']>;
-  Promotietekst?: Maybe<Scalars['String']>;
-  GewijzigdDatum?: Maybe<Scalars['Date']>;
-  DigitaalAanbod?: Maybe<Scalars['Boolean']>;
-  MinimumDatum?: Maybe<Scalars['Date']>;
-  MaximumDatum?: Maybe<Scalars['Date']>;
-  MaximumCursisten?: Maybe<Scalars['Int']>;
-  Competenties?: Maybe<Array<Maybe<Competentie>>>;
-  Themas?: Maybe<Array<Maybe<Thema>>>;
-  Vakgroep?: Maybe<Vakgroep>;
-  ExamenInstelling?: Maybe<ExamenInstelling>;
-};
-
-export type Thema = {
-  __typename?: 'Thema';
-  ThemaID: Scalars['ID'];
-  UniversiteitID?: Maybe<Scalars['Int']>;
-  Naam: Scalars['String'];
-  Code: Scalars['String'];
 };
 
 export type TotaalExtBtwTarief = {
@@ -621,49 +704,7 @@ export type CreateCourseInput = {
   Eindtijd: Scalars['Date'];
   LocatieID: Scalars['Int'];
   Docent?: Maybe<Scalars['SafeString']>;
-};
-
-export type Cursus = {
-  __typename?: 'Cursus';
-  CursusID: Scalars['ID'];
-  VakID?: Maybe<Scalars['Int']>;
-  CursusleiderID?: Maybe<Scalars['Int']>;
-  Prijs?: Maybe<Scalars['Float']>;
-  Titel?: Maybe<Scalars['String']>;
-  Promotietekst?: Maybe<Scalars['String']>;
-  IsBesloten?: Maybe<Scalars['Boolean']>;
-  MaximumCursisten?: Maybe<Scalars['Int']>;
-  Opmerkingen?: Maybe<Scalars['String']>;
-  Status?: Maybe<Scalars['String']>;
-  CursusCode?: Maybe<Scalars['String']>;
-  AocKenmerk?: Maybe<Scalars['String']>;
-  ExamenCursusID?: Maybe<Scalars['Int']>;
-  DatumAangemaakt?: Maybe<Scalars['Date']>;
-  DatumGewijzigd?: Maybe<Scalars['Date']>;
-  PersoonIDAangemaakt?: Maybe<Scalars['Int']>;
-  PersoonIDGewijzigd?: Maybe<Scalars['Int']>;
-  Sessies?: Maybe<Array<Maybe<Sessie>>>;
-  Vak: Vak;
-};
-
-export type Sessie = {
-  __typename?: 'Sessie';
-  SessieID: Scalars['ID'];
-  CursusID: Scalars['ID'];
-  LocatieID: Scalars['ID'];
-  LocatieToevoeging: Scalars['String'];
-  Datum: Scalars['Date'];
-  Begintijd: Scalars['Date'];
-  Eindtijd: Scalars['Date'];
-  Docent: Scalars['String'];
-  Opmerkingen: Scalars['String'];
-  SessieType: Scalars['String'];
-  DigitaalExamenId?: Maybe<Scalars['Int']>;
-  DatumAangemaakt?: Maybe<Scalars['Date']>;
-  DatumGewijzigd?: Maybe<Scalars['Date']>;
-  PersoonIDAangemaakt?: Maybe<Scalars['Int']>;
-  PersoonIDGewijzigd?: Maybe<Scalars['Int']>;
-  Locatie?: Maybe<Locatie>;
+  ExamenVersieID: Scalars['Int'];
 };
 
 export type RequestDuplicateInput = {
@@ -901,7 +942,7 @@ export type SpecialtiesQuery = (
   { __typename?: 'Query' }
   & { Specialties?: Maybe<Array<Maybe<(
     { __typename?: 'Vak' }
-    & Pick<Vak, 'VakID' | 'Afkorting' | 'Code' | 'Titel' | 'Kosten' | 'MinimumDatum' | 'MaximumDatum' | 'Promotietekst' | 'DigitaalAanbod'>
+    & Pick<Vak, 'VakID' | 'Afkorting' | 'Code' | 'Titel' | 'Kosten' | 'MinimumDatum' | 'MaximumDatum' | 'Promotietekst'>
     & { Competenties?: Maybe<Array<Maybe<(
       { __typename?: 'Competentie' }
       & Pick<Competentie, 'Naam' | 'Code'>
@@ -923,6 +964,44 @@ export type SpecialtyQuery = (
     { __typename?: 'Vak' }
     & Pick<Vak, 'VakID' | 'ExamenInstellingID' | 'Code' | 'Titel' | 'Promotietekst' | 'Kosten' | 'MinimumDatum' | 'MaximumDatum' | 'MaximumCursisten'>
   )> }
+);
+
+export type ExamsQueryVariables = Exact<{
+  input: ExamsInput;
+}>;
+
+
+export type ExamsQuery = (
+  { __typename?: 'Query' }
+  & { Exams?: Maybe<Array<Maybe<(
+    { __typename?: 'Cursus' }
+    & Pick<Cursus, 'CursusID' | 'VakID' | 'Titel' | 'CursusCode'>
+    & { Sessies?: Maybe<Array<Maybe<(
+      { __typename?: 'Sessie' }
+      & Pick<Sessie, 'SessieID' | 'Datum'>
+      & { Locatie?: Maybe<(
+        { __typename?: 'Locatie' }
+        & Pick<Locatie, 'LocatieID' | 'Naam'>
+        & { Contactgegevens: (
+          { __typename?: 'Contactgegevens' }
+          & Pick<Contactgegevens, 'ContactgegevensID' | 'Woonplaats'>
+        ) }
+      )> }
+    )>>> }
+  )>>> }
+);
+
+export type SearchExamVersionsQueryVariables = Exact<{
+  input: SearchExamVersionsInput;
+}>;
+
+
+export type SearchExamVersionsQuery = (
+  { __typename?: 'Query' }
+  & { SearchExamVersions?: Maybe<Array<Maybe<(
+    { __typename?: 'ExamenVersie' }
+    & { Value: ExamenVersie['ExamenVersieID'], Text: ExamenVersie['ExamenOmschrijving'] }
+  )>>> }
 );
 
 export type CreateCourseMutationVariables = Exact<{
@@ -1073,7 +1152,6 @@ export const SpecialtiesDocument = gql`
       Code
     }
     Promotietekst
-    DigitaalAanbod
   }
 }
     `;
@@ -1144,6 +1222,88 @@ export function useSpecialtyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type SpecialtyQueryHookResult = ReturnType<typeof useSpecialtyQuery>;
 export type SpecialtyLazyQueryHookResult = ReturnType<typeof useSpecialtyLazyQuery>;
 export type SpecialtyQueryResult = Apollo.QueryResult<SpecialtyQuery, SpecialtyQueryVariables>;
+export const ExamsDocument = gql`
+    query Exams($input: examsInput!) {
+  Exams(input: $input) {
+    CursusID
+    VakID
+    Titel
+    CursusCode
+    Sessies {
+      SessieID
+      Datum
+      Locatie {
+        LocatieID
+        Naam
+        Contactgegevens {
+          ContactgegevensID
+          Woonplaats
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExamsQuery__
+ *
+ * To run a query within a React component, call `useExamsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExamsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExamsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExamsQuery(baseOptions?: Apollo.QueryHookOptions<ExamsQuery, ExamsQueryVariables>) {
+        return Apollo.useQuery<ExamsQuery, ExamsQueryVariables>(ExamsDocument, baseOptions);
+      }
+export function useExamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExamsQuery, ExamsQueryVariables>) {
+          return Apollo.useLazyQuery<ExamsQuery, ExamsQueryVariables>(ExamsDocument, baseOptions);
+        }
+export type ExamsQueryHookResult = ReturnType<typeof useExamsQuery>;
+export type ExamsLazyQueryHookResult = ReturnType<typeof useExamsLazyQuery>;
+export type ExamsQueryResult = Apollo.QueryResult<ExamsQuery, ExamsQueryVariables>;
+export const SearchExamVersionsDocument = gql`
+    query SearchExamVersions($input: searchExamVersionsInput!) {
+  SearchExamVersions(input: $input) {
+    Value: ExamenVersieID
+    Text: ExamenOmschrijving
+  }
+}
+    `;
+
+/**
+ * __useSearchExamVersionsQuery__
+ *
+ * To run a query within a React component, call `useSearchExamVersionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchExamVersionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchExamVersionsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSearchExamVersionsQuery(baseOptions?: Apollo.QueryHookOptions<SearchExamVersionsQuery, SearchExamVersionsQueryVariables>) {
+        return Apollo.useQuery<SearchExamVersionsQuery, SearchExamVersionsQueryVariables>(SearchExamVersionsDocument, baseOptions);
+      }
+export function useSearchExamVersionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchExamVersionsQuery, SearchExamVersionsQueryVariables>) {
+          return Apollo.useLazyQuery<SearchExamVersionsQuery, SearchExamVersionsQueryVariables>(SearchExamVersionsDocument, baseOptions);
+        }
+export type SearchExamVersionsQueryHookResult = ReturnType<typeof useSearchExamVersionsQuery>;
+export type SearchExamVersionsLazyQueryHookResult = ReturnType<typeof useSearchExamVersionsLazyQuery>;
+export type SearchExamVersionsQueryResult = Apollo.QueryResult<SearchExamVersionsQuery, SearchExamVersionsQueryVariables>;
 export const CreateCourseDocument = gql`
     mutation createCourse($input: CreateCourseInput!) {
   createCourse(input: $input) {

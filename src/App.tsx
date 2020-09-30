@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, HashRouter } from 'react-router-dom';
 import { FormatErrorParams } from 'yup';
 import * as yup from 'yup';
 
@@ -15,6 +15,7 @@ import CourseEdit from './courses/edit/CourseEdit';
 import CourseReady from './courses/ready/CourseReady';
 import { UserContext, useAuth, Roles, hasOneOfRoles } from './shared/Auth';
 import CourseNew from 'courses/edit/CourseNew';
+import CourseList from 'courses/list/CourseList';
 
 // @TODO Move to lib?
 yup.setLocale({
@@ -68,25 +69,27 @@ const App: React.FC<{}> = (props) => {
   }
 
   return (
-    <UserContext.Provider value={auth.my}>
-      <ThemeContext.Provider value={{ mode: ERKENNINGEN_SITE_TYPE }}>
-        <GrowlProvider>
-          <ThemeBureauErkenningen>
-            <Switch>
-              <Route path="/wijzig/:id" component={CourseEdit} />
-              <Route path="/nieuw" component={CourseNew} />
-              <Route path="/gereed" component={CourseReady} />
-              <Route path="/overzicht">List courses</Route>
-              <Route path="/" component={CourseNew} />
-              <Route>
-                Route not found, please set a route in the url hash (e.g. /overzicht, /wijzig/1234
-                or /nieuw)
-              </Route>
-            </Switch>
-          </ThemeBureauErkenningen>
-        </GrowlProvider>
-      </ThemeContext.Provider>
-    </UserContext.Provider>
+    <HashRouter>
+      <UserContext.Provider value={auth.my}>
+        <ThemeContext.Provider value={{ mode: ERKENNINGEN_SITE_TYPE }}>
+          <GrowlProvider>
+            <ThemeBureauErkenningen>
+              <Switch>
+                <Route path="/wijzig/:id" component={CourseEdit} />
+                <Route path="/nieuw" component={CourseNew} />
+                <Route path="/gereed" component={CourseReady} />
+                <Route path="/overzicht" component={CourseList} />
+                <Route path="/" component={CourseNew} />
+                <Route>
+                  Route not found, please set a route in the url hash (e.g. /overzicht, /wijzig/1234
+                  or /nieuw)
+                </Route>
+              </Switch>
+            </ThemeBureauErkenningen>
+          </GrowlProvider>
+        </ThemeContext.Provider>
+      </UserContext.Provider>
+    </HashRouter>
   );
 };
 
