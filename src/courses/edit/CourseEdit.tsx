@@ -161,7 +161,7 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
           <>
             <Panel title="Examen" className="form-horizontal">
               <p>
-                Kennisaanbod geldig van {toDutchDate(specialty.Specialty?.MinimumDatum)} t/m{' '}
+                Examenvak geldig van {toDutchDate(specialty.Specialty?.MinimumDatum)} t/m{' '}
                 {toDutchDate(specialty.Specialty?.MaximumDatum)}
               </p>
               <FormText name={'Titel'} label={'Titel *'} />

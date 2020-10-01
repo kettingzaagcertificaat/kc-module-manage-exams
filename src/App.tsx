@@ -61,7 +61,7 @@ const App: React.FC<{}> = (props) => {
   }
 
   if (!auth.authenticated) {
-    return <Alert type="danger">U moet ingelogd zijn om het kennisaanbod te beheren.</Alert>;
+    return <Alert type="danger">U moet ingelogd zijn om een examen te plannen.</Alert>;
   }
 
   if (!hasOneOfRoles([Roles.Rector, Roles.Hoogleraar], auth.my?.Roles)) {
