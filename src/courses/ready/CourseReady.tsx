@@ -46,7 +46,11 @@ const CourseReady: React.FC<{}> = (props) => {
           <FormItem label={'Document(en)'} formControlClassName="form-control-static col-md-9">
             {examVersion?.ExamVersionDocuments.Documenten?.map((doc) => (
               <div key={doc.Document.DocumentID}>
-                <a target="_blank" rel="noopener noreferrer" href={doc.Document.Locatie}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`${doc.Document.Locatie}${doc.Document.Naam}`}
+                >
                   {doc.Document.Omschrijving}
                 </a>
               </div>
