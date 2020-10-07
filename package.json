@@ -1,5 +1,5 @@
 {
-  "name": "kc-module-manage-courses",
+  "name": "kc-module-manage-exams",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
