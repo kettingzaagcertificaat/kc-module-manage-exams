@@ -77,10 +77,41 @@ query Exams($input: examsInput!) {
   }
 }
 
+query Examiners {
+  Examinatoren {
+    PersoonID
+    Voorletters
+    Tussenvoegsel
+    Achternaam
+    Contactgegevens {
+      Woonplaats
+    }
+  }
+}
+
 query SearchExamVersions($input: searchExamVersionsInput!) {
   SearchExamVersions(input: $input) {
     Value: ExamenVersieID
     Text: ExamenOmschrijving
+  }
+}
+
+query ExamVersionDocuments($input: examVersionDocumentsInput!) {
+  ExamVersionDocuments(input: $input) {
+    ExamenVersieCode
+    ExamenOmschrijving
+    StartDatum
+    EindDatum
+    Documenten {
+      AangemaaktDoor
+      AangemaaktDatum
+      Document {
+        DocumentID
+        Naam
+        Locatie
+        Omschrijving
+      }
+    }
   }
 }
 

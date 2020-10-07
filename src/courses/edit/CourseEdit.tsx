@@ -16,6 +16,8 @@ import FormSelectGql from 'components/FormSelectGql';
 import { addDays, addYears, subDays } from 'date-fns';
 import { FormikHelpers, FormikProps } from 'formik';
 import {
+  ExaminersDocument,
+  ExaminersQuery,
   SearchExamVersionsDocument,
   SearchLocationsDocument,
   useCreateCourseMutation,
@@ -25,6 +27,7 @@ import AddLocation from 'location/AddLocation';
 import React, { useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
+import { personDisplayName } from 'shared/Utils';
 import * as yup from 'yup';
 
 const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
@@ -55,7 +58,6 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
         summary: 'Examen aangemaakt',
         detail: 'Het examen is succesvol aangemaakt.',
       });
-      history.push('/gereed');
     },
     onError(e) {
       showGrowl({
@@ -126,7 +128,7 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
                 return !v || this.resolve(yup.ref('Begintijd')) < v;
               }),
           ],
-          Docent: ['', yup.string()],
+          ExaminatorPersoonID: [null, yup.number().required()],
           ExamenVersieID: [null, yup.number().required()],
         }}
         onSubmit={async (values, actions: FormikHelpers<any>) => {
@@ -136,7 +138,7 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
 
           clearGrowl();
 
-          await createCourse({
+          const result = await createCourse({
             variables: {
               input: {
                 VakID: +specialty.Specialty.VakID,
@@ -150,11 +152,15 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd),
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd),
                 LocatieID: parseInt(values.LocatieID),
-                Docent: values.Docent,
+                ExaminatorPersoonID: +values.ExaminatorPersoonID,
                 ExamenVersieID: +values.ExamenVersieID,
               },
             },
           });
+
+          if (result.data?.createCourse?.CursusID) {
+            history.push(`/gereed/${values.ExamenVersieID}`);
+          }
         }}
       >
         {(formikProps: FormikProps<any>) => (
@@ -221,10 +227,23 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
                   onClick={() => onNewLocationClick(formikProps)}
                 />
               </FormSelectGql>
-              <FormText
-                name={'Docent'}
-                label={'Docent(en)'}
-                placeholder={'Voer optioneel docenten in'}
+              <FormSelectGql
+                name={'ExaminatorPersoonID'}
+                label={'Examinator *'}
+                placeholder={'Selecteer een examinator'}
+                formControlClassName="col-sm-5"
+                filter={true}
+                mapResult={(data: ExaminersQuery) => {
+                  return (
+                    data.Examinatoren?.map((examiner) => ({
+                      label: `${personDisplayName(examiner)} | ${
+                        examiner.Contactgegevens?.Woonplaats || ''
+                      }`,
+                      value: '' + examiner.PersoonID,
+                    })) || []
+                  );
+                }}
+                gqlQuery={ExaminersDocument}
               />
               {formikProps.values.Datum && (
                 <FormSelectGql

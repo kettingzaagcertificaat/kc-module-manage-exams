@@ -77,7 +77,7 @@ const App: React.FC<{}> = (props) => {
               <Switch>
                 <Route path="/wijzig/:id" component={CourseEdit} />
                 <Route path="/nieuw" component={CourseNew} />
-                <Route path="/gereed" component={CourseReady} />
+                <Route path="/gereed/:examVersionId" component={CourseReady} />
                 <Route path="/overzicht" component={CourseList} />
                 <Route path="/" component={CourseNew} />
                 <Route>
