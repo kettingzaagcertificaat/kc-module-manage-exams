@@ -8,12 +8,13 @@ import { useGetMyQuery, My } from 'generated/graphql';
 
 export enum Roles {
   Beoordelaar = 'Beoordelaar',
-  BoekhouderErkenningen = 'BoekhouderErkenningen',
+  Boekhouder = 'Boekhouder',
   Examinator = 'Examinator',
   Hoogleraar = 'Hoogleraar',
   Inspecteur = 'Inspecteur',
   Rector = 'Rector',
   Student = 'Student',
+  ContactpersoonExamenInstelling = 'ContactpersoonExamenInstelling',
 }
 
 export const UserContext = React.createContext<DeepPartial<My> | undefined>(undefined);

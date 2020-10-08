@@ -1,4 +1,5 @@
 import { Alert } from '@erkenningen/ui/components/alert';
+import { Button } from '@erkenningen/ui/components/button';
 import { DataTable } from '@erkenningen/ui/components/datatable';
 // import './InvoiceDataTable.css';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
@@ -8,10 +9,8 @@ import { toDutchDate } from '@erkenningen/ui/utils';
 import { useExamsQuery } from 'generated/graphql';
 import { Column } from 'primereact/column';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 const CourseList: React.FC<{}> = (props) => {
-  const history = useHistory();
   const [page, setPage] = useState({ page: 0, rows: 10, first: 0 });
   const { showGrowl } = useGrowlContext();
   const [sort, setSort] = useState<{ field: string; direction: number }>({
@@ -89,13 +88,11 @@ const CourseList: React.FC<{}> = (props) => {
   }
 
   return (
-    <Panel title="Examen selecteren">
+    <Panel title="Examens wijzigen">
       <DataTable
         value={data.Exams}
-        className="p-datatable-customers"
-        rowHover
         lazy={true}
-        dataKey="FactuurID"
+        dataKey="CursusCode"
         emptyMessage="Geen examens gevonden. Controleer filter criteria."
         responsive
         paginator={true}
@@ -110,13 +107,21 @@ const CourseList: React.FC<{}> = (props) => {
         onSort={(e: { sortField: string; sortOrder: number; multiSortMeta: any }) => {
           setSort({ field: e.sortField, direction: e.sortOrder });
         }}
-        onRowClick={(e: any) => {
-          history.push(`/wijzig/${e.data.CursusID}`);
-        }}
+        // onRowClick={(e: any) => {
+        //   history.push(`/wijzig/${e.data.CursusID}`);
+        // }}
         totalRecords={0}
         currentPageReportTemplate="{first} tot {last} van {totalRecords}"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       >
+        <Column
+          body={(row: any) => (
+            <>
+              <Button label={''} icon="fas fa-info" />
+              <Button label={''} icon="fas fa-edit" />
+            </>
+          )}
+        />
         <Column field="CursusCode" header={'Examencode'} />
         <Column field="Titel" header={'Titel'} />
         <Column
@@ -133,6 +138,7 @@ const CourseList: React.FC<{}> = (props) => {
             }`
           }
         />
+        <Column field="AantalDeelnemers" header={'Deelnemers'} />
       </DataTable>
     </Panel>
   );

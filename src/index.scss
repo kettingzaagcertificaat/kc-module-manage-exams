@@ -1,0 +1,11 @@
+body button:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+body .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.5rem;
+}
+
+body .p-datatable .p-datatable-tbody button {
+  font-size: 1.3rem;
+}
