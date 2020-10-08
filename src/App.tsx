@@ -6,10 +6,8 @@ import * as yup from 'yup';
 
 import { Alert } from '@erkenningen/ui/components/alert';
 import { GrowlProvider } from '@erkenningen/ui/components/growl';
-import { ThemeBureauErkenningen } from '@erkenningen/ui/layout/theme';
+import { ThemeKC } from '@erkenningen/ui/layout/theme';
 import { ThemeContext } from '@erkenningen/ui/layout/theme';
-
-import { ERKENNINGEN_SITE_TYPE } from '@erkenningen/config';
 
 import CourseEdit from './courses/edit/CourseEdit';
 import CourseReady from './courses/ready/CourseReady';
@@ -71,9 +69,9 @@ const App: React.FC<{}> = (props) => {
   return (
     <HashRouter>
       <UserContext.Provider value={auth.my}>
-        <ThemeContext.Provider value={{ mode: ERKENNINGEN_SITE_TYPE }}>
+        <ThemeContext.Provider value={{ mode: 'admin' }}>
           <GrowlProvider>
-            <ThemeBureauErkenningen>
+            <ThemeKC>
               <Switch>
                 <Route path="/wijzig/:id" component={CourseEdit} />
                 <Route path="/nieuw" component={CourseNew} />
@@ -85,7 +83,7 @@ const App: React.FC<{}> = (props) => {
                   or /nieuw)
                 </Route>
               </Switch>
-            </ThemeBureauErkenningen>
+            </ThemeKC>
           </GrowlProvider>
         </ThemeContext.Provider>
       </UserContext.Provider>
