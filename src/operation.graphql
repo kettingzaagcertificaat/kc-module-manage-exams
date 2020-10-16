@@ -9,8 +9,11 @@ query getMy {
 
 query SearchLocations($ExamenInstellingID: Int!) {
   SearchLocations(input: { ExamenInstellingID: $ExamenInstellingID }) {
-    Text: Naam
-    Value: LocatieID
+    LocatieID
+    Naam
+    Contactgegevens {
+      Woonplaats
+    }
   }
 }
 
@@ -22,7 +25,7 @@ query SearchOrganizers {
 }
 
 query Specialties($examenInstellingId: Int!) {
-  Specialties(input: { examenInstellingId: $examenInstellingId }) {
+  Specialties(input: { examenInstellingId: $examenInstellingId, validOnly: true }) {
     VakID
     Afkorting
     Code
@@ -80,9 +83,7 @@ query Exams($input: examsInput!) {
 query Examiners {
   Examinatoren {
     PersoonID
-    Voorletters
-    Tussenvoegsel
-    Achternaam
+    SortableFullName
     Contactgegevens {
       Woonplaats
     }

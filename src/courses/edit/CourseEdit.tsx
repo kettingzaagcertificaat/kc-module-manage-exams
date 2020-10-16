@@ -20,6 +20,7 @@ import {
   ExaminersQuery,
   SearchExamVersionsDocument,
   SearchLocationsDocument,
+  SearchLocationsQuery,
   useCreateCourseMutation,
   useSpecialtyQuery,
 } from 'generated/graphql';
@@ -27,7 +28,6 @@ import AddLocation from 'location/AddLocation';
 import React, { useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
-import { personDisplayName } from 'shared/Utils';
 import * as yup from 'yup';
 
 const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
@@ -217,6 +217,14 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
                 placeholder={'Selecteer een locatie'}
                 formControlClassName="col-sm-5"
                 filter={true}
+                mapResult={(data: SearchLocationsQuery) => {
+                  return (
+                    data.SearchLocations?.map((location) => ({
+                      label: `${location.Naam} | ${location.Contactgegevens.Woonplaats}`,
+                      value: '' + location.LocatieID,
+                    })) || []
+                  );
+                }}
                 gqlQuery={SearchLocationsDocument}
                 variables={{ ExamenInstellingID: specialty.Specialty?.ExamenInstellingID }}
               >
@@ -236,7 +244,7 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
                 mapResult={(data: ExaminersQuery) => {
                   return (
                     data.Examinatoren?.map((examiner) => ({
-                      label: `${personDisplayName(examiner)} | ${
+                      label: `${examiner.SortableFullName} | ${
                         examiner.Contactgegevens?.Woonplaats || ''
                       }`,
                       value: '' + examiner.PersoonID,
