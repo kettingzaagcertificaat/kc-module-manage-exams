@@ -1,829 +1,391 @@
 <!DOCTYPE html>
-<html lang="nl-NL">
-  <head id="Head">
-    <!--*********************************************-->
-    <!-- DNN Platform - http://www.dnnsoftware.com   -->
-    <!-- Copyright (c) 2002-2017, by DNN Corporation -->
-    <!--*********************************************-->
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <meta name="REVISIT-AFTER" content="1 DAYS" />
-    <meta name="RATING" content="GENERAL" />
-    <meta name="RESOURCE-TYPE" content="DOCUMENT" />
-    <meta content="text/javascript" http-equiv="Content-Script-Type" />
-    <meta content="text/css" http-equiv="Content-Style-Type" />
-    <title>
-      Home | Erkenningen
-    </title>
-    <meta id="MetaKeywords" name="KEYWORDS" content=",DotNetNuke,DNN" />
-    <meta id="MetaGenerator" name="GENERATOR" content="DotNetNuke " />
-    <meta id="MetaRobots" name="ROBOTS" content="INDEX, FOLLOW" />
-    <link
-      href="http://administratie.erkenningen.nl/Resources/Shared/stylesheets/dnndefault/7.0.0/default.css?cdv=426"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <link
-      href="http://administratie.erkenningen.nl/DesktopModules/AOCRaad.Keurmerken.GebruikerIdentitySwitch/module.css?cdv=426"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <link
-      href="http://administratie.erkenningen.nl/Portals/_default/Containers/ErkenningenBootstrap3Containers/Title_BlackBox.css?cdv=426"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <link
-      href="http://administratie.erkenningen.nl/Portals/1/portal.css?cdv=426"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <link
-      href="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/dist/full-package.css?cdv=426"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <script
-      src="http://administratie.erkenningen.nl/Resources/libraries/jQuery/01_09_01/jquery.js?cdv=426"
-      type="text/javascript"
-    ></script>
-    <script
-      src="http://administratie.erkenningen.nl/Resources/libraries/jQuery-UI/01_11_03/jquery-ui.js?cdv=426"
-      type="text/javascript"
-    ></script>
-
-    <script type="text/javascript">
-      // Set global erkenningen vars
-      // window.ERKENNINGEN_GRAPHQL_API_URL = "https://api.erkenningen.nl/graphql";
-      window.ERKENNINGEN_LOGIN_URL = "/Default.aspx?tabid=154";
-      window.ERKENNINGEN_SITE_TYPE = "admin";
+<html  lang="nl-NL">
+<head id="Head">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="REVISIT-AFTER" content="1 DAYS" />
+<meta name="RATING" content="GENERAL" />
+<meta name="RESOURCE-TYPE" content="DOCUMENT" />
+<meta content="text/javascript" http-equiv="Content-Script-Type" />
+<meta content="text/css" http-equiv="Content-Style-Type" />
+<title>
+	Kettingzaagcertificaat 
+</title><meta id="MetaKeywords" name="KEYWORDS" content=",DotNetNuke,DNN" /><meta id="MetaGenerator" name="GENERATOR" content="DotNetNuke " /><meta id="MetaRobots" name="ROBOTS" content="INDEX, FOLLOW" />
+<link href="/default.css" type="text/css" rel="stylesheet"/>
+<link href="/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+<link href="/skin.css?cdv=433" type="text/css" rel="stylesheet"/>
+<link href="/container.css" type="text/css" rel="stylesheet"/>
+<link href="/Title_Blue.css?cdv=433" type="text/css" rel="stylesheet"/>
+<link href="/portal.css?cdv=433" type="text/css" rel="stylesheet"/>
+<script src="/jquery.js?cdv=433" type="text/javascript"></script>
+<script src="/jquery-migrate.js?cdv=433" type="text/javascript"></script>
+<script src="/jquery-ui.js?cdv=433" type="text/javascript"></script>
+<!-- <link href="/WebResource.axd?d=hcXDZhXiidgP3NrbYp9dGfOLfSD7sLkNWeDvqI8XLa_MOtGwIs4vzs3ibA_0jAdWnSnRaHnZHauKX_pQC-u7L60tS3ebKPNXU1UgSibgofRgWBTqcepr4IePYkSTWkt7XkdLpQ2&amp;t=635857767569065523" type="text/css" rel="stylesheet" /> -->
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<script type="text/javascript">
+    window.ERKENNINGEN_GRAPHQL_API_URL = 'http://localhost:3040/graphql';
+    window.ERKENNINGEN_LOGIN_URL = 'https://kettingzaagcertificaat.nl/Default.aspx?tabid=154';
+    window.ERKENNINGEN_SITE_TYPE = 'administratie';
     </script>
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no&#39;"
-    />
-  </head>
+</head>
+<body id="Body">
 
-  <body
-    id="Body"
-    class="tab-61 tab-level-0 root-61 lang-root-61 lang-nl tab-home portal-1 va-layout-default va-mainnav-right"
-  >
-    <form method="post" action="/" id="Form" enctype="multipart/form-data">
-      <div class="aspNetHidden">
-        <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
-        <input
-          type="hidden"
-          name="__EVENTARGUMENT"
-          id="__EVENTARGUMENT"
-          value=""
-        />
-        <input
-          type="hidden"
-          name="__VIEWSTATE"
-          id="__VIEWSTATE"
-          value="/wEPDwUKLTU1MDYzMDgwNw8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgICBg8WAh4FY2xhc3MFZnRhYi02MSB0YWItbGV2ZWwtMCByb290LTYxIGxhbmctcm9vdC02MSBsYW5nLW5sIHRhYi1ob21lICBwb3J0YWwtMSB2YS1sYXlvdXQtZGVmYXVsdCB2YS1tYWlubmF2LXJpZ2h0IBYCAgEPZBYCAgcPZBYCZg9kFgQCBQ8VBi4vUG9ydGFscy9fZGVmYXVsdC9za2lucy9lcmtlbm5pbmdlbmJvb3RzdHJhcDMvLi9Qb3J0YWxzL19kZWZhdWx0L3NraW5zL2Vya2VubmluZ2VuYm9vdHN0cmFwMy8uL1BvcnRhbHMvX2RlZmF1bHQvc2tpbnMvZXJrZW5uaW5nZW5ib290c3RyYXAzLy4vUG9ydGFscy9fZGVmYXVsdC9za2lucy9lcmtlbm5pbmdlbmJvb3RzdHJhcDMvLi9Qb3J0YWxzL19kZWZhdWx0L3NraW5zL2Vya2VubmluZ2VuYm9vdHN0cmFwMy8uL1BvcnRhbHMvX2RlZmF1bHQvc2tpbnMvZXJrZW5uaW5nZW5ib290c3RyYXAzL2QCFA9kFgICAg9kFgICAQ9kFgJmD2QWAgIBD2QWAgIBD2QWAmYPFgIeB1Zpc2libGVoZGRKrnG4vwsdy+rkFamtFVv0d6/AQQ=="
-        />
-      </div>
+<script src="/ScriptResource.axd?d=nv7asgRUU0uATxBDkZc-A76E66hJO0_wYYxUsZWXY47FHrGEi64FN31VQkhZGxCQzpsfPhQ1f_kn6F9O5XwfAi4qhvjhmCRS4gfTta00SXUK4JkOw6KEmSn874s1&amp;t=ffffffffcdd1bd0a" type="text/javascript"></script>
 
-      <script type="text/javascript">
-        //<![CDATA[
-        var theForm = document.forms["Form"];
-        if (!theForm) {
-          theForm = document.Form;
-        }
-        function __doPostBack(eventTarget, eventArgument) {
-          if (!theForm.onsubmit || theForm.onsubmit() != false) {
-            theForm.__EVENTTARGET.value = eventTarget;
-            theForm.__EVENTARGUMENT.value = eventArgument;
-            theForm.submit();
-          }
-        }
-        //]]>
-      </script>
+<script src="/bootstrap.min.js?cdv=433" type="text/javascript"></script>
+<script src="/dnn.js?cdv=433" type="text/javascript"></script>
+<script src="/dnn.modalpopup.js?cdv=433" type="text/javascript"></script>
+<script src="/dnncore.js?cdv=433" type="text/javascript"></script>
 
-      <script
-        src="http://administratie.erkenningen.nl/WebResource.axd?d=qP1cwHYtPhlhLiulLVCEi7_mmBvNylNrUqlL1hF_D5Y28uhK9zpmgK5ukyGi6GcsQqQj1y53qvxgvgq34wDVDG16l781&amp;t=637100842445053551"
-        type="text/javascript"
-      ></script>
-
-      <script type="text/javascript">
-        //<![CDATA[
-        var __cultureInfo = {
-          name: "nl-NL",
-          numberFormat: {
-            CurrencyDecimalDigits: 2,
-            CurrencyDecimalSeparator: ",",
-            IsReadOnly: false,
-            CurrencyGroupSizes: [3],
-            NumberGroupSizes: [3],
-            PercentGroupSizes: [3],
-            CurrencyGroupSeparator: ".",
-            CurrencySymbol: "€",
-            NaNSymbol: "NaN",
-            CurrencyNegativePattern: 12,
-            NumberNegativePattern: 1,
-            PercentPositivePattern: 0,
-            PercentNegativePattern: 0,
-            NegativeInfinitySymbol: "-Infinity",
-            NegativeSign: "-",
-            NumberDecimalDigits: 2,
-            NumberDecimalSeparator: ",",
-            NumberGroupSeparator: ".",
-            CurrencyPositivePattern: 2,
-            PositiveInfinitySymbol: "Infinity",
-            PositiveSign: "+",
-            PercentDecimalDigits: 2,
-            PercentDecimalSeparator: ",",
-            PercentGroupSeparator: ".",
-            PercentSymbol: "%",
-            PerMilleSymbol: "‰",
-            NativeDigits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-            DigitSubstitution: 1,
-          },
-          dateTimeFormat: {
-            AMDesignator: "",
-            Calendar: {
-              MinSupportedDateTime: "\/Date(-62135596800000)\/",
-              MaxSupportedDateTime: "\/Date(253402297199999)\/",
-              AlgorithmType: 1,
-              CalendarType: 1,
-              Eras: [1],
-              TwoDigitYearMax: 2029,
-              IsReadOnly: false,
-            },
-            DateSeparator: "-",
-            FirstDayOfWeek: 1,
-            CalendarWeekRule: 2,
-            FullDateTimePattern: "dddd d MMMM yyyy HH:mm:ss",
-            LongDatePattern: "dddd d MMMM yyyy",
-            LongTimePattern: "HH:mm:ss",
-            MonthDayPattern: "d MMMM",
-            PMDesignator: "",
-            RFC1123Pattern:
-              "ddd, dd MMM yyyy HH\u0027:\u0027mm\u0027:\u0027ss \u0027GMT\u0027",
-            ShortDatePattern: "d-M-yyyy",
-            ShortTimePattern: "HH:mm",
-            SortableDateTimePattern:
-              "yyyy\u0027-\u0027MM\u0027-\u0027dd\u0027T\u0027HH\u0027:\u0027mm\u0027:\u0027ss",
-            TimeSeparator: ":",
-            UniversalSortableDateTimePattern:
-              "yyyy\u0027-\u0027MM\u0027-\u0027dd HH\u0027:\u0027mm\u0027:\u0027ss\u0027Z\u0027",
-            YearMonthPattern: "MMMM yyyy",
-            AbbreviatedDayNames: ["zo", "ma", "di", "wo", "do", "vr", "za"],
-            ShortestDayNames: ["zo", "ma", "di", "wo", "do", "vr", "za"],
-            DayNames: [
-              "zondag",
-              "maandag",
-              "dinsdag",
-              "woensdag",
-              "donderdag",
-              "vrijdag",
-              "zaterdag",
-            ],
-            AbbreviatedMonthNames: [
-              "jan",
-              "feb",
-              "mrt",
-              "apr",
-              "mei",
-              "jun",
-              "jul",
-              "aug",
-              "sep",
-              "okt",
-              "nov",
-              "dec",
-              "",
-            ],
-            MonthNames: [
-              "januari",
-              "februari",
-              "maart",
-              "april",
-              "mei",
-              "juni",
-              "juli",
-              "augustus",
-              "september",
-              "oktober",
-              "november",
-              "december",
-              "",
-            ],
-            IsReadOnly: false,
-            NativeCalendarName: "Gregoriaanse kalender",
-            AbbreviatedMonthGenitiveNames: [
-              "jan",
-              "feb",
-              "mrt",
-              "apr",
-              "mei",
-              "jun",
-              "jul",
-              "aug",
-              "sep",
-              "okt",
-              "nov",
-              "dec",
-              "",
-            ],
-            MonthGenitiveNames: [
-              "januari",
-              "februari",
-              "maart",
-              "april",
-              "mei",
-              "juni",
-              "juli",
-              "augustus",
-              "september",
-              "oktober",
-              "november",
-              "december",
-              "",
-            ],
-          },
-          eras: [1, "n.Chr.", null, 0],
-        }; //]]>
-      </script>
-
-      <script
-        src="http://administratie.erkenningen.nl/ScriptResource.axd?d=SF73_9hh1giN-FNuTQXvytzBij2_zodNM2FBbSFwh1cHFe3AUuVWTEyDx0HAC8WBpgbm-AXHmc1yDfuWtevd3v9hya0RDwXinnbE_M10Hx332ZZp0&amp;t=23c9c237"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/ScriptResource.axd?d=3rgxIIi4il3FBolFXlV7cQ1cJsEUYrdgDmgpJuWLOUpzaGxYhgYF6i1HKDzRXK1fKtGjB1MQ0ZHVe0a-qyvUl4HcF8qLrtevSPCMquASGuB3DzJ_HHs10KTi6xQWyUv4Or1P4Q2&amp;t=23c9c237"
-        type="text/javascript"
-      ></script>
-      <div class="aspNetHidden">
-        <input
-          type="hidden"
-          name="__VIEWSTATEGENERATOR"
-          id="__VIEWSTATEGENERATOR"
-          value="CA0B0334"
-        />
-        <input
-          type="hidden"
-          name="__EVENTVALIDATION"
-          id="__EVENTVALIDATION"
-          value="/wEdAASVlPWx6mFGDoKXFzT0iE+7nNRl4T1eu7m8TM5TYeP8L1fJ82cLYuNHga3Vmj3QvawglYTgmyD61+C5CtBsuVtA5zdUhe2oslI3Srp+aVeAKgwK5Z8="
-        />
-      </div>
-      <script
-        src="http://administratie.erkenningen.nl/js/dnn.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/js/dnn.modalpopup.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/js/jquery.smartmenus.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/js/jquery.smartmenus.bootstrap.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/js/scripts.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/js/dnncore.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script type="text/javascript">
-        //<![CDATA[
-        Sys.WebForms.PageRequestManager._initialize(
-          "ScriptManager",
-          "Form",
-          [],
-          [],
-          [],
-          90,
-          ""
-        );
-        //]]>
-      </script>
-
-      <!-- <a class="sr-only sr-only-focusable" href="#content"> </a> -->
-      <div class="ly-fullwrapper">
-        <header>
-          <div class="container-fluid clearfix navbar-be">
-            <div class="ly-container-inner" style="width: 100%; display: flex;">
-              <div class="ly-overlay"></div>
-              <div
-                id="nav-icon"
-                class="ly-nav-mobile-trigger pull-left"
-                title="Menu"
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <a
-                class="ly-logo-mobile visible-xs"
-                href="http://administratie.erkenningen.nl/"
-                title="Bureau Erkenningen"
-              >
-                <img
-                  alt="Logo"
-                  src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/images/BE-logo.svg"
-                  data-fallback="/Portals/_default/skins/erkenningenbootstrap3/images/logo.png"
-                  onerror="this.src=this.getAttribute('data-fallback');this.onerror=null;"
-                />
-              </a>
-              <a
-                class="ly-logo hidden-xs"
-                href="http://administratie.erkenningen.nl/"
-                title="Bureau Erkenningen"
-              >
-                <img
-                  alt="Logo"
-                  src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/images/BE-logo.svg"
-                  data-fallback="/Portals/_default/skins/erkenningenbootstrap3/images/logo.png"
-                  onerror="this.src=this.getAttribute('data-fallback');this.onerror=null;"
-                />
-              </a>
-              <nav id="nav-mobile">
-                <div class="ly-header-mobile">
-                  <div class="container-fluid clearfix">
-                    <a href="#" class="ly-close"></a>
-                    <a
-                      class="ly-logo pull-right"
-                      href="http://administratie.erkenningen.nl/"
-                      title="Bureau Erkenningen"
-                    >
-                      <img
-                        alt="Logo"
-                        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/images/BE-logo.svg"
-                        data-fallback="/Portals/_default/skins/erkenningenbootstrap3/images/logo.png"
-                        onerror="this.src=this.getAttribute('data-fallback');this.onerror=null;"
-                      />
-                    </a>
-                  </div>
-                </div>
-
-                <ul class="ly-nav ly-nav-mobile">
-                  <li class="nav-61 first active">
-                    <div class="ly-linkwrapper">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=61"
-                        >Home</a
-                      >
-                    </div>
-                  </li>
-                  <li class="nav-122 has-child inactive">
-                    <div class="ly-linkwrapper">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=122"
-                        >Bijeenkomst</a
-                      >
-                      <div class="ly-navopener">
-                        <div class="ly-navopener-icon"></div>
-                      </div>
-                    </div>
-                    <ul class="">
-                      <li class="nav-132 first last inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=132"
-                            >Bijeenkomst zoeken, aanmelden en gevolgd</a
-                          >
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-252 has-child inactive">
-                    <div class="ly-linkwrapper">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=252"
-                        >KBA-GB Certificering</a
-                      >
-                      <div class="ly-navopener">
-                        <div class="ly-navopener-icon"></div>
-                      </div>
-                    </div>
-                    <ul class="">
-                      <li class="nav-255 first last inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=255"
-                            >Registreren agrarier</a
-                          >
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-144 has-child inactive">
-                    <div class="ly-linkwrapper">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=144"
-                        >Examen</a
-                      >
-                      <div class="ly-navopener">
-                        <div class="ly-navopener-icon"></div>
-                      </div>
-                    </div>
-                    <ul class="">
-                      <li class="nav-153 first last inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=153"
-                            >Aanvraag licentie</a
-                          >
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-146 last has-child inactive">
-                    <div class="ly-linkwrapper">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=146"
-                        >Veiligheidsformulieren</a
-                      >
-                      <div class="ly-navopener">
-                        <div class="ly-navopener-icon"></div>
-                      </div>
-                    </div>
-                    <ul class="">
-                      <li class="nav-152 first inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=152"
-                            >Documenten</a
-                          >
-                        </div>
-                      </li>
-                      <li class="nav-202 inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=202"
-                            >Veiligheidsinstructie formulier aanvragen</a
-                          >
-                        </div>
-                      </li>
-                      <li class="nav-203 last inactive">
-                        <div class="ly-linkwrapper">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=203"
-                            >Veiligheidsinstructie controleren</a
-                          >
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
-
-              <div id="navbar" class="collapse navbar-collapse">
-                <div id="dnnMenu">
-                  <ul class="nav navbar-nav topLevel">
-                    <li class="active">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=61"
-                        ><span>Home</span>
-                      </a>
-                    </li>
-
-                    <li class="dropdown">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=122"
-                        ><span>Bijeenkomst</span> <span class="caret"></span
-                      ></a>
-
-                      <ul class="dropdown-menu subLevel">
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=132"
-                            ><span
-                              >Bijeenkomst zoeken, aanmelden en gevolgd</span
-                            >
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=252"
-                        ><span>KBA-GB Certificering</span>
-                        <span class="caret"></span
-                      ></a>
-
-                      <ul class="dropdown-menu subLevel">
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=255"
-                            ><span>Registreren agrarier</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=144"
-                        ><span>Examen</span> <span class="caret"></span
-                      ></a>
-
-                      <ul class="dropdown-menu subLevel">
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=153"
-                            ><span>Aanvraag licentie</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a
-                        href="http://administratie.erkenningen.nl/Default.aspx?tabid=146"
-                        ><span>Veiligheidsformulieren</span>
-                        <span class="caret"></span
-                      ></a>
-
-                      <ul class="dropdown-menu subLevel">
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=152"
-                            ><span>Documenten</span>
-                          </a>
-                        </li>
-
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=202"
-                            ><span
-                              >Veiligheidsinstructie formulier aanvragen</span
-                            >
-                          </a>
-                        </li>
-
-                        <li class="">
-                          <a
-                            href="http://administratie.erkenningen.nl/Default.aspx?tabid=203"
-                            ><span>Veiligheidsinstructie controleren</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container-fluid clearfix navbar-be navbar-be-breadcrumbs">
-            <div class="ly-container-inner nav">
-              <div class="breadCrumbRow">
-                <div>
-                  <span
-                    id="dnn_dnnBREADCRUMB_lblBreadCrumb"
-                    itemprop="breadcrumb"
-                    itemscope=""
-                    itemtype="https://schema.org/breadcrumb"
-                    ><span itemscope itemtype="http://schema.org/BreadcrumbList"
-                      ><span
-                        itemprop="itemListElement"
-                        itemscope
-                        itemtype="http://schema.org/ListItem"
-                        ><a
-                          href="http://administratie.erkenningen.nl/Default.aspx?tabid=61"
-                          class="breadcrumbtxt"
-                          itemprop="item"
-                          ><span itemprop="name">Home</span></a
-                        >
-                        <meta itemprop="position" content="1" /></span></span
-                  ></span>
-                </div>
-                <div>
-                  <a
-                    id="dnn_DnnLogin_loginLink"
-                    title="Inloggen"
-                    class="d-sm-none-down logintxt"
-                    rel="nofollow"
-                    onclick="this.disabled=true;"
-                    href="http://administratie.erkenningen.nl/Default.aspx?tabid=154&amp;returnurl=%2f"
-                    >Inloggen</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-      </div>
-      <div class="container-fluid ly-container-inner">
-        <main role="main">
-          <div class="row dnnpane">
-            <div id="dnn_TopPane" class="col-md-12 toppane DNNEmptyPane"></div>
-          </div>
-          <div id="mainContent-inner">
-            <div class="row dnnpane">
-              <div id="dnn_P1_33_1" class="col-md-3 leftContentPane spacingTop">
-                <div class="DnnModule DnnModule-DNN_HTML DnnModule-897">
-                  <a name="897"></a>
-                  <div id="dnn_ctr897_ContentPane">
-                    <!-- Start_Module_897 -->
-                    <div
-                      id="dnn_ctr897_ModuleContent"
-                      class="DNNModuleContent ModDNNHTMLC"
-                    >
-                      <div id="dnn_ctr897_HtmlModule_lblContent" class="Normal">
-                        <style>
-                          .greenContainer {
-                            padding: 15px;
-                            background: #d3ebea;
-                            margin-bottom: 15px;
-                          }
-                        </style>
-                        <div class="greenContainer">
-                          <strong
-                            >Welkom op de administratiesite van Bureau
-                            Erkenningen</strong
-                          ><br />
-                          <br />
-                          <p>
-                            Hier kunt u
-                            <a
-                              href="http://administratie.erkenningen.nl/LinkClick.aspx?link=%2fDefault.aspx%3ftabid%3d104&amp;tabid=61&amp;portalid=1&amp;mid=897"
-                              >uw gegevens</a
-                            >
-                            inzien, u kunt bekijken welke kennisbijeenkomsten u
-                            nog moet volgen, wat
-                            <a
-                              href="http://administratie.erkenningen.nl/LinkClick.aspx?link=%2fDefault.aspx%3ftabid%3d140&amp;tabid=61&amp;portalid=1&amp;mid=897"
-                              tabindex="0"
-                              >uw studievorderingen</a
-                            >
-                            zijn en u kunt een
-                            <a
-                              href="http://administratie.erkenningen.nl/LinkClick.aspx?link=%2fDefault.aspx%3ftabid%3d132&amp;tabid=61&amp;portalid=1&amp;mid=897"
-                              tabindex="0"
-                              >kennisbijeenkomst selecteren</a
-                            >
-                            en u daarvoor aanmelden.
-                          </p>
-                          <br />
-                          <a href="https://erkenningen.nl" tabindex="0"
-                            >&gt; Terug naar de informatie site</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End_Module_897 -->
-                  </div>
-                </div>
-              </div>
-              <div id="dnn_ContentPane" class="col-md-9 contentPanes pacingTop">
-                <div class="DnnModule DnnModule-DNN_HTML DnnModule-802">
-                  <a name="802"></a>
-                  <div class="c_container c_head_black_box">
-                    <div class="c_content">
-                      <div
-                        id="dnn_ctr802_ContentPane"
-                        class="Normal c_contentpane"
-                      >
-                        <div
-                          id="kc-module-manage-courses"
-                          class="module-entry"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row dnnpane">
-              <div
-                id="dnn_P1_75_1"
-                class="col-md-8 leftPane spacingTop DNNEmptyPane"
-              ></div>
-              <div
-                id="dnn_P1_25_2"
-                class="col-md-4 rightPane spacingTop DNNEmptyPane"
-              ></div>
-            </div>
-
-            <div class="row dnnpane">
-              <div
-                id="dnn_P1_50_1"
-                class="col-md-6 leftPane spacingTop DNNEmptyPane"
-              ></div>
-              <div
-                id="dnn_P1_50_2"
-                class="col-md-6 rightPane spacingTop DNNEmptyPane"
-              ></div>
-            </div>
-
-            <div class="row dnnpane">
-              <div
-                id="dnn_P2_25_1"
-                class="col-md-4 spacingTop DNNEmptyPane"
-              ></div>
-              <div
-                id="dnn_P2_75_2"
-                class="col-md-8 spacingTop DNNEmptyPane"
-              ></div>
-            </div>
-
-            <div class="row dnnpane">
-              <div
-                id="dnn_P3_33_1"
-                class="col-md-4 spacingTop DNNEmptyPane"
-              ></div>
-              <div
-                id="dnn_P3_33_2"
-                class="col-md-4 spacingTop DNNEmptyPane"
-              ></div>
-              <div
-                id="dnn_P3_33_3"
-                class="col-md-4 spacingTop DNNEmptyPane"
-              ></div>
-            </div>
-
-            <div class="row dnnpane">
-              <div
-                id="dnn_ContentPaneLower"
-                class="col-md-12 contentPane spacingTop DNNEmptyPane"
-              ></div>
-            </div>
-          </div>
-        </main>
-      </div>
-      <footer>
-        <div class="container-fluid">
-          <div class="ly-container-inner-footer clearfix">
-            <ul>
-              <li>
-                <a href="https://erkenningen.nl/contact" class="footerLink"
-                  >Contact
-                </a>
-              </li>
-              <li>
-                <a href="https://erkenningen.nl/faq" class="footerLink">FAQ </a>
-              </li>
-              <li>
-                <a
-                  href="http://administratie.erkenningen.nl/Default.aspx?tabid=154&ctl=Terms"
-                  class="footerLink"
-                  >Disclaimer
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://administratie.erkenningen.nl/Default.aspx?tabid=289"
-                  class="footerLink"
-                  >Privacyverklaring
-                </a>
-              </li>
-            </ul>
-          </div>
+<div class="container navbar-heighter">
+	<div class="navbar-brand">
+		<a id="dnn_dnnLOGO_hypLogo" title="KC" href="https://kettingzaagcertificaat.nl/"><img id="dnn_dnnLOGO_imgLogo" style="width: 100%;" src="/Logo_NKC_ORANJE_VLAK_RGB_small.png" alt="KC" /></a>
+	</div>
+	
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-      </footer>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
 
-      <!--CDF(Css|/Portals/_default/skins/erkenningenbootstrap3/dist/full-package.css?cdv=426)-->
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/">Home</a>
+    
+    </li>
 
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/js/jquery.smartmenus.js?cdv=426)-->
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/js/jquery.smartmenus.bootstrap.js?cdv=426)-->
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/js/scripts.js?cdv=426)-->
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Dashboard">Dashboard</a>
+    
+    </li>
 
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js?cdv=426)-->
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/node_modules/sidr/dist/jquery.sidr.min.js?cdv=426)-->
-      <!--CDF(Javascript|/Portals/_default/skins/erkenningenbootstrap3/dist/scripts.js?cdv=426)-->
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Beheer<b class="caret"></b></a>
+    
+        <ul class="dropdown-menu">
+        
+	<li class="active">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Gebruikers-zoeken">Gebruikers zoeken</a>
+		
+	</li>
+	
 
-      <input name="ScrollTop" type="hidden" id="ScrollTop" />
-      <input
-        name="__dnnVariable"
-        type="hidden"
-        id="__dnnVariable"
-        autocomplete="off"
-        value="`{`__scdoff`:`1`,`containerid_dnn_ctr802_ModuleContent`:`802`,`cookieid_dnn_ctr802_ModuleContent`:`_Module802_Visible`,`min_icon_802`:`/Portals/_default/Containers/ErkenningenBootstrap3Containers/images/DNN-minus.gif`,`max_icon_802`:`/Portals/_default/Containers/ErkenningenBootstrap3Containers/images/DNN-plus.gif`,`max_text`:`Maximaliseren`,`min_text`:`Minimaliseren`}"
-      />
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/node_modules/sidr/dist/jquery.sidr.min.js?cdv=426"
-        type="text/javascript"
-      ></script>
-      <script
-        src="http://administratie.erkenningen.nl/Portals/_default/skins/erkenningenbootstrap3/dist/scripts.js?cdv=426"
-        type="text/javascript"
-      ></script>
-    </form>
-    <!--CDF(Javascript|/js/dnncore.js?cdv=426)-->
-    <!--CDF(Javascript|/js/dnn.modalpopup.js?cdv=426)-->
-    <!--CDF(Css|/Resources/Shared/stylesheets/dnndefault/7.0.0/default.css?cdv=426)-->
-    <!--CDF(Css|/Portals/_default/Containers/ErkenningenBootstrap3Containers/Title_BlackBox.css?cdv=426)-->
-    <!--CDF(Css|/DesktopModules/AOCRaad.Keurmerken.GebruikerIdentitySwitch/module.css?cdv=426)-->
-    <!--CDF(Css|/DesktopModules/AOCRaad.Keurmerken.GebruikerIdentitySwitch/module.css?cdv=426)-->
-    <!--CDF(Css|/Portals/1/portal.css?cdv=426)-->
-    <!--CDF(Javascript|/js/dnn.js?cdv=426)-->
-    <!--CDF(Javascript|/Resources/libraries/jQuery-UI/01_11_03/jquery-ui.js?cdv=426)-->
-    <!--CDF(Javascript|/Resources/libraries/jQuery/01_09_01/jquery.js?cdv=426)-->
-  </body>
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Nieuwe-gebruiker-aanmaken">Nieuwe gebruiker aanmaken</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Systeeminstellingen-wijzigen">Systeeminstellingen wijzigen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Management-rapportage">Management rapportage</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Attenderingen">Attenderingen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Gebruiker-ontdubbelen">Gebruiker ontdubbelen</a>
+		
+	</li>
+	
+
+        </ul>
+    
+    </li>
+
+
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Examens<b class="caret"></b></a>
+    
+        <ul class="dropdown-menu">
+        
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Exameninstellingen">Exameninstellingen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examen-aanmaken">Examen aanmaken</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examenvakken-beheren">Examen beheren</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examenlocaties-beheren">Examenlocaties beheren</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examen-plannen">Examen plannen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examenplanning-wijzigen">Examenplanning wijzigen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examenkandidaten-aanmelden">Kandidaten aanmelden en examen downloaden</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Papieren-examendocumenten-downloaden">Papieren examendocumenten downloaden</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Examens/Examenresultaten-registeren">Examenresultaten registeren</a>
+		
+	</li>
+	
+
+        </ul>
+    
+    </li>
+
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Inspectie<b class="caret"></b></a>
+    
+        <ul class="dropdown-menu">
+        
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Inspectie/Inspectie-plannen">Inspectie plannen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Inspectie/Inspecties-bekijken">Inspecties bekijken</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Inspectie/Inspectierapport-maken">Inspectierapport maken</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Inspectie/Rapporten-bekijken">Rapporten bekijken</a>
+		
+	</li>
+	
+
+        </ul>
+    
+    </li>
+
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Passen">Passen<b class="caret"></b></a>
+    
+        <ul class="dropdown-menu">
+        
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Beheer/Passen-export">Passen export</a>
+		
+	</li>
+	
+
+        </ul>
+    
+    </li>
+
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Factuur">Factuur</a>
+    
+    </li>
+
+    <li class="dropdown ">
+    
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informatie<b class="caret"></b></a>
+    
+        <ul class="dropdown-menu">
+        
+	<li class="dropdown-submenu">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Informatie/Handleidingen">Handleidingen</a>
+		
+		<ul class="dropdown-menu">
+			
+	
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Informatie/Handleidingen/Regels-bij-certificering-via-een-examen">Regels bij certificering via  een examen</a>
+		
+	</li>
+
+		</ul>
+	
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Informatie/Meest-gestelde-vragen">Meest gestelde vragen</a>
+		
+	</li>
+	
+
+	<li class="">
+		
+        <a class="dropdown-toggle" href="https://kettingzaagcertificaat.nl/Openbaar-register">Openbaar register</a>
+		
+	</li>
+	
+
+        </ul>
+    
+    </li>
+
+</ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                <li>
+                    <a id="dnn_dnnLogin_loginLink" title="Uitloggen" class="LoginLink" rel="nofollow" href="https://kettingzaagcertificaat.nl/Beheer/Gebruikers-zoeken/ctl/Logoff">Uitloggen</a>
+
+                </li>
+                <li>
+                    <a id="dnn_dnnUser_registerLink" title="Bezoek mijn profiel" class="SkinObject" rel="nofollow" href="https://kettingzaagcertificaat.nl/Mijn-gegevens/userId/771960">A.G. de Groot</a>
+
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container">
+    <!--/Logo-->
+
+    <div id="TopContent" class="row">
+        <div id="dnn_TopPane" class="col-md-12 DNNEmptyPane"></div>
+    </div>
+
+	<div id="TopSubContent" class="row">
+        <div id="dnn_TopLeftPane" class="col-md-9 DNNEmptyPane"></div>
+		<div id="dnn_TopRightPane" class="col-md-3 DNNEmptyPane"></div>
+    </div>
+	
+    <div id="Content" class="row">
+        <div id="dnn_ContentPane" class="col-md-12"><div class="DnnModule DnnModule-DNN_HTML DnnModule-557"><a name="557"></a>
+    </div>
+    <div class="c_footer">
+    </div>
+</div>
+</div><div class="DnnModule DnnModule-Gebruikers DnnModule-716"><a name="716"></a>
+<div class="c_container c_head_blue">
+ 
+    <div class="c_content">
+        <div id="dnn_ctr716_ContentPane" class="Normal c_contentpane">
+        <!-- Start_Module_716 --><div id="dnn_ctr716_ModuleContent" class="DNNModuleContent ModGebruikersC">
+            <div
+            id="kc-module-manage-courses"
+            class="module-entry"
+          ></div>
+</div><!-- End_Module_716 --></div>
+    </div>
+    <div class="c_footer">
+    </div>
+</div>
+</div></div>
+    </div>
+    <div id="MidContent" class="row">
+        <div id="dnn_ThirdRowLeft" class="col-md-4 DNNEmptyPane"></div>
+        <div id="dnn_ThirdRowMiddle" class="col-md-4 DNNEmptyPane"></div>
+        <div id="dnn_ThirdRowRight" class="col-md-4 DNNEmptyPane"></div>
+    </div>
+	<div id="MidContentLeftRight" class="row">
+        <div id="dnn_Left50" class="col-md-6 DNNEmptyPane"></div>
+        <div id="dnn_Right50" class="col-md-6 DNNEmptyPane"></div>
+    </div>
+    <div id="ContentLeftCol" class="row">
+        <div id="dnn_LeftPane" class="col-md-3 DNNEmptyPane"></div>
+        <div id="dnn_ContentPaneRight" class="col-md-6 DNNEmptyPane"></div>
+        <div id="dnn_RightPane" class="col-md-3 DNNEmptyPane"></div>
+    </div>
+
+    <div id="BottomContent" class="row">
+
+        <div id="dnn_BottomPane" class="col-md-12 DNNEmptyPane"></div>
+    </div>
+    <div id="FooterRow" class="row">
+
+        <div id="dnn_FooterRowLeft" class="col-md-4 DNNEmptyPane"></div>
+        <div id="dnn_FooterRowMiddle" class="col-md-4 DNNEmptyPane"></div>
+        <div id="dnn_FooterRowRight" class="col-md-4 DNNEmptyPane"></div>
+
+        <div id="dnn_FooterPane" class="col-md-12 DNNEmptyPane"></div>
+        <div id="CopyRightPane" class="SkinLink col-md-12 center">
+            <div class="col-md-12">
+                <span id="dnn_dnnCopyright_lblCopyright" class="SkinObject">Copyright 2015 (c) AOC Keurmerk</span>
+
+                <a id="dnn_dnnTerms_hypTerms" class="SkinObject" rel="nofollow" href="https://kettingzaagcertificaat.nl/Terms">Gebruiksovereenkomst</a>
+				<a href="/Privacybeleid">Privacybeleid</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+</form>
+    
+</body>
 </html>

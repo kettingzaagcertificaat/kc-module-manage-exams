@@ -1,0 +1,533 @@
+.Normal {
+    font-size: 14px;
+    line-height: 1.428;
+}
+.SkinLink {
+    margin-top: 15px;
+    text-align: center;
+}
+.navbar {
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.3) !important;
+}
+.navbar-heighter {
+	height: 105px !important;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #999;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+  background: rgb(127, 127, 127);
+  background: rgba(127, 127, 127, 0.9);
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background-color: #fff;
+  color: #000;
+}
+
+.c_head_blue h2.c_title, .c_head_blue h2.c_title input {
+  color: #a90a2e !important;
+}
+
+a, a:visited {
+  color: #a90a2e; 
+}
+a {
+  color: #a90a2e;
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background-color: rgba(127, 127, 127, 0.8);
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+  background-color: rgb(127, 127, 127);
+}
+
+.navbar .navbar-nav>li>a, .navbar-brand {
+  /*
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.9);
+  font-weight: bold;
+  */
+}
+
+.navbar-default {
+	background-color: #3c4346;
+	border-color: #3c4346;
+	background-image: none;
+	margin-left: 120px;
+}
+
+.carousel-inner > .active.left {
+    float: none;
+}
+
+.carousel-caption h1 {
+    color: #fff;
+}
+
+.navbar-brand {
+    padding: 0 0 !important;
+	width: 106px;
+}
+
+a.btn-info, a.btn-info:visited, a.btn-primary, a.btn-primary:visited {
+    color: #fff !important;
+}
+
+.searchBox {
+    padding: 15px 15px 0 15px;
+    width: 240px;
+}
+
+    .searchBox .searchText {
+        color: #000;
+        float: right;
+    }
+
+.searchSkinObjectPreview_group {
+    display: none;
+}
+
+ul.dnnAdminTabNav {
+    height: 40px;
+    border-radius: 0 !important;
+}
+
+
+/* styling for the Edit Profile and My Account links in User Profiles */
+.dnnActions {
+    display: inline-block;
+}
+
+    .dnnActions li {
+        margin-right: 5px;
+        list-style: none;
+        float: left;
+    }
+
+
+/*override for dnnLabels in the bootstrap */
+.form-group .dnnLabel {
+    text-align: left;
+    width: auto;
+}
+
+.dnnLabel + span {
+    white-space: normal;
+}
+
+/* Addition to bootstrap menu styles */
+/* Displace second and deeper level menus right from their parent.  */
+/* .dropdown-menu .dropdown-menu
+{
+  margin-left:160px;
+} */
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+display: block;
+}
+
+.dropdown-submenu {
+    position: relative !important;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block !important;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+
+
+/* ADMIN */
+
+#ControlBar, #ControlBar:before, #ControlBar:after, #ControlBar *:before, #ControlBar *:after,
+#ControlBar li, #ControlBar li:before, #ControlBar li:after,
+#ControlBar a, #ControlBar a:before, #ControlBar a:after,
+.dnn_mact, .dnn_mact:before, .dnn_mact:after, .dnn_mact *:before, .dnn_mact *:after,
+.dnn_mact li, .dnn_mact li:before, .dnn_mact li:after {
+    -webkit-box-sizing: content-box !important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box !important; /* Firefox, other Gecko */
+    box-sizing: content-box !important; /* Opera/IE 8+ */
+}
+
+
+.navbar-default .navbar-nav > li > div > ul > li > a, .navbar-default .LoginLink {
+    color: #ffffff;
+}
+
+ /*    .navbar-default .navbar-nav > li > div > a:hover,
+    .navbar-default .navbar-nav > li > div > a:focus,
+    .navbar-default .navbar-nav > li > div > ul > li > a:hover,
+    .navbar-default .navbar-nav > li > div > ul > li > a:focus {
+        color: #ffffff;
+        background-color: #178acc;
+    } */
+
+
+/*------------------------------------------------*/
+/* LOGIN */
+/*------------------------------------------------*/
+
+.navbar-right {
+    height: 51px;
+}
+
+    .navbar-right .registerGroup,
+    .navbar-right .registerGroup *,
+    .navbar-right .loginGroup,
+    .navbar-right .loginGroup * {
+        display: inline;
+    }
+
+    .navbar-right .registerGroup,
+    .navbar-right .loginGroup {
+        float: right;
+    }
+
+        .navbar-right .registerGroup li:first-child:hover {
+            border-left: #222;
+        }
+
+        /* Register Group Styles */
+        .navbar-right .registerGroup li {
+            float: left;
+        }
+
+        .navbar-right .registerGroup .buttonGroup {
+            margin-right: 0;
+        }
+
+        .navbar-right .registerGroup a,
+        .navbar-right .loginGroup a {
+            display: block;
+            position: relative;
+            height: 50px;
+            min-width: 12px;
+            padding: 15px 15px 0 15px;
+            vertical-align: middle;
+        }
+
+            .navbar-right .registerGroup a:hover,
+            .navbar-right .loginGroup a:hover {
+            }
+
+            .navbar-right .registerGroup a:active,
+            .navbar-right .loginGroup a:active {
+                text-shadow: 0 -1px 0 #ffffff;
+            }
+
+            .navbar-right .registerGroup a:hover,
+            .navbar-right .loginGroup a:hover {
+                text-decoration: none;
+            }
+
+            .navbar-right .registerGroup a strong,
+            .navbar-right .loginGroup a strong {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                overflow: hidden;
+                font-size: 0;
+                text-indent: -9999px;
+            }
+
+    .navbar-right .userMessages a,
+    .navbar-right .userNotifications a {
+        background-color: transparent;
+    }
+
+    .navbar-right .userMessages strong {
+        height: 100%;
+        background: url('i/icon_message.png') no-repeat center center;
+    }
+
+    .navbar-right .userNotifications {
+    }
+
+        .navbar-right .userNotifications strong {
+            height: 100%;
+            background: url('i/icon_notification.png') no-repeat center center;
+        }
+
+    .navbar-right .registerGroup a span {
+        display: inline-block;
+        min-width: 7px;
+        margin-right: 3px;
+        text-align: center;
+    }
+
+
+
+    .navbar-right .registerGroup .userProfileImg a {
+        min-width: 50px;
+        min-height: 50px;
+        padding: 0;
+    }
+
+    .navbar-right .registerGroup a img {
+        height: 50px;
+        width: 50px;
+    }
+
+    /* Login Group Styles */
+    .navbar-right .loginGroup {
+    }
+
+        .navbar-right .loginGroup a {
+        }
+
+    /* Number of message next to the message icon*/
+    .navbar-right .userMessages a span,
+    .navbar-right .userNotifications a span {
+        display: inline-block;
+        margin-top: 0;
+        margin-right: 0;
+        background-color: transparent;
+    }
+
+    .navbar-right .userNotifications span, .navbar-right .userMessages span {
+        height: 100%;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+        font-size: 0;
+        text-indent: -9999px;
+        z-index: 999;
+    }
+
+    .navbar-right .userNotifications span {
+        background: url('i/icon_notification_active.png') no-repeat center center;
+    }
+
+    .navbar-right .userMessages span {
+        background: url('i/icon_message_active.png') no-repeat center center;
+    }
+
+
+/* Content formatting */
+
+#Content, #TopContent {
+    margin-top: 10px;
+}
+
+
+
+/* fix for carousel for large resolution displays */
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    margin: 0 auto;
+    width: 100%;
+}
+
+
+/* fix for DNN dropdown lists being cut off*/
+
+.dnnDropDownList .selected-item, .dnnDropDownList .selected-item a  {
+    height: 35px !important;
+}
+
+
+/* fix for coloring on DNN Check boxes and radio */
+.dnnCheckbox .mark, .dnnRadiobutton .mark{ background: none;}
+
+h2 {
+	font-size: 20px;
+}
+
+.ajax__tab_xp .ajax__tab_body{
+	font-family: inherit !important;
+	font-size: inherit !important;
+}
+
+.aspNetDisabled {
+	cursor: not-allowed;
+}
+@media (min-width: 979px) {
+  ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+  }
+}
+
+/* Gridview styles */
+
+.table.table-striped tr.pgr td {
+  background-color: #fff;
+}
+.table.table-striped .pgr table
+{
+    margin: 10px 0;
+	border-radius: 4px;
+}
+.pgr table tr td span {
+  background: #337ab7;
+  padding: 6px 12px;
+  color: #fff;
+  cursor: default;
+  border: 1px solid #337ab7;
+  line-height: 1.42857143;
+  text-decoration: none;
+ }
+ .pgr table tr td a {
+  background: #fff;
+  padding: 6px 12px;
+  color: #337ab7;
+  cursor: default;
+  border: 1px solid #ddd;
+  line-height: 1.42857143;
+  text-decoration: none;
+ }
+ .pgr table tr td a:hover {
+   color: #23527c;
+  background-color: #eee;
+  border-color: #ddd;
+ }
+ .pgr table tr td:first-child a, .pgr table tr td:first-child span {
+ border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+ }
+ .pgr table tr td:last-child a, .pgr table tr td:last-child span {
+ border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+ }
+ 
+.table.table-striped .pgr td
+{
+    border-width: 0;
+}
+.table.table-striped.pgr a
+{
+    color: #505050;
+    text-decoration: none;
+}
+.table.table-striped.pgr a:hover
+{
+    color: #FF7200;
+    text-decoration: none;
+    border-bottom: 1px dotted #FF7200;
+}
+
+td>input[type="image"] {
+  display: inline;
+  padding: 0px 1px;
+  vertical-align: middle;
+}
+
+/* Custom Bootstrap styles*/
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  padding: 4px 8px 4px 15px!important;
+}
+.table>thead>tr>th:first-child, .table>tbody>tr>th:first-child, .table>tfoot>tr>th:first-child, .table>thead>tr>td:first-child, .table>tbody>tr>td:first-child, .table>tfoot>tr>td:first-child {
+  padding-left: 15px !important;
+}
+.alert {
+	margin: 8px 0 !important;
+}
+.table {
+	margin-bottom: 0 !important;
+}
+.form-group {
+  margin-bottom: 10px;
+}
+html, body, .container {
+  height: 100%;
+}
+/* textarea.form-control {
+  height: 100%;
+} */
+.panel-title {
+color: #666666;
+font-weight: bold;
+}
+.modal-top-fix {
+	height: 16px;
+}
+.modal-top-fix-buttons {
+	height: 50px;
+}
+input[type="radio"] ~ *, input[type="checkbox"] ~ *{
+  font-weight: normal;
+  margin-left: 7px;
+}
+.NoWrap {
+	white-space: nowrap;
+}
+
+input + span, select + span {
+  float: left;
+  margin: -37px -23px;
+}
+input + span img, select + span img {
+  padding: 10px 6px;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
+}
+
+.validator-required {
+	padding: 10px 6px;	
+}
+
+/* Fixes modal popup within updatepanel bug */
+.ModalPopup
+{
+	border-radius: 10px;
+	background-color: #fff;
+    z-index: 1041 !important;
+}
+.modal-backdrop
+{
+    z-index: 1040 !important;
+}
+
+/* Fix remember me checkbox in login form */
+.dnnLoginRememberMe .dnnCheckbox {
+	float: initial;
+}
