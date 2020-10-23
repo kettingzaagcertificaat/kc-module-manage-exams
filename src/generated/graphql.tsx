@@ -539,11 +539,11 @@ export type Query = {
   Competenties: Array<Maybe<Competentie>>;
   Contactgegevens?: Maybe<Contactgegevens>;
   CursusSessies?: Maybe<Array<Maybe<CursusSessie>>>;
-  Exams?: Maybe<Array<Maybe<Cursus>>>;
   CursusDeelnames?: Maybe<Array<Maybe<CursusDeelname>>>;
   ExamenInstellingen: Array<Maybe<ExamenInstelling>>;
   ExamDetails?: Maybe<Exam>;
   ExamsForResultsRegistration?: Maybe<CursusNodes>;
+  Exams?: Maybe<CursusNodes>;
   ExamSpecialties?: Maybe<Array<Maybe<Vak>>>;
   ExamSpecialty?: Maybe<ExamSpecialty>;
   SearchExamVersions?: Maybe<Array<Maybe<ExamenVersie>>>;
@@ -593,11 +593,6 @@ export type QueryCursusSessiesArgs = {
 };
 
 
-export type QueryExamsArgs = {
-  input: ExamsInput;
-};
-
-
 export type QueryCursusDeelnamesArgs = {
   cursusId: Scalars['Int'];
 };
@@ -616,6 +611,11 @@ export type QueryExamDetailsArgs = {
 
 export type QueryExamsForResultsRegistrationArgs = {
   input: SearchExamsForResultsRegistrationInput;
+};
+
+
+export type QueryExamsArgs = {
+  input: ExamsInput;
 };
 
 
@@ -749,19 +749,6 @@ export type SearchCourseSessionsInput = {
   distanceRadius?: Maybe<Scalars['Int']>;
 };
 
-export type ExamsInput = {
-  /** Filter on part of exam code */
-  examCode?: Maybe<Scalars['SafeString']>;
-  /** Filter on part of title */
-  title?: Maybe<Scalars['SafeString']>;
-  /** Date range, from */
-  from?: Maybe<Scalars['Date']>;
-  /** Date range, to */
-  to?: Maybe<Scalars['Date']>;
-  /** Filter on LocatieID */
-  locationId?: Maybe<Scalars['Int']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   createCourse?: Maybe<Cursus>;
@@ -871,6 +858,22 @@ export type SearchExamInput = {
 
 export type SearchExamsForResultsRegistrationInput = {
   examenInstellingId: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  pageNumber: Scalars['Int'];
+  orderBy: OrderByArgs;
+};
+
+export type ExamsInput = {
+  /** Filter on part of exam code */
+  examCode?: Maybe<Scalars['SafeString']>;
+  /** Filter on part of title */
+  title?: Maybe<Scalars['SafeString']>;
+  /** Date range, from */
+  from?: Maybe<Scalars['Date']>;
+  /** Date range, to */
+  to?: Maybe<Scalars['Date']>;
+  /** Filter on LocatieID */
+  locationId?: Maybe<Scalars['Int']>;
   pageSize: Scalars['Int'];
   pageNumber: Scalars['Int'];
   orderBy: OrderByArgs;
@@ -1274,22 +1277,32 @@ export type ExamsQueryVariables = Exact<{
 
 export type ExamsQuery = (
   { __typename?: 'Query' }
-  & { Exams?: Maybe<Array<Maybe<(
-    { __typename?: 'Cursus' }
-    & Pick<Cursus, 'CursusID' | 'VakID' | 'Titel' | 'CursusCode'>
-    & { Sessies?: Maybe<Array<Maybe<(
-      { __typename?: 'Sessie' }
-      & Pick<Sessie, 'SessieID' | 'Datum'>
-      & { Locatie?: Maybe<(
-        { __typename?: 'Locatie' }
-        & Pick<Locatie, 'LocatieID' | 'Naam'>
-        & { Contactgegevens: (
-          { __typename?: 'Contactgegevens' }
-          & Pick<Contactgegevens, 'ContactgegevensID' | 'Woonplaats'>
-        ) }
-      )> }
+  & { Exams?: Maybe<(
+    { __typename?: 'CursusNodes' }
+    & Pick<CursusNodes, 'totalCount'>
+    & { pageInfo?: Maybe<(
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage'>
+    )>, nodes?: Maybe<Array<Maybe<(
+      { __typename?: 'Cursus' }
+      & Pick<Cursus, 'CursusID' | 'VakID' | 'Titel' | 'CursusCode' | 'IsBesloten'>
+      & { Sessies?: Maybe<Array<Maybe<(
+        { __typename?: 'Sessie' }
+        & Pick<Sessie, 'SessieID' | 'Datum'>
+        & { Locatie?: Maybe<(
+          { __typename?: 'Locatie' }
+          & Pick<Locatie, 'LocatieID' | 'Naam'>
+          & { Contactgegevens: (
+            { __typename?: 'Contactgegevens' }
+            & Pick<Contactgegevens, 'ContactgegevensID' | 'Woonplaats'>
+          ) }
+        )> }
+      )>>>, CursusDeelnames?: Maybe<Array<Maybe<(
+        { __typename?: 'CursusDeelname' }
+        & Pick<CursusDeelname, 'Status'>
+      )>>> }
     )>>> }
-  )>>> }
+  )> }
 );
 
 export type ExaminersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -1565,20 +1578,31 @@ export type SpecialtyQueryResult = Apollo.QueryResult<SpecialtyQuery, SpecialtyQ
 export const ExamsDocument = gql`
     query Exams($input: examsInput!) {
   Exams(input: $input) {
-    CursusID
-    VakID
-    Titel
-    CursusCode
-    Sessies {
-      SessieID
-      Datum
-      Locatie {
-        LocatieID
-        Naam
-        Contactgegevens {
-          ContactgegevensID
-          Woonplaats
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    nodes {
+      CursusID
+      VakID
+      Titel
+      CursusCode
+      IsBesloten
+      Sessies {
+        SessieID
+        Datum
+        Locatie {
+          LocatieID
+          Naam
+          Contactgegevens {
+            ContactgegevensID
+            Woonplaats
+          }
         }
+      }
+      CursusDeelnames {
+        Status
       }
     }
   }

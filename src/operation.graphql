@@ -61,20 +61,31 @@ query Specialty($vakId: Int!) {
 
 query Exams($input: examsInput!) {
   Exams(input: $input) {
-    CursusID
-    VakID
-    Titel
-    CursusCode
-    Sessies {
-      SessieID
-      Datum
-      Locatie {
-        LocatieID
-        Naam
-        Contactgegevens {
-          ContactgegevensID
-          Woonplaats
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    nodes {
+      CursusID
+      VakID
+      Titel
+      CursusCode
+      IsBesloten
+      Sessies {
+        SessieID
+        Datum
+        Locatie {
+          LocatieID
+          Naam
+          Contactgegevens {
+            ContactgegevensID
+            Woonplaats
+          }
         }
+      }
+      CursusDeelnames {
+        Status
       }
     }
   }
