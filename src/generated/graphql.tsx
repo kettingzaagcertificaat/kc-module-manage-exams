@@ -109,6 +109,8 @@ export type Cursus = {
   /**  Only available when sub query is available  */
   VakExamenType?: Maybe<VakExamenTypeEnum>;
   /**  Only available when sub query is available  */
+  StudieresultaatStatus?: Maybe<StudieresultaatStatusEnum>;
+  /**  Only available when sub query is available  */
   LocatiePlaats?: Maybe<Scalars['String']>;
 };
 
