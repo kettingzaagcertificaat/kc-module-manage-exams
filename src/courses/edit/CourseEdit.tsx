@@ -110,8 +110,8 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
             yup
               .string()
               .matches(
-                /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/g,
-                'Tijd moet in uu:mm formaat, bijv. 15:30',
+                /^(0[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]$/g,
+                'Tijd moet in uu:mm of uu.mm formaat, bijv. 15:30',
               )
               .required(),
           ],
@@ -120,8 +120,8 @@ const CourseEdit: React.FC<{ specialtyId?: number }> = (props) => {
             yup
               .string()
               .matches(
-                /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/g,
-                'Tijd moet in uu:mm formaat, bijv. 15:30',
+                /^(0[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]$/g,
+                'Tijd moet in uu:mm of uu.mm formaat, bijv. 15:30',
               )
               .required()
               .test('greaterThan', 'Eindtijd moet na begintijd liggen', function (v) {
