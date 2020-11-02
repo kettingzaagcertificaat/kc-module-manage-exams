@@ -22,7 +22,11 @@ const FormSelectGql: React.FC<
     return <span>Fout opgetreden bij het ophalen van de gegevens</span>;
   }
 
-  if (props.emptyMessage && !loading && !data) {
+  if (
+    props.emptyMessage &&
+    !loading &&
+    (!data[Object.keys(data)[0]] || !data[Object.keys(data)[0]].length)
+  ) {
     return <Alert type="warning">{props.emptyMessage}</Alert>;
   }
 
