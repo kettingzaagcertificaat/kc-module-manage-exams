@@ -22,13 +22,8 @@ const FormSelectGql: React.FC<
     return <span>Fout opgetreden bij het ophalen van de gegevens</span>;
   }
 
-  if (!loading && !data) {
-    return (
-      <Alert type="warning">
-        Er zijn nog geen vakken beschikbaar. Kopieer eerst een sjabloon vak en pas deze vervolgens
-        aan.
-      </Alert>
-    );
+  if (props.emptyMessage && !loading && !data) {
+    return <Alert type="warning">{props.emptyMessage}</Alert>;
   }
 
   return (
