@@ -4,11 +4,13 @@ import { useQuery } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 
 import { FormSelect } from '@erkenningen/ui/components/form';
+import { Alert } from '@erkenningen/ui/components/alert';
 
 const FormSelectGql: React.FC<
   {
     gqlQuery: DocumentNode;
     variables?: any;
+    emptyMessage?: string;
     mapResult?: (data: any) => { label: string; value: string }[];
   } & Omit<React.ComponentProps<typeof FormSelect>, 'options'>
 > = (props) => {
@@ -18,6 +20,15 @@ const FormSelectGql: React.FC<
 
   if (error) {
     return <span>Fout opgetreden bij het ophalen van de gegevens</span>;
+  }
+
+  if (!loading && !data) {
+    return (
+      <Alert type="warning">
+        Er zijn nog geen vakken beschikbaar. Kopieer eerst een sjabloon vak en pas deze vervolgens
+        aan.
+      </Alert>
+    );
   }
 
   return (
