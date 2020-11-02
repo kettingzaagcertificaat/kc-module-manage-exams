@@ -3,7 +3,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 
-import { FormSelect } from '@erkenningen/ui/components/form';
+import { FormItem, FormSelect } from '@erkenningen/ui/components/form';
 import { Alert } from '@erkenningen/ui/components/alert';
 
 const FormSelectGql: React.FC<
@@ -19,7 +19,9 @@ const FormSelectGql: React.FC<
   });
 
   if (error) {
-    return <span>Fout opgetreden bij het ophalen van de gegevens</span>;
+    <FormItem>
+      <Alert type="danger">Fout opgetreden bij het ophalen van de gegevens</Alert>
+    </FormItem>;
   }
 
   if (
@@ -27,7 +29,11 @@ const FormSelectGql: React.FC<
     !loading &&
     (!data[Object.keys(data)[0]] || !data[Object.keys(data)[0]].length)
   ) {
-    return <Alert type="warning">{props.emptyMessage}</Alert>;
+    return (
+      <FormItem>
+        <Alert type="warning">{props.emptyMessage}</Alert>
+      </FormItem>
+    );
   }
 
   return (
