@@ -19,9 +19,11 @@ const FormSelectGql: React.FC<
   });
 
   if (error) {
-    <FormItem>
-      <Alert type="danger">Fout opgetreden bij het ophalen van de gegevens</Alert>
-    </FormItem>;
+    return (
+      <FormItem label={' '}>
+        <Alert type="danger">Fout opgetreden bij het ophalen van de gegevens</Alert>
+      </FormItem>
+    );
   }
 
   if (
@@ -30,7 +32,7 @@ const FormSelectGql: React.FC<
     (!data[Object.keys(data)[0]] || !data[Object.keys(data)[0]].length)
   ) {
     return (
-      <FormItem>
+      <FormItem label={' '}>
         <Alert type="warning">{props.emptyMessage}</Alert>
       </FormItem>
     );
