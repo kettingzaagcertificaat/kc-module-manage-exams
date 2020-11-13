@@ -22,10 +22,9 @@ const CourseReady: React.FC<{}> = (props) => {
           <Button label={'Nog een examen maken'} icon="pi pi-plus" className={styles.firstButton} />
         </Link>
 
-        {/* <Link to="/overzicht">
-        <Button label={'Naar overzicht'} type="secondary" icon="pi pi-list" />
-      </Link>
-       */}
+        <Link to="/overzicht">
+          <Button label={'Naar overzicht'} type="secondary" icon="pi pi-list" />
+        </Link>
       </Panel>
       {examVersion?.ExamVersionDocuments && (
         <Panel title="Papieren examen documenten" className="form-horizontal">

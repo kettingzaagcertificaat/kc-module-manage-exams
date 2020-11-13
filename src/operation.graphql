@@ -91,6 +91,95 @@ query Exams($input: examsInput!) {
   }
 }
 
+query ExamDetails($input: searchExamInput!) {
+  ExamDetails(input: $input) {
+    Cursus {
+      CursusID
+      VakID
+      CursusleiderID
+      Prijs
+      Titel
+      Promotietekst
+      IsBesloten
+      MaximumCursisten
+      Opmerkingen
+      Status
+      CursusCode
+      DatumAangemaakt
+      DatumGewijzigd
+      PersoonIDAangemaakt
+      PersoonIDGewijzigd
+      Vak {
+        VakID
+        MinimumDatum
+        MaximumDatum
+        ExamenInstellingID
+        ExamenInstelling {
+          Naam
+          Contactgegevens {
+            Adresregel1
+            Huisnummer
+            HuisnummerToevoeging
+            Woonplaats
+            Telefoon
+            Email
+          }
+          ContactpersoonExamenInstelling {
+            Persoon {
+              SortableFullName
+            }
+          }
+        }
+      }
+      Sessies {
+        SessieID
+        Datum
+        Begintijd
+        Eindtijd
+        Opmerkingen
+        ExaminatorPersoon {
+          PersoonID
+          SortableFullName
+        }
+        ExamenVersie {
+          ExamenVersieID
+          ExamenType
+          ExamenVersieCode
+          ExamenOmschrijving
+          StartDatum
+          EindDatum
+          Documenten {
+            ExamenVersieDocumentID
+            AangemaaktDatum
+            AangemaaktDoor
+            Document {
+              DocumentID
+              Naam
+              Locatie
+              Omschrijving
+            }
+          }
+        }
+        Locatie {
+          LocatieID
+          Naam
+          Contactgegevens {
+            ContactgegevensID
+            Woonplaats
+          }
+        }
+      }
+      CursusDeelnames {
+        Status
+        Persoon {
+          PersoonID
+          SortableFullName
+        }
+      }
+    }
+  }
+}
+
 query Examiners {
   Examinatoren {
     PersoonID
@@ -127,8 +216,8 @@ query ExamVersionDocuments($input: examVersionDocumentsInput!) {
   }
 }
 
-mutation createCourse($input: CreateCourseInput!) {
-  createCourse(input: $input) {
+mutation saveExam($input: SaveExamInput!) {
+  saveExam(input: $input) {
     CursusID
   }
 }

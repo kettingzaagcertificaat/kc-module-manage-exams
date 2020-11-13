@@ -21,17 +21,16 @@ import {
   SearchExamVersionsDocument,
   SearchLocationsDocument,
   SearchLocationsQuery,
-  useExamDetailsQuery,
   useSaveExamMutation,
+  useSpecialtyQuery,
 } from 'generated/graphql';
 import AddLocation from 'location/AddLocation';
 import React, { useContext, useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
-import { getTimeDisplay } from 'utils/time';
 import * as yup from 'yup';
 
-const CourseEdit: React.FC<{}> = (props) => {
+const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
   const [showAddLocationDialog, setShowAddLocationDialog] = useState<boolean>(false);
   const [currentForm, setCurrentForm] = useState<FormikProps<any>>();
   const { clearGrowl, showGrowl } = useGrowlContext();
@@ -40,15 +39,14 @@ const CourseEdit: React.FC<{}> = (props) => {
 
   const { id: courseId } = useParams<any>();
 
-  const { loading: examLoading, data: exam } = useExamDetailsQuery({
-    fetchPolicy: 'network-only',
-    variables: { input: { examId: +courseId } },
+  const { loading: specialtyLoading, data: specialty } = useSpecialtyQuery({
+    variables: { vakId: props.specialtyId || -1 },
     onError() {
       showGrowl({
         severity: 'error',
-        summary: 'Examen ophalen',
+        summary: 'Examenvakken ophalen',
         sticky: true,
-        detail: `Er is een fout opgetreden bij het ophalen van het examen. Controleer uw invoer of neem contact met ons op.`,
+        detail: `Er is een fout opgetreden bij het ophalen van de examenvakken. Controleer uw invoer of neem contact met ons op.`,
       });
     },
   });
@@ -57,19 +55,23 @@ const CourseEdit: React.FC<{}> = (props) => {
     onCompleted(data) {
       showGrowl({
         severity: 'success',
-        summary: 'Examen gewijzigd',
-        detail: 'Het examen is succesvol gewijzigd.',
+        summary: 'Examen aangemaakt',
+        detail: 'Het examen is succesvol aangemaakt.',
       });
     },
     onError(e) {
       showGrowl({
         severity: 'error',
-        summary: 'Examen niet gewijzigd',
+        summary: 'Examen niet aangemaakt',
         sticky: true,
-        detail: `Er is een fout opgetreden bij het wijzigen van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
+        detail: `Er is een fout opgetreden bij het aanmaken van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
       });
     },
   });
+
+  if (!props.specialtyId && !courseId) {
+    return <Alert type="danger">Er is geen vak of examen gekozen</Alert>;
+  }
 
   const onNewLocationClick = (formikProps: FormikProps<any>) => {
     setCurrentForm(formikProps);
@@ -83,47 +85,28 @@ const CourseEdit: React.FC<{}> = (props) => {
     setShowAddLocationDialog(false);
   };
 
-  if (examLoading) {
-    return (
-      <Panel title="Examen wijzigen" className="form-horizontal">
-        <Spinner text={'Gegevens laden...'} />
-      </Panel>
-    );
+  if (specialtyLoading) {
+    return <Spinner text={'Gegevens laden...'} />;
   }
 
-  if (!courseId || !exam?.ExamDetails?.Cursus) {
-    return (
-      <Panel title="Examen wijzigen" className="form-horizontal">
-        <Alert type="danger">Cursus niet gevonden</Alert>
-      </Panel>
-    );
-  }
-
-  const course = exam?.ExamDetails.Cursus;
-  const session = course.Sessies ? course.Sessies[0] : null;
-
-  if (!session) {
-    return (
-      <Panel title="Examen wijzigen" className="form-horizontal">
-        <Alert type="danger">Sessie bij cursus ontbreekt</Alert>
-      </Panel>
-    );
+  if (!specialty?.Specialty) {
+    return null;
   }
 
   return (
     <>
       <Form
         schema={{
-          LocatieID: [session.Locatie?.LocatieID, yup.number().required()],
-          Titel: [course.Titel, yup.string().max(255).required()],
-          Promotietekst: [course.Promotietekst, yup.string().max(5000).required()],
-          Prijs: [course.Prijs, yup.number().required()],
-          IsBesloten: [course.IsBesloten, yup.boolean().required()],
-          MaximumCursisten: [course.MaximumCursisten, yup.number().required()],
-          Opmerkingen: [course.Opmerkingen, yup.string().max(1000)],
-          Datum: [session.Datum ? new Date(session.Datum) : null, yup.date().required()],
+          LocatieID: [null, yup.number().required()],
+          Titel: [specialty.Specialty.Titel, yup.string().max(255).required()],
+          Promotietekst: [specialty.Specialty.Promotietekst, yup.string().max(5000).required()],
+          Prijs: [specialty.Specialty.Kosten, yup.number().required()],
+          IsBesloten: [false, yup.boolean().required()],
+          MaximumCursisten: [specialty.Specialty.MaximumCursisten, yup.number().required()],
+          Opmerkingen: ['', yup.string().max(1000)],
+          Datum: [null, yup.date().required()],
           Begintijd: [
-            session?.Begintijd ? getTimeDisplay(session?.Begintijd) : '',
+            null,
             yup
               .string()
               .matches(
@@ -133,7 +116,7 @@ const CourseEdit: React.FC<{}> = (props) => {
               .required(),
           ],
           Eindtijd: [
-            session?.Eindtijd ? getTimeDisplay(session?.Eindtijd) : '',
+            null,
             yup
               .string()
               .matches(
@@ -145,18 +128,20 @@ const CourseEdit: React.FC<{}> = (props) => {
                 return !v || this.resolve(yup.ref('Begintijd')) < v;
               }),
           ],
-          ExaminatorPersoonID: [session?.ExaminatorPersoon?.PersoonID, yup.number().required()],
-          ExamenVersieID: [session?.ExamenVersie?.ExamenVersieID, yup.number().required()],
+          ExaminatorPersoonID: [null, yup.number().required()],
+          ExamenVersieID: [null, yup.number().required()],
         }}
         onSubmit={async (values, actions: FormikHelpers<any>) => {
+          if (!specialty.Specialty) {
+            return;
+          }
+
           clearGrowl();
 
           const result = await saveExam({
             variables: {
               input: {
-                CursusID: course.CursusID,
-                SessieID: session.SessieID,
-                VakID: +(course.VakID || 0),
+                VakID: +specialty.Specialty.VakID,
                 Titel: values.Titel,
                 Promotietekst: values.Promotietekst,
                 Prijs: parseFloat(values.Prijs),
@@ -174,16 +159,16 @@ const CourseEdit: React.FC<{}> = (props) => {
           });
 
           if (result.data?.saveExam?.CursusID) {
-            history.push(`/overzicht`);
+            history.push(`/gereed/${values.ExamenVersieID}`);
           }
         }}
       >
         {(formikProps: FormikProps<any>) => (
           <>
-            <Panel title="Examen wijzigen" className="form-horizontal">
+            <Panel title="Examen" className="form-horizontal">
               <p>
-                Examenvak geldig van {toDutchDate(course.Vak.MinimumDatum)} t/m{' '}
-                {toDutchDate(course.Vak.MaximumDatum)}
+                Examenvak geldig van {toDutchDate(specialty.Specialty?.MinimumDatum)} t/m{' '}
+                {toDutchDate(specialty.Specialty?.MaximumDatum)}
               </p>
               <FormText name={'Titel'} label={'Titel *'} />
               <FormText name={'Promotietekst'} label={'Promotietekst *'} isTextArea={true} />
@@ -241,7 +226,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                   );
                 }}
                 gqlQuery={SearchLocationsDocument}
-                variables={{ ExamenInstellingID: course.Vak.ExamenInstellingID }}
+                variables={{ ExamenInstellingID: specialty.Specialty?.ExamenInstellingID }}
               >
                 <Button
                   className="mr-2"
@@ -278,7 +263,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                   gqlQuery={SearchExamVersionsDocument}
                   variables={{
                     input: {
-                      VakID: +(course.Vak.VakID || 0),
+                      VakID: +(specialty.Specialty?.VakID || 0),
                       ExamDate: formikProps.values.Datum,
                     },
                   }}
@@ -286,9 +271,6 @@ const CourseEdit: React.FC<{}> = (props) => {
               )}
               <FormItem label={' '}>
                 <Button label={'Opslaan'} buttonType="submit" icon="pi pi-check" />
-                <Link to="/overzicht">
-                  <Button label={'Annuleren'} type="secondary" />
-                </Link>
               </FormItem>
             </Panel>
           </>
@@ -297,10 +279,10 @@ const CourseEdit: React.FC<{}> = (props) => {
       <AddLocation
         onHide={handleAddLocation}
         visible={showAddLocationDialog}
-        examenInstellingId={course.Vak.ExamenInstellingID}
+        examenInstellingId={specialty?.Specialty.ExamenInstellingID}
       />
     </>
   );
 };
 
-export default CourseEdit;
+export default CourseNewDetails;

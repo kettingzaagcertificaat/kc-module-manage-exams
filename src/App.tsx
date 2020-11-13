@@ -12,8 +12,10 @@ import { ThemeContext } from '@erkenningen/ui/layout/theme';
 import CourseEdit from './courses/edit/CourseEdit';
 import CourseReady from './courses/ready/CourseReady';
 import { UserContext, useAuth, Roles, hasOneOfRoles } from './shared/Auth';
-import CourseNew from 'courses/edit/CourseNew';
+import CourseNew from 'courses/new/CourseNewSelectSpecialty';
 import CourseList from 'courses/list/CourseList';
+import CourseNewSelectSpecialty from 'courses/new/CourseNewSelectSpecialty';
+import CourseDetails from 'courses/details/CourseDetails';
 
 // @TODO Move to lib?
 yup.setLocale({
@@ -74,7 +76,8 @@ const App: React.FC<{}> = (props) => {
             <ThemeKC>
               <Switch>
                 <Route path="/wijzig/:id" component={CourseEdit} />
-                <Route path="/nieuw" component={CourseNew} />
+                <Route path="/details/:id" component={CourseDetails} />
+                <Route path="/nieuw" component={CourseNewSelectSpecialty} />
                 <Route path="/gereed/:examVersionId" component={CourseReady} />
                 <Route path="/overzicht" component={CourseList} />
                 <Route path="/" component={CourseNew} />

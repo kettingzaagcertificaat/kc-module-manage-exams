@@ -38,6 +38,7 @@ const CourseList: React.FC<{}> = (props) => {
   });
 
   const { loading, data, error } = useExamsQuery({
+    fetchPolicy: 'cache-and-network',
     variables: {
       input: {
         pageNumber: pagination.pageNumber,
@@ -151,8 +152,16 @@ const CourseList: React.FC<{}> = (props) => {
           bodyStyle={{ textAlign: 'center' }}
           body={(row: any) => (
             <>
-              <Button label={''} icon="fas fa-info" />
-              <Button label={''} icon="fas fa-edit" />
+              <Button
+                label={''}
+                icon="fas fa-info"
+                onClick={() => history.push(`/details/${row.CursusID}`)}
+              />
+              <Button
+                label={''}
+                icon="fas fa-edit"
+                onClick={() => history.push(`/wijzig/${row.CursusID}`)}
+              />
             </>
           )}
         />

@@ -80,6 +80,19 @@ export type Contactgegevens = {
   EmailWerkgever?: Maybe<Scalars['String']>;
 };
 
+export type ContactpersoonExamenInstelling = {
+  __typename?: 'ContactpersoonExamenInstelling';
+  ExamenInstellingID: Scalars['ID'];
+  PersoonID: Scalars['ID'];
+  ContactgegevensID: Scalars['Int'];
+  Naam: Scalars['String'];
+  IsBtwPlichtig: Scalars['Boolean'];
+  IsActief: Scalars['Boolean'];
+  Code: Scalars['String'];
+  Contactgegevens: Contactgegevens;
+  Persoon: Persoon;
+};
+
 export type Cursus = {
   __typename?: 'Cursus';
   CursusID: Scalars['ID'];
@@ -127,6 +140,7 @@ export type CursusDeelname = {
   Certificering?: Maybe<Certificering>;
   Persoon: Persoon;
   StudieresultaatStatus?: Maybe<StudieresultaatStatusEnum>;
+  GeslaagdVoorCertificaatID?: Maybe<Scalars['Int']>;
 };
 
 export type Document = {
@@ -147,6 +161,7 @@ export type ExamenInstelling = {
   IsActief: Scalars['Boolean'];
   Code: Scalars['String'];
   Contactgegevens: Contactgegevens;
+  ContactpersoonExamenInstelling?: Maybe<Array<Maybe<ContactpersoonExamenInstelling>>>;
 };
 
 export type ExamenVersie = {
@@ -174,7 +189,7 @@ export type Factuur = {
   __typename?: 'Factuur';
   FactuurID: Scalars['ID'];
   FactuurNummer: Scalars['String'];
-  CodeJaarFactuurNummer?: Maybe<Scalars['String']>;
+  KenmerkJaarFactuurNummer?: Maybe<Scalars['String']>;
   CrediteurType: CrediteurTypeEnum;
   CrediteurID: Scalars['Int'];
   CrediteurContactgegevensID: Scalars['Int'];
@@ -325,6 +340,7 @@ export type Sessie = {
   SessieID: Scalars['ID'];
   CursusID: Scalars['ID'];
   LocatieID: Scalars['ID'];
+  ExamenVersieID: Scalars['ID'];
   LocatieToevoeging: Scalars['String'];
   Datum: Scalars['Date'];
   Begintijd: Scalars['Date'];
@@ -333,12 +349,14 @@ export type Sessie = {
   Opmerkingen: Scalars['String'];
   SessieType: Scalars['String'];
   DigitaalExamenId?: Maybe<Scalars['Int']>;
-  ExaminatorPersoonID?: Maybe<Scalars['Int']>;
+  ExaminatorPersoonID: Scalars['ID'];
   DatumAangemaakt?: Maybe<Scalars['Date']>;
   DatumGewijzigd?: Maybe<Scalars['Date']>;
   PersoonIDAangemaakt?: Maybe<Scalars['Int']>;
   PersoonIDGewijzigd?: Maybe<Scalars['Int']>;
   Locatie?: Maybe<Locatie>;
+  ExamenVersie?: Maybe<ExamenVersie>;
+  ExaminatorPersoon?: Maybe<Persoon>;
 };
 
 export type Studieresultaat = {
@@ -751,10 +769,11 @@ export type SearchCourseSessionsInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCourse?: Maybe<Cursus>;
   RegisterExamResults?: Maybe<Scalars['String']>;
   /** The `requestDuplicate` can be used to request a license card duplicate */
   requestDuplicate: RequestDuplicateResult;
+  saveExam?: Maybe<Cursus>;
+  exportCards: ExportCardsResult;
   updateInvoiceStatus: UpdateInvoiceStatusResult;
   createInvoiceCollection: CreateInvoiceCollectionResult;
   /** Create or update a location */
@@ -765,11 +784,6 @@ export type Mutation = {
 };
 
 
-export type MutationCreateCourseArgs = {
-  input: CreateCourseInput;
-};
-
-
 export type MutationRegisterExamResultsArgs = {
   input: Array<Maybe<RegisterExamResultsInput>>;
 };
@@ -777,6 +791,16 @@ export type MutationRegisterExamResultsArgs = {
 
 export type MutationRequestDuplicateArgs = {
   input: RequestDuplicateInput;
+};
+
+
+export type MutationSaveExamArgs = {
+  input: SaveExamInput;
+};
+
+
+export type MutationExportCardsArgs = {
+  sendToBatchMailer?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -808,22 +832,6 @@ export type MutationMultipleUploadArgs = {
 export type MutationMultiUploadArgs = {
   file1: Scalars['Upload'];
   file2: Scalars['Upload'];
-};
-
-export type CreateCourseInput = {
-  VakID: Scalars['Int'];
-  Titel: Scalars['SafeString'];
-  Promotietekst: Scalars['SafeString'];
-  Prijs: Scalars['Float'];
-  MaximumCursisten: Scalars['Int'];
-  IsBesloten: Scalars['Boolean'];
-  Opmerkingen?: Maybe<Scalars['SafeString']>;
-  Datum: Scalars['Date'];
-  Begintijd: Scalars['Date'];
-  Eindtijd: Scalars['Date'];
-  LocatieID: Scalars['Int'];
-  ExaminatorPersoonID: Scalars['Int'];
-  ExamenVersieID: Scalars['Int'];
 };
 
 export type RegisterExamResultsInput = {
@@ -879,6 +887,24 @@ export type ExamsInput = {
   orderBy: OrderByArgs;
 };
 
+export type SaveExamInput = {
+  CursusID?: Maybe<Scalars['ID']>;
+  SessieID?: Maybe<Scalars['ID']>;
+  VakID: Scalars['ID'];
+  LocatieID: Scalars['ID'];
+  ExaminatorPersoonID: Scalars['ID'];
+  ExamenVersieID: Scalars['ID'];
+  Titel: Scalars['SafeString'];
+  Promotietekst: Scalars['SafeString'];
+  Prijs: Scalars['Float'];
+  MaximumCursisten: Scalars['Int'];
+  IsBesloten: Scalars['Boolean'];
+  Opmerkingen?: Maybe<Scalars['SafeString']>;
+  Datum: Scalars['Date'];
+  Begintijd: Scalars['Date'];
+  Eindtijd: Scalars['Date'];
+};
+
 export type Exam = {
   __typename?: 'Exam';
   Cursus?: Maybe<Cursus>;
@@ -905,6 +931,12 @@ export type SearchExamVersionsInput = {
 
 export type ExamVersionDocumentsInput = {
   ExamenVersieID: Scalars['Int'];
+};
+
+export type ExportCardsResult = {
+  __typename?: 'exportCardsResult';
+  fileName: Scalars['String'];
+  result: Scalars['String'];
 };
 
 export type CreateInvoiceCollectionInput = {
@@ -984,7 +1016,7 @@ export type Invoice = {
   FactuurID: Scalars['ID'];
   FactuurNummer: Scalars['String'];
   CursusCode: Scalars['String'];
-  FactuurNr: Scalars['String'];
+  KenmerkJaarFactuurNummer: Scalars['String'];
   FactuurStatus: Scalars['String'];
   StatusOpmerkingen?: Maybe<Scalars['String']>;
   FactuurJaar: Scalars['Int'];
@@ -994,7 +1026,7 @@ export type Invoice = {
   BedragIncBtw: Scalars['Float'];
   BtwBedrag: Scalars['Float'];
   ProductCode: Scalars['String'];
-  ProductNaam: Scalars['String'];
+  ItemType: Scalars['String'];
   DebiteurID: Scalars['Int'];
   DebiteurType: DebiteurTypeEnum;
   DebiteurNaam: Scalars['String'];
@@ -1305,6 +1337,72 @@ export type ExamsQuery = (
   )> }
 );
 
+export type ExamDetailsQueryVariables = Exact<{
+  input: SearchExamInput;
+}>;
+
+
+export type ExamDetailsQuery = (
+  { __typename?: 'Query' }
+  & { ExamDetails?: Maybe<(
+    { __typename?: 'Exam' }
+    & { Cursus?: Maybe<(
+      { __typename?: 'Cursus' }
+      & Pick<Cursus, 'CursusID' | 'VakID' | 'CursusleiderID' | 'Prijs' | 'Titel' | 'Promotietekst' | 'IsBesloten' | 'MaximumCursisten' | 'Opmerkingen' | 'Status' | 'CursusCode' | 'DatumAangemaakt' | 'DatumGewijzigd' | 'PersoonIDAangemaakt' | 'PersoonIDGewijzigd'>
+      & { Vak: (
+        { __typename?: 'Vak' }
+        & Pick<Vak, 'VakID' | 'MinimumDatum' | 'MaximumDatum' | 'ExamenInstellingID'>
+        & { ExamenInstelling?: Maybe<(
+          { __typename?: 'ExamenInstelling' }
+          & Pick<ExamenInstelling, 'Naam'>
+          & { Contactgegevens: (
+            { __typename?: 'Contactgegevens' }
+            & Pick<Contactgegevens, 'Adresregel1' | 'Huisnummer' | 'HuisnummerToevoeging' | 'Woonplaats' | 'Telefoon' | 'Email'>
+          ), ContactpersoonExamenInstelling?: Maybe<Array<Maybe<(
+            { __typename?: 'ContactpersoonExamenInstelling' }
+            & { Persoon: (
+              { __typename?: 'Persoon' }
+              & Pick<Persoon, 'SortableFullName'>
+            ) }
+          )>>> }
+        )> }
+      ), Sessies?: Maybe<Array<Maybe<(
+        { __typename?: 'Sessie' }
+        & Pick<Sessie, 'SessieID' | 'Datum' | 'Begintijd' | 'Eindtijd' | 'Opmerkingen'>
+        & { ExaminatorPersoon?: Maybe<(
+          { __typename?: 'Persoon' }
+          & Pick<Persoon, 'PersoonID' | 'SortableFullName'>
+        )>, ExamenVersie?: Maybe<(
+          { __typename?: 'ExamenVersie' }
+          & Pick<ExamenVersie, 'ExamenVersieID' | 'ExamenType' | 'ExamenVersieCode' | 'ExamenOmschrijving' | 'StartDatum' | 'EindDatum'>
+          & { Documenten?: Maybe<Array<Maybe<(
+            { __typename?: 'ExamenVersieDocument' }
+            & Pick<ExamenVersieDocument, 'ExamenVersieDocumentID' | 'AangemaaktDatum' | 'AangemaaktDoor'>
+            & { Document: (
+              { __typename?: 'Document' }
+              & Pick<Document, 'DocumentID' | 'Naam' | 'Locatie' | 'Omschrijving'>
+            ) }
+          )>>> }
+        )>, Locatie?: Maybe<(
+          { __typename?: 'Locatie' }
+          & Pick<Locatie, 'LocatieID' | 'Naam'>
+          & { Contactgegevens: (
+            { __typename?: 'Contactgegevens' }
+            & Pick<Contactgegevens, 'ContactgegevensID' | 'Woonplaats'>
+          ) }
+        )> }
+      )>>>, CursusDeelnames?: Maybe<Array<Maybe<(
+        { __typename?: 'CursusDeelname' }
+        & Pick<CursusDeelname, 'Status'>
+        & { Persoon: (
+          { __typename?: 'Persoon' }
+          & Pick<Persoon, 'PersoonID' | 'SortableFullName'>
+        ) }
+      )>>> }
+    )> }
+  )> }
+);
+
 export type ExaminersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1354,14 +1452,14 @@ export type ExamVersionDocumentsQuery = (
   )> }
 );
 
-export type CreateCourseMutationVariables = Exact<{
-  input: CreateCourseInput;
+export type SaveExamMutationVariables = Exact<{
+  input: SaveExamInput;
 }>;
 
 
-export type CreateCourseMutation = (
+export type SaveExamMutation = (
   { __typename?: 'Mutation' }
-  & { createCourse?: Maybe<(
+  & { saveExam?: Maybe<(
     { __typename?: 'Cursus' }
     & Pick<Cursus, 'CursusID'>
   )> }
@@ -1634,6 +1732,122 @@ export function useExamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Exam
 export type ExamsQueryHookResult = ReturnType<typeof useExamsQuery>;
 export type ExamsLazyQueryHookResult = ReturnType<typeof useExamsLazyQuery>;
 export type ExamsQueryResult = Apollo.QueryResult<ExamsQuery, ExamsQueryVariables>;
+export const ExamDetailsDocument = gql`
+    query ExamDetails($input: searchExamInput!) {
+  ExamDetails(input: $input) {
+    Cursus {
+      CursusID
+      VakID
+      CursusleiderID
+      Prijs
+      Titel
+      Promotietekst
+      IsBesloten
+      MaximumCursisten
+      Opmerkingen
+      Status
+      CursusCode
+      DatumAangemaakt
+      DatumGewijzigd
+      PersoonIDAangemaakt
+      PersoonIDGewijzigd
+      Vak {
+        VakID
+        MinimumDatum
+        MaximumDatum
+        ExamenInstellingID
+        ExamenInstelling {
+          Naam
+          Contactgegevens {
+            Adresregel1
+            Huisnummer
+            HuisnummerToevoeging
+            Woonplaats
+            Telefoon
+            Email
+          }
+          ContactpersoonExamenInstelling {
+            Persoon {
+              SortableFullName
+            }
+          }
+        }
+      }
+      Sessies {
+        SessieID
+        Datum
+        Begintijd
+        Eindtijd
+        Opmerkingen
+        ExaminatorPersoon {
+          PersoonID
+          SortableFullName
+        }
+        ExamenVersie {
+          ExamenVersieID
+          ExamenType
+          ExamenVersieCode
+          ExamenOmschrijving
+          StartDatum
+          EindDatum
+          Documenten {
+            ExamenVersieDocumentID
+            AangemaaktDatum
+            AangemaaktDoor
+            Document {
+              DocumentID
+              Naam
+              Locatie
+              Omschrijving
+            }
+          }
+        }
+        Locatie {
+          LocatieID
+          Naam
+          Contactgegevens {
+            ContactgegevensID
+            Woonplaats
+          }
+        }
+      }
+      CursusDeelnames {
+        Status
+        Persoon {
+          PersoonID
+          SortableFullName
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExamDetailsQuery__
+ *
+ * To run a query within a React component, call `useExamDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExamDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExamDetailsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExamDetailsQuery(baseOptions?: Apollo.QueryHookOptions<ExamDetailsQuery, ExamDetailsQueryVariables>) {
+        return Apollo.useQuery<ExamDetailsQuery, ExamDetailsQueryVariables>(ExamDetailsDocument, baseOptions);
+      }
+export function useExamDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExamDetailsQuery, ExamDetailsQueryVariables>) {
+          return Apollo.useLazyQuery<ExamDetailsQuery, ExamDetailsQueryVariables>(ExamDetailsDocument, baseOptions);
+        }
+export type ExamDetailsQueryHookResult = ReturnType<typeof useExamDetailsQuery>;
+export type ExamDetailsLazyQueryHookResult = ReturnType<typeof useExamDetailsLazyQuery>;
+export type ExamDetailsQueryResult = Apollo.QueryResult<ExamDetailsQuery, ExamDetailsQueryVariables>;
 export const ExaminersDocument = gql`
     query Examiners {
   Examinatoren {
@@ -1750,38 +1964,38 @@ export function useExamVersionDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type ExamVersionDocumentsQueryHookResult = ReturnType<typeof useExamVersionDocumentsQuery>;
 export type ExamVersionDocumentsLazyQueryHookResult = ReturnType<typeof useExamVersionDocumentsLazyQuery>;
 export type ExamVersionDocumentsQueryResult = Apollo.QueryResult<ExamVersionDocumentsQuery, ExamVersionDocumentsQueryVariables>;
-export const CreateCourseDocument = gql`
-    mutation createCourse($input: CreateCourseInput!) {
-  createCourse(input: $input) {
+export const SaveExamDocument = gql`
+    mutation saveExam($input: SaveExamInput!) {
+  saveExam(input: $input) {
     CursusID
   }
 }
     `;
-export type CreateCourseMutationFn = Apollo.MutationFunction<CreateCourseMutation, CreateCourseMutationVariables>;
+export type SaveExamMutationFn = Apollo.MutationFunction<SaveExamMutation, SaveExamMutationVariables>;
 
 /**
- * __useCreateCourseMutation__
+ * __useSaveExamMutation__
  *
- * To run a mutation, you first call `useCreateCourseMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateCourseMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSaveExamMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveExamMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createCourseMutation, { data, loading, error }] = useCreateCourseMutation({
+ * const [saveExamMutation, { data, loading, error }] = useSaveExamMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateCourseMutation(baseOptions?: Apollo.MutationHookOptions<CreateCourseMutation, CreateCourseMutationVariables>) {
-        return Apollo.useMutation<CreateCourseMutation, CreateCourseMutationVariables>(CreateCourseDocument, baseOptions);
+export function useSaveExamMutation(baseOptions?: Apollo.MutationHookOptions<SaveExamMutation, SaveExamMutationVariables>) {
+        return Apollo.useMutation<SaveExamMutation, SaveExamMutationVariables>(SaveExamDocument, baseOptions);
       }
-export type CreateCourseMutationHookResult = ReturnType<typeof useCreateCourseMutation>;
-export type CreateCourseMutationResult = Apollo.MutationResult<CreateCourseMutation>;
-export type CreateCourseMutationOptions = Apollo.BaseMutationOptions<CreateCourseMutation, CreateCourseMutationVariables>;
+export type SaveExamMutationHookResult = ReturnType<typeof useSaveExamMutation>;
+export type SaveExamMutationResult = Apollo.MutationResult<SaveExamMutation>;
+export type SaveExamMutationOptions = Apollo.BaseMutationOptions<SaveExamMutation, SaveExamMutationVariables>;
 export const SaveLocationDocument = gql`
     mutation saveLocation($input: saveLocationInput!) {
   saveLocation(input: $input) {
