@@ -3,12 +3,14 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 
-import { FormSelect } from '@erkenningen/ui/components/form';
+import { FormItem, FormSelect } from '@erkenningen/ui/components/form';
+import { Alert } from '@erkenningen/ui/components/alert';
 
 const FormSelectGql: React.FC<
   {
     gqlQuery: DocumentNode;
     variables?: any;
+    emptyMessage?: string;
     mapResult?: (data: any) => { label: string; value: string }[];
   } & Omit<React.ComponentProps<typeof FormSelect>, 'options'>
 > = (props) => {
@@ -17,7 +19,23 @@ const FormSelectGql: React.FC<
   });
 
   if (error) {
-    return <span>Fout opgetreden bij het ophalen van de gegevens</span>;
+    return (
+      <FormItem label={' '}>
+        <Alert type="danger">Fout opgetreden bij het ophalen van de gegevens</Alert>
+      </FormItem>
+    );
+  }
+
+  if (
+    props.emptyMessage &&
+    !loading &&
+    (!data[Object.keys(data)[0]] || !data[Object.keys(data)[0]].length)
+  ) {
+    return (
+      <FormItem label={' '}>
+        <Alert type="warning">{props.emptyMessage}</Alert>
+      </FormItem>
+    );
   }
 
   return (

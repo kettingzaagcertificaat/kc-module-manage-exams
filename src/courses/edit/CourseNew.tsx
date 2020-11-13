@@ -76,6 +76,9 @@ const CourseNew: React.FC<{}> = () => {
                   label={'Kies het examenvak waarop u het nieuwe examen wilt baseren::'}
                   filter={true}
                   gqlQuery={SpecialtiesDocument}
+                  emptyMessage={
+                    'Er zijn nog geen vakken beschikbaar. Kopieer eerst een sjabloon vak en pas deze vervolgens aan.'
+                  }
                   mapResult={(data: any) =>
                     data.Specialties.map((item: any) => ({
                       label: `${item.VakID} | geldig tot: ${toDutchDate(
