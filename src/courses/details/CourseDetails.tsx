@@ -101,36 +101,38 @@ const CourseDetails: React.FC<{}> = (props) => {
       <Row>
         <Col>
           <Panel title="Examensessies" className="form-horizontal" doNotIncludeBody={true}>
-            <table
-              className="table table-striped"
-              cellSpacing={0}
-              style={{ borderCollapse: 'collapse' }}
-            >
-              <tbody>
-                <tr>
-                  <th>Datum</th>
-                  <th>Begintijd</th>
-                  <th>Eindtijd</th>
-                  <th>Locatie</th>
-                  <th>Examentype</th>
-                  <th>Versie</th>
-                  <th>Examinator</th>
-                  <th>Opmerkingen</th>
-                </tr>
-                {course.Sessies?.map((session, index) => (
-                  <tr key={index}>
-                    <td>{toDutchDate(session.Datum)}</td>
-                    <td>{getTimeDisplay(session.Begintijd)}</td>
-                    <td>{getTimeDisplay(session.Eindtijd)}</td>
-                    <td>{session.Locatie?.Naam}</td>
-                    <td>{session.ExamenVersie?.ExamenType}</td>
-                    <td>{session.ExamenVersie?.ExamenOmschrijving}</td>
-                    <td>{session.ExaminatorPersoon?.SortableFullName}</td>
-                    <td>{session.Opmerkingen}</td>
+            <div className="table-responsive">
+              <table
+                className="table table-striped table-responsive"
+                cellSpacing={0}
+                style={{ borderCollapse: 'collapse' }}
+              >
+                <tbody>
+                  <tr>
+                    <th>Datum</th>
+                    <th>Begintijd</th>
+                    <th>Eindtijd</th>
+                    <th>Locatie</th>
+                    <th>Examentype</th>
+                    <th>Versie</th>
+                    <th>Examinator</th>
+                    <th>Opmerkingen</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                  {course.Sessies?.map((session, index) => (
+                    <tr key={index}>
+                      <td>{toDutchDate(session.Datum)}</td>
+                      <td>{getTimeDisplay(session.Begintijd)}</td>
+                      <td>{getTimeDisplay(session.Eindtijd)}</td>
+                      <td>{session.Locatie?.Naam}</td>
+                      <td>{session.ExamenVersie?.ExamenType}</td>
+                      <td>{session.ExamenVersie?.ExamenOmschrijving}</td>
+                      <td>{session.ExaminatorPersoon?.SortableFullName}</td>
+                      <td>{session.Opmerkingen}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Panel>
         </Col>
       </Row>
@@ -173,26 +175,28 @@ const CourseDetails: React.FC<{}> = (props) => {
       <Row>
         <Col>
           <Panel title="Deelnemers" className="form-horizontal" doNotIncludeBody={true}>
-            <table
-              className="table table-striped"
-              cellSpacing={0}
-              style={{ borderCollapse: 'collapse' }}
-            >
-              <tbody>
-                <tr>
-                  <th>ID</th>
-                  <th>Naam</th>
-                  <th>Status</th>
-                </tr>
-                {course.CursusDeelnames?.map((participation, index) => (
-                  <tr key={index}>
-                    <td>KC-{participation.Persoon.PersoonID}</td>
-                    <td>{participation.Persoon.SortableFullName}</td>
-                    <td>{participation.Status}</td>
+            <div className="table-responsive">
+              <table
+                className="table table-striped table-responsive"
+                cellSpacing={0}
+                style={{ borderCollapse: 'collapse' }}
+              >
+                <tbody>
+                  <tr>
+                    <th>ID</th>
+                    <th>Naam</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                  {course.CursusDeelnames?.map((participation, index) => (
+                    <tr key={index}>
+                      <td>KC-{participation.Persoon.PersoonID}</td>
+                      <td>{participation.Persoon.SortableFullName}</td>
+                      <td>{participation.Status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Panel>
         </Col>
       </Row>

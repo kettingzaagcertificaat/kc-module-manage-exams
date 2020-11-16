@@ -13,6 +13,8 @@ import { Spinner } from '@erkenningen/ui/components/spinner';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 
+import styles from './CourseList.module.scss';
+
 type IPagination = {
   pageNumber: number;
   pageSize: number;
@@ -48,11 +50,6 @@ const CourseList: React.FC<{}> = (props) => {
           sortDirection:
             pagination.direction === 1 ? SortDirectionEnum.Asc : SortDirectionEnum.Desc,
         },
-        // examCode: '',
-        // title: '',
-        // from: new Date(),
-        // to: new Date(),
-        // locationId: 0,
       },
     },
     onError() {
@@ -128,6 +125,7 @@ const CourseList: React.FC<{}> = (props) => {
         dataKey="CursusCode"
         emptyMessage="Geen examens gevonden. Controleer filter criteria."
         responsive
+        autoLayout
         paginator={true}
         rows={pagination.pageSize || 10}
         rowsPerPageOptions={[10, 25, 50, 100]}
@@ -149,7 +147,7 @@ const CourseList: React.FC<{}> = (props) => {
       >
         <Column
           headerStyle={{ width: '8rem' }}
-          bodyStyle={{ textAlign: 'center' }}
+          bodyClassName={styles.center}
           body={(row: any) => (
             <>
               <Button
@@ -165,17 +163,12 @@ const CourseList: React.FC<{}> = (props) => {
             </>
           )}
         />
-        <Column
-          field="CursusCode"
-          header={'Examencode'}
-          headerStyle={{ width: '14rem' }}
-          sortable={true}
-        />
+        <Column field="CursusCode" header={'Examencode'} sortable={true} />
         <Column
           field="IsBesloten"
           header={''}
           headerStyle={{ width: '2rem' }}
-          bodyStyle={{ textAlign: 'center' }}
+          bodyClassName={styles.center}
           body={(row: any) => (row.IsBesloten ? <i className={'fas fa-lock'}></i> : '')}
         />
         <Column field="Titel" header={'Titel'} sortable={true} />
@@ -184,7 +177,6 @@ const CourseList: React.FC<{}> = (props) => {
           header={'Datum'}
           sortable={true}
           sortField={'Sessies:Datum'}
-          headerStyle={{ width: '11rem' }}
           body={(row: any) => toDutchDate(row.Sessies[0]?.Datum)}
         />
         <Column
@@ -201,7 +193,7 @@ const CourseList: React.FC<{}> = (props) => {
         <Column
           field="AantalDeelnemers"
           headerStyle={{ width: '4rem' }}
-          bodyStyle={{ textAlign: 'center' }}
+          bodyClassName={styles.center}
           header={<i className={'fas fa-users'} />}
           body={(row: any) =>
             row.CursusDeelnames.filter((cd: any) => cd.Status !== CursusDeelnameStatusEnum.Afgemeld)
