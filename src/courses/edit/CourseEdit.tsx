@@ -13,7 +13,7 @@ import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
-import { addDays, addYears, subDays } from 'date-fns';
+import { addDays, addYears, subYears } from 'date-fns';
 import { FormikHelpers, FormikProps } from 'formik';
 import {
   ExaminersDocument,
@@ -207,7 +207,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                 formControlClassName="col-sm-3"
                 minDate={
                   hasRole(Roles.Rector, user?.Roles)
-                    ? subDays(new Date(), 100)
+                    ? subYears(new Date(), 10)
                     : addDays(new Date(), 7)
                 }
                 maxDate={addYears(new Date(), 50)}
