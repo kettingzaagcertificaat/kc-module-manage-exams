@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Switch, Route, HashRouter } from 'react-router-dom';
+import { Switch, Route, HashRouter, Redirect } from 'react-router-dom';
 import { FormatErrorParams } from 'yup';
 import * as yup from 'yup';
 
@@ -12,7 +12,6 @@ import { ThemeContext } from '@erkenningen/ui/layout/theme';
 import CourseEdit from './courses/edit/CourseEdit';
 import CourseReady from './courses/ready/CourseReady';
 import { UserContext, useAuth, Roles, hasOneOfRoles } from './shared/Auth';
-import CourseNew from 'courses/new/CourseNewSelectSpecialty';
 import CourseList from 'courses/list/CourseList';
 import CourseNewSelectSpecialty from 'courses/new/CourseNewSelectSpecialty';
 import CourseDetails from 'courses/details/CourseDetails';
@@ -80,7 +79,13 @@ const App: React.FC<{}> = (props) => {
                 <Route path="/nieuw" component={CourseNewSelectSpecialty} />
                 <Route path="/gereed/:examVersionId" component={CourseReady} />
                 <Route path="/overzicht" component={CourseList} />
-                <Route path="/" component={CourseNew} />
+                <Route path="/">
+                  <Redirect
+                    to={{
+                      pathname: '/overzicht',
+                    }}
+                  />
+                </Route>
                 <Route>
                   Route not found, please set a route in the url hash (e.g. /overzicht, /wijzig/1234
                   or /nieuw)

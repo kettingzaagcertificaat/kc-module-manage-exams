@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as qs from 'query-string';
 import { Column } from 'primereact/column';
 
@@ -119,6 +119,11 @@ const CourseList: React.FC<{}> = (props) => {
 
   return (
     <Panel title="Examens wijzigen">
+      <div className="mb-1">
+        <Link to="/nieuw">
+          <Button label={'Nieuw examen plannen'} icon="pi pi-plus" />
+        </Link>
+      </div>
       <DataTable
         value={data.Exams?.nodes}
         lazy={true}

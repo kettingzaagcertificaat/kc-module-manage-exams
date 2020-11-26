@@ -1,3 +1,4 @@
+import { Button } from '@erkenningen/ui/components/button';
 import { FormSelect } from '@erkenningen/ui/components/form';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
@@ -8,6 +9,7 @@ import FormSelectGql from 'components/FormSelectGql';
 import { FormikProps } from 'formik';
 import { SpecialtiesDocument, useSearchOrganizersQuery } from 'generated/graphql';
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
 import * as yup from 'yup';
 import CourseNewDetails from './CourseNewDetails';
@@ -51,10 +53,11 @@ const CourseNewSelectSpecialty: React.FC<{}> = () => {
             <Panel title="Nieuw examen maken en plannen">
               {hasRole(Roles.Rector, user?.Roles) && (
                 <FormSelect
+                  className="row"
                   labelClassNames="col-sm-12 text-left"
                   placeholder={'Selecteer een exameninstelling'}
                   name={'ExamenInstellingID'}
-                  label={'Kies de exameninstelling waarvoor u een nieuw examen wilt maken'}
+                  label={'Kies de exameninstelling waarvoor u een nieuw examen wilt maken:'}
                   filter={true}
                   options={
                     organizers.SearchOrganizers?.map((item: any) => ({
@@ -70,10 +73,11 @@ const CourseNewSelectSpecialty: React.FC<{}> = () => {
               )}
               {(formikProps.values.ExamenInstellingID || !hasRole(Roles.Rector, user?.Roles)) && (
                 <FormSelectGql
+                  className="row"
                   labelClassNames="col-sm-12 text-left"
                   placeholder={'Selecteer een examenvak'}
                   name={'VakID'}
-                  label={'Kies het examenvak waarop u het nieuwe examen wilt baseren::'}
+                  label={'Kies het examenvak waarop u het nieuwe examen wilt baseren:'}
                   filter={true}
                   gqlQuery={SpecialtiesDocument}
                   emptyMessage={
@@ -107,6 +111,9 @@ const CourseNewSelectSpecialty: React.FC<{}> = () => {
         )}
       </Form>
       {specialtyId && <CourseNewDetails specialtyId={specialtyId}></CourseNewDetails>}
+      <Link to="/overzicht">
+        <Button label={'Terug naar overzicht'} type="secondary" icon="pi pi-list" />
+      </Link>
     </>
   );
 };

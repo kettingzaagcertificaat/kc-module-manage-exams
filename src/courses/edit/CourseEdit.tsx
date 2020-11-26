@@ -286,9 +286,6 @@ const CourseEdit: React.FC<{}> = (props) => {
               )}
               <FormItem label={' '}>
                 <Button label={'Opslaan'} buttonType="submit" icon="pi pi-check" />
-                <Link to="/overzicht">
-                  <Button label={'Annuleren'} type="secondary" />
-                </Link>
               </FormItem>
             </Panel>
           </>
@@ -299,6 +296,9 @@ const CourseEdit: React.FC<{}> = (props) => {
         visible={showAddLocationDialog}
         examenInstellingId={course.Vak.ExamenInstellingID}
       />
+      <Link to="/overzicht">
+        <Button label={'Terug naar overzicht'} type="secondary" icon="pi pi-list" />
+      </Link>
     </>
   );
 };
