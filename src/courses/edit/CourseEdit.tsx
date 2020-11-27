@@ -156,7 +156,7 @@ const CourseEdit: React.FC<{}> = (props) => {
               input: {
                 CursusID: course.CursusID,
                 SessieID: session.SessieID,
-                VakID: +(course.VakID || 0),
+                VakID: course.VakID || 0,
                 Titel: values.Titel,
                 Promotietekst: values.Promotietekst,
                 Prijs: parseFloat(values.Prijs),
@@ -167,8 +167,8 @@ const CourseEdit: React.FC<{}> = (props) => {
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd.replace('.', ':')),
                 LocatieID: parseInt(values.LocatieID),
-                ExaminatorPersoonID: +values.ExaminatorPersoonID,
-                ExamenVersieID: +values.ExamenVersieID,
+                ExaminatorPersoonID: values.ExaminatorPersoonID,
+                ExamenVersieID: values.ExamenVersieID,
               },
             },
           });
@@ -236,7 +236,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                   return (
                     data.SearchLocations?.map((location) => ({
                       label: `${location.Naam} | ${location.Contactgegevens.Woonplaats}`,
-                      value: '' + location.LocatieID,
+                      value: location.LocatieID,
                     })) || []
                   );
                 }}
@@ -262,7 +262,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                       label: `${examiner.SortableFullName} | ${
                         examiner.Contactgegevens?.Woonplaats || ''
                       }`,
-                      value: '' + examiner.PersoonID,
+                      value: examiner.PersoonID,
                     })) || []
                   );
                 }}
@@ -278,7 +278,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                   gqlQuery={SearchExamVersionsDocument}
                   variables={{
                     input: {
-                      VakID: +(course.Vak.VakID || 0),
+                      VakID: course.Vak.VakID || 0,
                       ExamDate: formikProps.values.Datum,
                     },
                   }}

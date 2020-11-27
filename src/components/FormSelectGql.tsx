@@ -11,7 +11,7 @@ const FormSelectGql: React.FC<
     gqlQuery: DocumentNode;
     variables?: any;
     emptyMessage?: string;
-    mapResult?: (data: any) => { label: string; value: string }[];
+    mapResult?: (data: any) => { label: string; value: any }[];
   } & Omit<React.ComponentProps<typeof FormSelect>, 'options'>
 > = (props) => {
   const { loading, error, data } = useQuery(props.gqlQuery, {

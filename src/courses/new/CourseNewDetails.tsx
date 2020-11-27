@@ -141,7 +141,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
           const result = await saveExam({
             variables: {
               input: {
-                VakID: +specialty.Specialty.VakID,
+                VakID: specialty.Specialty.VakID,
                 Titel: values.Titel,
                 Promotietekst: values.Promotietekst,
                 Prijs: parseFloat(values.Prijs),
@@ -152,8 +152,8 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd.replace('.', ':')),
                 LocatieID: parseInt(values.LocatieID),
-                ExaminatorPersoonID: +values.ExaminatorPersoonID,
-                ExamenVersieID: +values.ExamenVersieID,
+                ExaminatorPersoonID: values.ExaminatorPersoonID,
+                ExamenVersieID: values.ExamenVersieID,
               },
             },
           });
@@ -221,7 +221,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                   return (
                     data.SearchLocations?.map((location) => ({
                       label: `${location.Naam} | ${location.Contactgegevens.Woonplaats}`,
-                      value: '' + location.LocatieID,
+                      value: location.LocatieID,
                     })) || []
                   );
                 }}
@@ -247,7 +247,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                       label: `${examiner.SortableFullName} | ${
                         examiner.Contactgegevens?.Woonplaats || ''
                       }`,
-                      value: '' + examiner.PersoonID,
+                      value: examiner.PersoonID,
                     })) || []
                   );
                 }}
@@ -263,7 +263,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                   gqlQuery={SearchExamVersionsDocument}
                   variables={{
                     input: {
-                      VakID: +(specialty.Specialty?.VakID || 0),
+                      VakID: specialty.Specialty?.VakID || 0,
                       ExamDate: formikProps.values.Datum,
                     },
                   }}
