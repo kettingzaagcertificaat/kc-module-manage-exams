@@ -15,6 +15,7 @@ import { UserContext, useAuth, Roles, hasOneOfRoles } from './shared/Auth';
 import CourseList from 'courses/list/CourseList';
 import CourseNewSelectSpecialty from 'courses/new/CourseNewSelectSpecialty';
 import CourseDetails from 'courses/details/CourseDetails';
+import { ConfirmationServiceProvider } from 'shared/useConfirm';
 
 // @TODO Move to lib?
 yup.setLocale({
@@ -69,32 +70,34 @@ const App: React.FC<{}> = (props) => {
 
   return (
     <HashRouter>
-      <UserContext.Provider value={auth.my}>
-        <ThemeContext.Provider value={{ mode: 'admin' }}>
-          <GrowlProvider>
-            <ThemeKC>
-              <Switch>
-                <Route path="/wijzig/:id" component={CourseEdit} />
-                <Route path="/details/:id" component={CourseDetails} />
-                <Route path="/nieuw" component={CourseNewSelectSpecialty} />
-                <Route path="/gereed/:examVersionId" component={CourseReady} />
-                <Route path="/overzicht" component={CourseList} />
-                <Route path="/">
-                  <Redirect
-                    to={{
-                      pathname: '/overzicht',
-                    }}
-                  />
-                </Route>
-                <Route>
-                  Route not found, please set a route in the url hash (e.g. /overzicht, /wijzig/1234
-                  or /nieuw)
-                </Route>
-              </Switch>
-            </ThemeKC>
-          </GrowlProvider>
-        </ThemeContext.Provider>
-      </UserContext.Provider>
+      <ThemeKC>
+        <UserContext.Provider value={auth.my}>
+          <ThemeContext.Provider value={{ mode: 'admin' }}>
+            <GrowlProvider>
+              <ConfirmationServiceProvider>
+                <Switch>
+                  <Route path="/wijzig/:id" component={CourseEdit} />
+                  <Route path="/details/:id" component={CourseDetails} />
+                  <Route path="/nieuw" component={CourseNewSelectSpecialty} />
+                  <Route path="/gereed/:examVersionId" component={CourseReady} />
+                  <Route path="/overzicht" component={CourseList} />
+                  <Route path="/">
+                    <Redirect
+                      to={{
+                        pathname: '/overzicht',
+                      }}
+                    />
+                  </Route>
+                  <Route>
+                    Route not found, please set a route in the url hash (e.g. /overzicht,
+                    /wijzig/1234 or /nieuw)
+                  </Route>
+                </Switch>
+              </ConfirmationServiceProvider>
+            </GrowlProvider>
+          </ThemeContext.Provider>
+        </UserContext.Provider>
+      </ThemeKC>
     </HashRouter>
   );
 };

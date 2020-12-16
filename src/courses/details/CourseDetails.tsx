@@ -5,25 +5,18 @@ import { Spinner } from '@erkenningen/ui/components/spinner';
 import { Panel } from '@erkenningen/ui/layout/panel';
 
 import { useExamDetailsQuery } from 'generated/graphql';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Button } from '@erkenningen/ui/components/button';
 import { Row } from '@erkenningen/ui/layout/row';
 import { Col } from '@erkenningen/ui/layout/col';
 import { Alert } from '@erkenningen/ui/components/alert';
 import { getTimeDisplay } from 'utils/time';
-import { toDutchDate } from '@erkenningen/ui/utils';
-
-const FormStaticItem: React.FC<{ label: string }> = (props) => {
-  return (
-    <div className={''}>
-      <label className={'col-sm-4 control-label'}>{props.label}</label>
-      <div className={'col-md-8 form-control-static'}>{props.children}</div>
-    </div>
-  );
-};
+import { toDutchDate, toDutchMoney } from '@erkenningen/ui/utils';
+import { FormStaticItem } from 'components/FormStaticItem';
 
 const CourseDetails: React.FC<{}> = (props) => {
   const { showGrowl } = useGrowlContext();
+  const history = useHistory();
 
   const { id: courseId } = useParams<any>();
 
@@ -72,7 +65,7 @@ const CourseDetails: React.FC<{}> = (props) => {
             <FormStaticItem label="Titel">{course.Titel}</FormStaticItem>
             <FormStaticItem label="Examendatum">{course.CursusID}</FormStaticItem>
             <FormStaticItem label="Promotietekst">{course.Promotietekst}</FormStaticItem>
-            <FormStaticItem label="Prijs">{course.Prijs}</FormStaticItem>
+            <FormStaticItem label="Prijs">&euro; {toDutchMoney(course.Prijs)}</FormStaticItem>
           </Panel>
         </Col>
         <Col size={'col-md-6'}>
@@ -93,7 +86,9 @@ const CourseDetails: React.FC<{}> = (props) => {
               {course.Vak.ExamenInstelling?.Contactgegevens.Telefoon}
             </FormStaticItem>
             <FormStaticItem label="E-mail">
-              {course.Vak.ExamenInstelling?.Contactgegevens.Email}
+              <a href={`mailto:${course.Vak.ExamenInstelling?.Contactgegevens.Email}`}>
+                {course.Vak.ExamenInstelling?.Contactgegevens.Email}
+              </a>
             </FormStaticItem>
           </Panel>
         </Col>
@@ -175,35 +170,43 @@ const CourseDetails: React.FC<{}> = (props) => {
       <Row>
         <Col>
           <Panel title="Deelnemers" className="form-horizontal" doNotIncludeBody={true}>
-            <div className="table-responsive">
-              <table
-                className="table table-striped table-responsive"
-                cellSpacing={0}
-                style={{ borderCollapse: 'collapse' }}
-              >
-                <tbody>
-                  <tr>
-                    <th>ID</th>
-                    <th>Naam</th>
-                    <th>Status</th>
-                  </tr>
-                  {course.CursusDeelnames?.map((participation, index) => (
-                    <tr key={index}>
-                      <td>KC-{participation.Persoon.PersoonID}</td>
-                      <td>{participation.Persoon.SortableFullName}</td>
-                      <td>{participation.Status}</td>
+            {!course.CursusDeelnames?.length ? (
+              <Alert type={'info'}>Er zijn nog geen deelnemers gemeld.</Alert>
+            ) : (
+              <div className="table-responsive">
+                <table
+                  className="table table-striped table-responsive"
+                  cellSpacing={0}
+                  style={{ borderCollapse: 'collapse' }}
+                >
+                  <tbody>
+                    <tr>
+                      <th>ID</th>
+                      <th>Naam</th>
+                      <th>Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    {course.CursusDeelnames?.map((participation, index) => (
+                      <tr key={index}>
+                        <td>KC-{participation.Persoon.PersoonID}</td>
+                        <td>{participation.Persoon.SortableFullName}</td>
+                        <td>{participation.Status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </Panel>
         </Col>
       </Row>
 
-      <Link to="/overzicht">
-        <Button label={'Terug naar overzicht'} type="secondary" icon="pi pi-list" />
-      </Link>
+      <Button
+        label={'Bewerken'}
+        icon="fas fa-edit"
+        onClick={() => history.push(`/wijzig/${course.CursusID}`)}
+        style={{ marginRight: '1rem' }}
+      />
+      <Link to="/overzicht">Terug naar overzicht</Link>
     </>
   );
 };

@@ -113,6 +113,7 @@ query ExamDetails($input: searchExamInput!) {
         VakID
         MinimumDatum
         MaximumDatum
+        Titel
         ExamenInstellingID
         ExamenInstelling {
           Naam
@@ -227,4 +228,8 @@ mutation saveLocation($input: saveLocationInput!) {
     LocatieID
     Naam
   }
+}
+
+mutation deleteExam($input: DeleteExamInput!) {
+  deleteExam(input: $input)
 }

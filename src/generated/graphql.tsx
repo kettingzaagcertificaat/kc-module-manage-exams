@@ -24,7 +24,7 @@ export type Scalars = {
 
 export type Beoordeling = {
   __typename?: 'Beoordeling';
-  BeoorderlingID: Scalars['Int'];
+  BeoordelingID: Scalars['Int'];
   VakID: Scalars['Int'];
   PersoonID?: Maybe<Scalars['Int']>;
   Status?: Maybe<BeoordelingStatusEnum>;
@@ -871,6 +871,7 @@ export type Mutation = {
   /** The `requestDuplicate` can be used to request a license card duplicate */
   requestDuplicate: RequestDuplicateResult;
   saveExam?: Maybe<Cursus>;
+  deleteExam?: Maybe<Scalars['Boolean']>;
   exportCards: ExportCardsResult;
   updatePlanning: UpdatePlanningResult;
   updateInvoiceStatus: UpdateInvoiceStatusResult;
@@ -895,6 +896,11 @@ export type MutationRequestDuplicateArgs = {
 
 export type MutationSaveExamArgs = {
   input: SaveExamInput;
+};
+
+
+export type MutationDeleteExamArgs = {
+  input: DeleteExamInput;
 };
 
 
@@ -1009,6 +1015,10 @@ export type SaveExamInput = {
   Datum: Scalars['Date'];
   Begintijd: Scalars['Date'];
   Eindtijd: Scalars['Date'];
+};
+
+export type DeleteExamInput = {
+  CursusID?: Maybe<Scalars['Int']>;
 };
 
 export type Exam = {
@@ -1570,7 +1580,7 @@ export type ExamDetailsQuery = (
       & Pick<Cursus, 'CursusID' | 'VakID' | 'CursusleiderID' | 'Prijs' | 'Titel' | 'Promotietekst' | 'IsBesloten' | 'MaximumCursisten' | 'Opmerkingen' | 'Status' | 'CursusCode' | 'DatumAangemaakt' | 'DatumGewijzigd' | 'PersoonIDAangemaakt' | 'PersoonIDGewijzigd'>
       & { Vak: (
         { __typename?: 'Vak' }
-        & Pick<Vak, 'VakID' | 'MinimumDatum' | 'MaximumDatum' | 'ExamenInstellingID'>
+        & Pick<Vak, 'VakID' | 'MinimumDatum' | 'MaximumDatum' | 'Titel' | 'ExamenInstellingID'>
         & { ExamenInstelling?: Maybe<(
           { __typename?: 'ExamenInstelling' }
           & Pick<ExamenInstelling, 'Naam'>
@@ -1695,6 +1705,16 @@ export type SaveLocationMutation = (
     { __typename?: 'Locatie' }
     & Pick<Locatie, 'LocatieID' | 'Naam'>
   ) }
+);
+
+export type DeleteExamMutationVariables = Exact<{
+  input: DeleteExamInput;
+}>;
+
+
+export type DeleteExamMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteExam'>
 );
 
 
@@ -1974,6 +1994,7 @@ export const ExamDetailsDocument = gql`
         VakID
         MinimumDatum
         MaximumDatum
+        Titel
         ExamenInstellingID
         ExamenInstelling {
           Naam
@@ -2248,3 +2269,33 @@ export function useSaveLocationMutation(baseOptions?: Apollo.MutationHookOptions
 export type SaveLocationMutationHookResult = ReturnType<typeof useSaveLocationMutation>;
 export type SaveLocationMutationResult = Apollo.MutationResult<SaveLocationMutation>;
 export type SaveLocationMutationOptions = Apollo.BaseMutationOptions<SaveLocationMutation, SaveLocationMutationVariables>;
+export const DeleteExamDocument = gql`
+    mutation deleteExam($input: DeleteExamInput!) {
+  deleteExam(input: $input)
+}
+    `;
+export type DeleteExamMutationFn = Apollo.MutationFunction<DeleteExamMutation, DeleteExamMutationVariables>;
+
+/**
+ * __useDeleteExamMutation__
+ *
+ * To run a mutation, you first call `useDeleteExamMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteExamMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteExamMutation, { data, loading, error }] = useDeleteExamMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteExamMutation(baseOptions?: Apollo.MutationHookOptions<DeleteExamMutation, DeleteExamMutationVariables>) {
+        return Apollo.useMutation<DeleteExamMutation, DeleteExamMutationVariables>(DeleteExamDocument, baseOptions);
+      }
+export type DeleteExamMutationHookResult = ReturnType<typeof useDeleteExamMutation>;
+export type DeleteExamMutationResult = Apollo.MutationResult<DeleteExamMutation>;
+export type DeleteExamMutationOptions = Apollo.BaseMutationOptions<DeleteExamMutation, DeleteExamMutationVariables>;

@@ -5,6 +5,7 @@ import {
   FormCheckbox,
   FormCurrency,
   FormItem,
+  FormNumber,
   FormText,
 } from '@erkenningen/ui/components/form';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
@@ -13,6 +14,7 @@ import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
+import { FormStaticItem } from 'components/FormStaticItem';
 import { addDays, addYears, subYears } from 'date-fns';
 import { FormikHelpers, FormikProps } from 'formik';
 import {
@@ -21,6 +23,7 @@ import {
   SearchExamVersionsDocument,
   SearchLocationsDocument,
   SearchLocationsQuery,
+  useDeleteExamMutation,
   useExamDetailsQuery,
   useSaveExamMutation,
 } from 'generated/graphql';
@@ -28,6 +31,7 @@ import AddLocation from 'location/AddLocation';
 import React, { useContext, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
+import { useConfirm } from 'shared/useConfirm';
 import { getTimeDisplay } from 'utils/time';
 import * as yup from 'yup';
 
@@ -35,6 +39,7 @@ const CourseEdit: React.FC<{}> = (props) => {
   const [showAddLocationDialog, setShowAddLocationDialog] = useState<boolean>(false);
   const [currentForm, setCurrentForm] = useState<FormikProps<any>>();
   const { clearGrowl, showGrowl } = useGrowlContext();
+  const confirm = useConfirm();
   const user = useContext(UserContext);
   const history = useHistory();
 
@@ -65,8 +70,25 @@ const CourseEdit: React.FC<{}> = (props) => {
       showGrowl({
         severity: 'error',
         summary: 'Examen niet gewijzigd',
-        sticky: true,
         detail: `Er is een fout opgetreden bij het wijzigen van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
+      });
+    },
+  });
+
+  const [deleteExam] = useDeleteExamMutation({
+    onCompleted(data) {
+      showGrowl({
+        severity: 'success',
+        summary: 'Examen verwijderd',
+        detail: 'Het examen is succesvol verwijderd.',
+      });
+    },
+    onError(e) {
+      showGrowl({
+        severity: 'error',
+        summary: 'Examen niet verwijderd',
+        sticky: true,
+        detail: `Er is een fout opgetreden bij het verwijderen van het examen: ${e.message}`,
       });
     },
   });
@@ -81,6 +103,15 @@ const CourseEdit: React.FC<{}> = (props) => {
       currentForm.setFieldValue('LocatieID', LocatieID);
     }
     setShowAddLocationDialog(false);
+  };
+
+  const deleteCourse = () => {
+    confirm({
+      variant: 'danger',
+      title: 'Examen verwijderen',
+      description: `Weet u zeker dat u examen '${course.Titel}' wilt verwijderen?`,
+      onOk: () => deleteExam({ variables: { input: { CursusID: course.CursusID } } }),
+    });
   };
 
   if (examLoading) {
@@ -181,10 +212,12 @@ const CourseEdit: React.FC<{}> = (props) => {
         {(formikProps: FormikProps<any>) => (
           <>
             <Panel title="Examen wijzigen" className="form-horizontal">
-              <p>
-                Examenvak geldig van {toDutchDate(course.Vak.MinimumDatum)} t/m{' '}
-                {toDutchDate(course.Vak.MaximumDatum)}
-              </p>
+              <FormStaticItem label="Vak" labelClassNames={'col-sm-4 col-md-3'}>
+                {course.Vak.Titel}
+              </FormStaticItem>
+              <FormStaticItem label="Geldigheid" labelClassNames={'col-sm-4 col-md-3'}>
+                {toDutchDate(course.Vak.MinimumDatum)} t/m {toDutchDate(course.Vak.MaximumDatum)}
+              </FormStaticItem>
               <FormText name={'Titel'} label={'Titel *'} />
               <FormText name={'Promotietekst'} label={'Promotietekst *'} isTextArea={true} />
               <FormCurrency
@@ -193,11 +226,14 @@ const CourseEdit: React.FC<{}> = (props) => {
                 formControlClassName="col-sm-2"
                 placeholder={'0,00'}
               />
-              <FormText
+              <FormNumber
                 name={'MaximumCursisten'}
                 label={'Max. aantal deelnemers *'}
                 formControlClassName="col-sm-2"
                 placeholder={'1'}
+                useGrouping={false}
+                min={1}
+                max={9999}
               />
               <FormCheckbox name={'IsBesloten'} label={'Besloten'} />
               <FormText name={'Opmerkingen'} label={'Opmerkingen'} isTextArea={true} />
@@ -285,7 +321,13 @@ const CourseEdit: React.FC<{}> = (props) => {
                 />
               )}
               <FormItem label={' '}>
-                <Button label={'Opslaan'} buttonType="submit" icon="pi pi-check" />
+                <Button label={'Opslaan'} buttonType="submit" icon="fas fa-check" />
+                <Button
+                  label={'Verwijderen'}
+                  icon="fas fa-trash"
+                  onClick={() => deleteCourse()}
+                  type={'danger'}
+                />
               </FormItem>
             </Panel>
           </>
@@ -296,9 +338,7 @@ const CourseEdit: React.FC<{}> = (props) => {
         visible={showAddLocationDialog}
         examenInstellingId={course.Vak.ExamenInstellingID}
       />
-      <Link to="/overzicht">
-        <Button label={'Terug naar overzicht'} type="secondary" icon="pi pi-list" />
-      </Link>
+      <Link to="/overzicht">Terug naar overzicht</Link>
     </>
   );
 };

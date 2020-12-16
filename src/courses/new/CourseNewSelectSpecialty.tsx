@@ -1,17 +1,19 @@
-import { Button } from '@erkenningen/ui/components/button';
+import React, { useContext, useState } from 'react';
+
+import * as yup from 'yup';
+import { Link } from 'react-router-dom';
+import { FormikProps } from 'formik';
+
 import { FormSelect } from '@erkenningen/ui/components/form';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
 import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
+
+import { SpecialtiesDocument, useSearchOrganizersQuery } from 'generated/graphql';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
-import { FormikProps } from 'formik';
-import { SpecialtiesDocument, useSearchOrganizersQuery } from 'generated/graphql';
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
-import * as yup from 'yup';
 import CourseNewDetails from './CourseNewDetails';
 
 const CourseNewSelectSpecialty: React.FC<{}> = () => {
@@ -111,9 +113,7 @@ const CourseNewSelectSpecialty: React.FC<{}> = () => {
         )}
       </Form>
       {specialtyId && <CourseNewDetails specialtyId={specialtyId}></CourseNewDetails>}
-      <Link to="/overzicht">
-        <Button label={'Terug naar overzicht'} type="secondary" icon="pi pi-list" />
-      </Link>
+      <Link to="/overzicht">Terug naar overzicht</Link>
     </>
   );
 };

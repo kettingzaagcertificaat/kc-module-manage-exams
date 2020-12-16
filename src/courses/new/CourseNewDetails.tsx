@@ -5,6 +5,7 @@ import {
   FormCheckbox,
   FormCurrency,
   FormItem,
+  FormNumber,
   FormText,
 } from '@erkenningen/ui/components/form';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
@@ -178,11 +179,14 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 formControlClassName="col-sm-2"
                 placeholder={'0,00'}
               />
-              <FormText
+              <FormNumber
                 name={'MaximumCursisten'}
                 label={'Max. aantal deelnemers *'}
                 formControlClassName="col-sm-2"
                 placeholder={'1'}
+                useGrouping={false}
+                min={1}
+                max={9999}
               />
               <FormCheckbox name={'IsBesloten'} label={'Besloten'} />
               <FormText name={'Opmerkingen'} label={'Opmerkingen'} isTextArea={true} />
