@@ -56,7 +56,7 @@ const CourseList: React.FC<{}> = (props) => {
     if (Number.isInteger(parsed.pageNumber)) {
       pageNumber = parsed.pageNumber as number;
     }
-    let pageSize = 3;
+    let pageSize = 10;
     if (Number.isInteger(parsed.pageSize)) {
       pageSize = parsed.pageSize as number;
     }
@@ -237,7 +237,7 @@ const CourseList: React.FC<{}> = (props) => {
           loading={loading}
           paginator={true}
           rows={pagination.pageSize || 10}
-          rowsPerPageOptions={[3, 10, 25, 50, 100]}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           first={pagination.first}
           onPage={(e: { first: number; rows: number; page: number; pageCount: number }) => {
             setStateAndQueryParam({
