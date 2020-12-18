@@ -71,7 +71,6 @@ query Exams($input: examsInput!) {
       VakID
       Titel
       CursusCode
-      IsBesloten
       Sessies {
         SessieID
         Datum
@@ -87,6 +86,7 @@ query Exams($input: examsInput!) {
       CursusDeelnames {
         Status
       }
+      AantalCursusDeelnames
     }
   }
 }
@@ -100,7 +100,6 @@ query ExamDetails($input: searchExamInput!) {
       Prijs
       Titel
       Promotietekst
-      IsBesloten
       MaximumCursisten
       Opmerkingen
       Status

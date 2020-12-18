@@ -2,7 +2,6 @@ import { Alert } from '@erkenningen/ui/components/alert';
 import { Button } from '@erkenningen/ui/components/button';
 import {
   FormCalendar,
-  FormCheckbox,
   FormCurrency,
   FormItem,
   FormNumber,
@@ -148,8 +147,7 @@ const CourseEdit: React.FC<{}> = (props) => {
           LocatieID: [session.Locatie?.LocatieID, yup.number().required()],
           Titel: [course.Titel, yup.string().max(255).required()],
           Promotietekst: [course.Promotietekst, yup.string().max(5000).required()],
-          Prijs: [course.Prijs, yup.number().required()],
-          IsBesloten: [course.IsBesloten, yup.boolean().required()],
+          Prijs: [course.Prijs, yup.number().required().max(1000)],
           MaximumCursisten: [course.MaximumCursisten, yup.number().required()],
           Opmerkingen: [course.Opmerkingen, yup.string().max(1000)],
           Datum: [session.Datum ? new Date(session.Datum) : null, yup.date().required()],
@@ -192,7 +190,6 @@ const CourseEdit: React.FC<{}> = (props) => {
                 Promotietekst: values.Promotietekst,
                 Prijs: parseFloat(values.Prijs),
                 MaximumCursisten: parseInt(values.MaximumCursisten),
-                IsBesloten: values.IsBesloten,
                 Opmerkingen: values.Opmerkingen,
                 Datum: values.Datum,
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
@@ -225,6 +222,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                 label={'Prijs per deelnemer *'}
                 formControlClassName="col-sm-2"
                 placeholder={'0,00'}
+                max={1000}
               />
               <FormNumber
                 name={'MaximumCursisten'}
@@ -235,7 +233,6 @@ const CourseEdit: React.FC<{}> = (props) => {
                 min={1}
                 max={9999}
               />
-              <FormCheckbox name={'IsBesloten'} label={'Besloten'} />
               <FormText name={'Opmerkingen'} label={'Opmerkingen'} isTextArea={true} />
               <FormCalendar
                 name={'Datum'}

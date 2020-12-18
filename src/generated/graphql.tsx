@@ -1010,7 +1010,6 @@ export type SaveExamInput = {
   Promotietekst: Scalars['SafeString'];
   Prijs: Scalars['Float'];
   MaximumCursisten: Scalars['Int'];
-  IsBesloten: Scalars['Boolean'];
   Opmerkingen?: Maybe<Scalars['SafeString']>;
   Datum: Scalars['Date'];
   Begintijd: Scalars['Date'];
@@ -1546,7 +1545,7 @@ export type ExamsQuery = (
       & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage'>
     )>, nodes?: Maybe<Array<Maybe<(
       { __typename?: 'Cursus' }
-      & Pick<Cursus, 'CursusID' | 'VakID' | 'Titel' | 'CursusCode' | 'IsBesloten'>
+      & Pick<Cursus, 'CursusID' | 'VakID' | 'Titel' | 'CursusCode' | 'AantalCursusDeelnames'>
       & { Sessies?: Maybe<Array<Maybe<(
         { __typename?: 'Sessie' }
         & Pick<Sessie, 'SessieID' | 'Datum'>
@@ -1577,7 +1576,7 @@ export type ExamDetailsQuery = (
     { __typename?: 'Exam' }
     & { Cursus?: Maybe<(
       { __typename?: 'Cursus' }
-      & Pick<Cursus, 'CursusID' | 'VakID' | 'CursusleiderID' | 'Prijs' | 'Titel' | 'Promotietekst' | 'IsBesloten' | 'MaximumCursisten' | 'Opmerkingen' | 'Status' | 'CursusCode' | 'DatumAangemaakt' | 'DatumGewijzigd' | 'PersoonIDAangemaakt' | 'PersoonIDGewijzigd'>
+      & Pick<Cursus, 'CursusID' | 'VakID' | 'CursusleiderID' | 'Prijs' | 'Titel' | 'Promotietekst' | 'MaximumCursisten' | 'Opmerkingen' | 'Status' | 'CursusCode' | 'DatumAangemaakt' | 'DatumGewijzigd' | 'PersoonIDAangemaakt' | 'PersoonIDGewijzigd'>
       & { Vak: (
         { __typename?: 'Vak' }
         & Pick<Vak, 'VakID' | 'MinimumDatum' | 'MaximumDatum' | 'Titel' | 'ExamenInstellingID'>
@@ -1925,7 +1924,6 @@ export const ExamsDocument = gql`
       VakID
       Titel
       CursusCode
-      IsBesloten
       Sessies {
         SessieID
         Datum
@@ -1941,6 +1939,7 @@ export const ExamsDocument = gql`
       CursusDeelnames {
         Status
       }
+      AantalCursusDeelnames
     }
   }
 }
@@ -1981,7 +1980,6 @@ export const ExamDetailsDocument = gql`
       Prijs
       Titel
       Promotietekst
-      IsBesloten
       MaximumCursisten
       Opmerkingen
       Status

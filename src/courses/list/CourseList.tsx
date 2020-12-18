@@ -4,11 +4,12 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import * as qs from 'query-string';
 import * as yup from 'yup';
 import { Column } from 'primereact/column';
+import { Tooltip } from 'primereact/tooltip';
 
 import { Alert } from '@erkenningen/ui/components/alert';
 import { Button } from '@erkenningen/ui/components/button';
 import {
-  CursusDeelnameStatusEnum,
+  //  CursusDeelnameStatusEnum,
   SortDirectionEnum,
   useDeleteExamMutation,
   useExamsLazyQuery,
@@ -218,8 +219,18 @@ const CourseList: React.FC<{}> = (props) => {
               <>
                 <FormText name={'examCode'} label={'Examencode'} formControlClassName="col-sm-3" />
                 <FormText name={'title'} label={'Titel'} formControlClassName="col-sm-3" />
-                <FormCalendar name={'from'} label={'Datum van'} formControlClassName="col-sm-3" />
-                <FormCalendar name={'to'} label={'Datum tot/met'} formControlClassName="col-sm-3" />
+                <FormCalendar
+                  name={'from'}
+                  label={'Datum van'}
+                  showButtonBar={true}
+                  formControlClassName="col-sm-3"
+                />
+                <FormCalendar
+                  name={'to'}
+                  label={'Datum tot/met'}
+                  showButtonBar={true}
+                  formControlClassName="col-sm-3"
+                />
                 <FormItem label={' '}>
                   <Button label={'Zoeken'} buttonType="submit" />
                 </FormItem>
@@ -285,13 +296,6 @@ const CourseList: React.FC<{}> = (props) => {
             )}
           />
           <Column field="CursusCode" header={'Examencode'} sortable={true} />
-          <Column
-            field="IsBesloten"
-            header={''}
-            headerStyle={{ width: '2rem' }}
-            bodyClassName={styles.center}
-            body={(row: any) => (row.IsBesloten ? <i className={'fas fa-lock'}></i> : '')}
-          />
           <Column field="Titel" header={'Titel'} sortable={true} />
           <Column
             field="Datum"
@@ -312,14 +316,16 @@ const CourseList: React.FC<{}> = (props) => {
             }
           />
           <Column
-            field="AantalDeelnemers"
-            headerStyle={{ width: '4rem' }}
+            field="AantalCursusDeelnames"
+            sortField={'AantalCursusDeelnames'}
+            sortable={true}
+            headerStyle={{ width: '6rem' }}
             bodyClassName={styles.center}
-            header={<i className={'fas fa-users'} />}
-            body={(row: any) =>
-              row.CursusDeelnames.filter(
-                (cd: any) => cd.Status !== CursusDeelnameStatusEnum.Afgemeld,
-              ).length
+            header={
+              <>
+                <Tooltip target=".numParticipants" position={'top'} />
+                <i className={'fas fa-users numParticipants'} data-pr-tooltip="Aantal deelnemers" />
+              </>
             }
           />
         </DataTable>

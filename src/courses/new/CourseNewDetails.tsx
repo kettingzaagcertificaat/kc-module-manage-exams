@@ -2,7 +2,6 @@ import { Alert } from '@erkenningen/ui/components/alert';
 import { Button } from '@erkenningen/ui/components/button';
 import {
   FormCalendar,
-  FormCheckbox,
   FormCurrency,
   FormItem,
   FormNumber,
@@ -101,8 +100,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
           LocatieID: [null, yup.number().required()],
           Titel: [specialty.Specialty.Titel, yup.string().max(255).required()],
           Promotietekst: [specialty.Specialty.Promotietekst, yup.string().max(5000).required()],
-          Prijs: [specialty.Specialty.Kosten, yup.number().required()],
-          IsBesloten: [false, yup.boolean().required()],
+          Prijs: [specialty.Specialty.Kosten, yup.number().required().max(1000)],
           MaximumCursisten: [specialty.Specialty.MaximumCursisten, yup.number().required()],
           Opmerkingen: ['', yup.string().max(1000)],
           Datum: [null, yup.date().required()],
@@ -147,7 +145,6 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 Promotietekst: values.Promotietekst,
                 Prijs: parseFloat(values.Prijs),
                 MaximumCursisten: parseInt(values.MaximumCursisten),
-                IsBesloten: values.IsBesloten,
                 Opmerkingen: values.Opmerkingen,
                 Datum: values.Datum,
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
@@ -178,6 +175,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 label={'Prijs per deelnemer *'}
                 formControlClassName="col-sm-2"
                 placeholder={'0,00'}
+                max={1000}
               />
               <FormNumber
                 name={'MaximumCursisten'}
@@ -188,7 +186,6 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 min={1}
                 max={9999}
               />
-              <FormCheckbox name={'IsBesloten'} label={'Besloten'} />
               <FormText name={'Opmerkingen'} label={'Opmerkingen'} isTextArea={true} />
               <FormCalendar
                 name={'Datum'}

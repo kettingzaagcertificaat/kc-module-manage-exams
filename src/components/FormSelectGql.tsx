@@ -32,7 +32,7 @@ const FormSelectGql: React.FC<
     (!data[Object.keys(data)[0]] || !data[Object.keys(data)[0]].length)
   ) {
     return (
-      <FormItem label={' '}>
+      <FormItem label={' '} className={props.className} labelClassNames={props.labelClassNames}>
         <Alert type="warning">{props.emptyMessage}</Alert>
       </FormItem>
     );
