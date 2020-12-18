@@ -18,7 +18,7 @@ import { DataTable } from '@erkenningen/ui/components/datatable';
 import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
-import { useConfirm } from 'shared/useConfirm';
+import { useConfirm } from '@erkenningen/ui/components/confirm';
 
 import styles from './CourseList.module.scss';
 import { FormikProps } from 'formik';
@@ -217,19 +217,19 @@ const CourseList: React.FC<{}> = (props) => {
           >
             {(formikProps: FormikProps<any>) => (
               <>
-                <FormText name={'examCode'} label={'Examencode'} formControlClassName="col-sm-3" />
-                <FormText name={'title'} label={'Titel'} formControlClassName="col-sm-3" />
+                <FormText name={'examCode'} label={'Examencode'} formControlClassName="col-sm-4" />
+                <FormText name={'title'} label={'Titel'} formControlClassName="col-sm-4" />
                 <FormCalendar
                   name={'from'}
                   label={'Datum van'}
                   showButtonBar={true}
-                  formControlClassName="col-sm-3"
+                  formControlClassName="col-sm-3 col-md-2"
                 />
                 <FormCalendar
                   name={'to'}
                   label={'Datum tot/met'}
                   showButtonBar={true}
-                  formControlClassName="col-sm-3"
+                  formControlClassName="col-sm-3 col-md-2"
                 />
                 <FormItem label={' '}>
                   <Button label={'Zoeken'} buttonType="submit" />

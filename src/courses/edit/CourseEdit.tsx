@@ -30,7 +30,7 @@ import AddLocation from 'location/AddLocation';
 import React, { useContext, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
-import { useConfirm } from 'shared/useConfirm';
+import { useConfirm } from '@erkenningen/ui/components/confirm';
 import { getTimeDisplay } from 'utils/time';
 import * as yup from 'yup';
 

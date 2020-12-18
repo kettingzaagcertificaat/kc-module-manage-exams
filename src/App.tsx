@@ -8,6 +8,7 @@ import { Alert } from '@erkenningen/ui/components/alert';
 import { GrowlProvider } from '@erkenningen/ui/components/growl';
 import { ThemeKC } from '@erkenningen/ui/layout/theme';
 import { ThemeContext } from '@erkenningen/ui/layout/theme';
+import { ConfirmProvider } from '@erkenningen/ui/components/confirm';
 
 import CourseEdit from './courses/edit/CourseEdit';
 import CourseReady from './courses/ready/CourseReady';
@@ -15,7 +16,6 @@ import { UserContext, useAuth, Roles, hasOneOfRoles } from './shared/Auth';
 import CourseList from 'courses/list/CourseList';
 import CourseNewSelectSpecialty from 'courses/new/CourseNewSelectSpecialty';
 import CourseDetails from 'courses/details/CourseDetails';
-import { ConfirmationServiceProvider } from 'shared/useConfirm';
 
 // @TODO Move to lib?
 yup.setLocale({
@@ -74,7 +74,7 @@ const App: React.FC<{}> = (props) => {
         <UserContext.Provider value={auth.my}>
           <ThemeContext.Provider value={{ mode: 'admin' }}>
             <GrowlProvider>
-              <ConfirmationServiceProvider>
+              <ConfirmProvider>
                 <Switch>
                   <Route path="/wijzig/:id" component={CourseEdit} />
                   <Route path="/details/:id" component={CourseDetails} />
@@ -93,7 +93,7 @@ const App: React.FC<{}> = (props) => {
                     /wijzig/1234 or /nieuw)
                   </Route>
                 </Switch>
-              </ConfirmationServiceProvider>
+              </ConfirmProvider>
             </GrowlProvider>
           </ThemeContext.Provider>
         </UserContext.Provider>
