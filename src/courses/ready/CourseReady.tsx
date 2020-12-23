@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { Panel } from '@erkenningen/ui/layout/panel';
 import { Button } from '@erkenningen/ui/components/button';
-import { FormItem } from '@erkenningen/ui/components/form';
+import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { useExamVersionDocumentsQuery } from 'generated/graphql';
 import { toDutchDate } from '@erkenningen/ui/utils';
 
@@ -30,19 +30,19 @@ const CourseReady: React.FC<{}> = (props) => {
         <Panel title="Papieren examen documenten" className="form-horizontal">
           <p>Hieronder kunt u de examen documenten downloaden door op de link te klikken.</p>
 
-          <FormItem label={'Examen versie'} formControlClassName="form-control-static col-md-9">
+          <FormStaticItem label={'Examen versie'}>
             {examVersion?.ExamVersionDocuments?.ExamenVersieCode}
-          </FormItem>
-          <FormItem label={'Omschrijving '} formControlClassName="form-control-static col-md-9">
+          </FormStaticItem>
+          <FormStaticItem label={'Omschrijving '}>
             {examVersion?.ExamVersionDocuments?.ExamenOmschrijving}
-          </FormItem>
-          <FormItem label={'Startdatum'} formControlClassName="form-control-static col-md-9">
+          </FormStaticItem>
+          <FormStaticItem label={'Startdatum'}>
             {toDutchDate(examVersion?.ExamVersionDocuments?.StartDatum)}
-          </FormItem>
-          <FormItem label={'Einddatum'} formControlClassName="form-control-static col-md-9">
+          </FormStaticItem>
+          <FormStaticItem label={'Einddatum'}>
             {toDutchDate(examVersion?.ExamVersionDocuments?.EindDatum)}
-          </FormItem>
-          <FormItem label={'Document(en)'} formControlClassName="form-control-static col-md-9">
+          </FormStaticItem>
+          <FormStaticItem label={'Document(en)'}>
             {examVersion?.ExamVersionDocuments.Documenten?.map((doc) => (
               <div key={doc.Document.DocumentID}>
                 <a
@@ -54,7 +54,7 @@ const CourseReady: React.FC<{}> = (props) => {
                 </a>
               </div>
             ))}
-          </FormItem>
+          </FormStaticItem>
         </Panel>
       )}
     </>

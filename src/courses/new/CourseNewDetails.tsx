@@ -13,7 +13,7 @@ import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
-import { addDays, addYears, subDays } from 'date-fns';
+import { addBusinessDays, addYears, startOfDay, subDays } from 'date-fns';
 import { FormikHelpers, FormikProps } from 'formik';
 import {
   ExaminersDocument,
@@ -47,6 +47,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
         summary: 'Examenvakken ophalen',
         sticky: true,
         detail: `Er is een fout opgetreden bij het ophalen van de examenvakken. Controleer uw invoer of neem contact met ons op.`,
+        life: 7000,
       });
     },
   });
@@ -65,6 +66,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
         summary: 'Examen niet aangemaakt',
         sticky: true,
         detail: `Er is een fout opgetreden bij het aanmaken van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
+        life: 7000,
       });
     },
   });
@@ -146,7 +148,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 Prijs: parseFloat(values.Prijs),
                 MaximumCursisten: parseInt(values.MaximumCursisten),
                 Opmerkingen: values.Opmerkingen,
-                Datum: values.Datum,
+                Datum: startOfDay(values.Datum),
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd.replace('.', ':')),
                 LocatieID: parseInt(values.LocatieID),
@@ -194,7 +196,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 minDate={
                   hasRole(Roles.Rector, user?.Roles)
                     ? subDays(new Date(), 100)
-                    : addDays(new Date(), 7)
+                    : addBusinessDays(new Date(), 4)
                 }
                 maxDate={addYears(new Date(), 50)}
               />

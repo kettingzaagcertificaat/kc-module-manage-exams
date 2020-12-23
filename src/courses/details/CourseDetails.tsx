@@ -10,9 +10,9 @@ import { Button } from '@erkenningen/ui/components/button';
 import { Row } from '@erkenningen/ui/layout/row';
 import { Col } from '@erkenningen/ui/layout/col';
 import { Alert } from '@erkenningen/ui/components/alert';
+import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { getTimeDisplay } from 'utils/time';
 import { toDutchDate, toDutchMoney } from '@erkenningen/ui/utils';
-import { FormStaticItem } from 'components/FormStaticItem';
 
 const CourseDetails: React.FC<{}> = (props) => {
   const { showGrowl } = useGrowlContext();

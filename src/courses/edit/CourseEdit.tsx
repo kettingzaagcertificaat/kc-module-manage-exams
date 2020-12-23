@@ -10,11 +10,11 @@ import {
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
 import { Panel } from '@erkenningen/ui/layout/panel';
+import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
-import { FormStaticItem } from 'components/FormStaticItem';
-import { addDays, addYears, subYears } from 'date-fns';
+import { addBusinessDays, addYears, startOfDay, subYears } from 'date-fns';
 import { FormikHelpers, FormikProps } from 'formik';
 import {
   ExaminersDocument,
@@ -53,6 +53,7 @@ const CourseEdit: React.FC<{}> = (props) => {
         summary: 'Examen ophalen',
         sticky: true,
         detail: `Er is een fout opgetreden bij het ophalen van het examen. Controleer uw invoer of neem contact met ons op.`,
+        life: 7000,
       });
     },
   });
@@ -70,6 +71,7 @@ const CourseEdit: React.FC<{}> = (props) => {
         severity: 'error',
         summary: 'Examen niet gewijzigd',
         detail: `Er is een fout opgetreden bij het wijzigen van het examen: ${e.message} Controleer uw invoer of neem contact met ons op.`,
+        life: 7000,
       });
     },
   });
@@ -88,6 +90,7 @@ const CourseEdit: React.FC<{}> = (props) => {
         summary: 'Examen niet verwijderd',
         sticky: true,
         detail: `Er is een fout opgetreden bij het verwijderen van het examen: ${e.message}`,
+        life: 7000,
       });
     },
   });
@@ -191,7 +194,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                 Prijs: parseFloat(values.Prijs),
                 MaximumCursisten: parseInt(values.MaximumCursisten),
                 Opmerkingen: values.Opmerkingen,
-                Datum: values.Datum,
+                Datum: startOfDay(values.Datum),
                 Begintijd: new Date('01-01-2000 ' + values.Begintijd.replace('.', ':')),
                 Eindtijd: new Date('01-01-2000 ' + values.Eindtijd.replace('.', ':')),
                 LocatieID: parseInt(values.LocatieID),
@@ -241,7 +244,7 @@ const CourseEdit: React.FC<{}> = (props) => {
                 minDate={
                   hasRole(Roles.Rector, user?.Roles)
                     ? subYears(new Date(), 10)
-                    : addDays(new Date(), 7)
+                    : addBusinessDays(new Date(), 4)
                 }
                 maxDate={addYears(new Date(), 50)}
               />
