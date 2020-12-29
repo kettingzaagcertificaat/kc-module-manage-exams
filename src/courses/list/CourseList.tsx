@@ -50,6 +50,7 @@ const CourseList: React.FC<{}> = (props) => {
   const { search } = useLocation();
   const { showGrowl } = useGrowlContext();
   const confirm = useConfirm();
+  const [isFirstPaging, setIsFirstPaging] = useState<boolean | null>(null);
 
   const parseQueryParams = (): IPaginationAndSort => {
     const parsed = qs.parse(search, { parseNumbers: true });
@@ -251,6 +252,13 @@ const CourseList: React.FC<{}> = (props) => {
           rowsPerPageOptions={[10, 25, 50, 100]}
           first={pagination.first}
           onPage={(e: { first: number; rows: number; page: number; pageCount: number }) => {
+            if (isFirstPaging === null) {
+              setIsFirstPaging(true);
+            } else if (isFirstPaging) {
+              setIsFirstPaging(false);
+              return;
+            }
+
             setStateAndQueryParam({
               ...pagination,
               pageNumber: e.page,
@@ -261,6 +269,7 @@ const CourseList: React.FC<{}> = (props) => {
           sortField={pagination.field}
           sortOrder={pagination.direction}
           onSort={(e: { sortField: string; sortOrder: number; multiSortMeta: any }) => {
+            setIsFirstPaging(null);
             setStateAndQueryParam({ ...pagination, field: e.sortField, direction: e.sortOrder });
           }}
           totalRecords={data?.Exams?.totalCount}
