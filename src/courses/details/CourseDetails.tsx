@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
-import { Panel } from '@erkenningen/ui/layout/panel';
+import { Panel, PanelBody } from '@erkenningen/ui/layout/panel';
 
 import { useExamDetailsQuery } from 'generated/graphql';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -171,7 +171,9 @@ const CourseDetails: React.FC<{}> = (props) => {
         <Col>
           <Panel title="Deelnemers" className="form-horizontal" doNotIncludeBody={true}>
             {!course.CursusDeelnames?.length ? (
-              <Alert type={'info'}>Er zijn nog geen deelnemers gemeld.</Alert>
+              <PanelBody>
+                <Alert type={'info'}>Er zijn nog geen deelnemers gemeld.</Alert>
+              </PanelBody>
             ) : (
               <div className="table-responsive">
                 <table
@@ -206,7 +208,9 @@ const CourseDetails: React.FC<{}> = (props) => {
         onClick={() => history.push(`/wijzig/${course.CursusID}`)}
         style={{ marginRight: '1rem' }}
       />
-      <Link to="/overzicht">Terug naar overzicht</Link>
+      <Link style={{ lineHeight: '29px' }} to="/overzicht">
+        Terug naar overzicht
+      </Link>
     </>
   );
 };

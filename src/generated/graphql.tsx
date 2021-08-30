@@ -47,7 +47,7 @@ export type Certificering = {
   CertificeringID: Scalars['Int'];
   CertificaatID: Scalars['Int'];
   NormVersieID?: Maybe<Scalars['Int']>;
-  PersoonID?: Maybe<Scalars['Int']>;
+  PersoonID: Scalars['Int'];
   BeginDatum?: Maybe<Scalars['Date']>;
   EindDatum?: Maybe<Scalars['Date']>;
   Opmerkingen: Scalars['String'];
@@ -441,7 +441,11 @@ export type Vak = {
   IsExamenVak?: Maybe<Scalars['Boolean']>;
   ExamenType?: Maybe<VakExamenTypeEnum>;
   Competenties?: Maybe<Array<Maybe<Competentie>>>;
+  CompetentieID?: Maybe<Scalars['Int']>;
+  CompetentieNaam?: Maybe<Scalars['String']>;
   Themas?: Maybe<Array<Maybe<Thema>>>;
+  ThemaID?: Maybe<Scalars['Int']>;
+  ThemaNaam?: Maybe<Scalars['String']>;
   Vakgroep?: Maybe<Vakgroep>;
   Status?: Maybe<VakStatusEnum>;
   Website?: Maybe<Scalars['String']>;
@@ -449,6 +453,7 @@ export type Vak = {
   Beoordelingen?: Maybe<Array<Maybe<Beoordeling>>>;
   VakVaardigheden?: Maybe<Array<Maybe<Vaardigheid>>>;
   VakKennisgebieden?: Maybe<Array<Maybe<Kennisgebied>>>;
+  BeoordelaarNaam?: Maybe<Scalars['String']>;
   VakDiscussie?: Maybe<Array<Maybe<VakDiscussie>>>;
 };
 
@@ -640,7 +645,6 @@ export type Query = {
   Certificeringen?: Maybe<Array<Maybe<Certificering>>>;
   Competenties: Array<Maybe<Competentie>>;
   Contactgegevens?: Maybe<Contactgegevens>;
-  CursusSessies?: Maybe<Array<Maybe<CursusSessie>>>;
   CursusDeelnames?: Maybe<Array<Maybe<CursusDeelname>>>;
   ExamenInstellingen: Array<Maybe<ExamenInstelling>>;
   ExamDetails?: Maybe<Exam>;
@@ -690,11 +694,6 @@ export type QueryCertificeringenArgs = {
 
 export type QueryContactgegevensArgs = {
   ContactgegevensID: Scalars['Int'];
-};
-
-
-export type QueryCursusSessiesArgs = {
-  input: SearchCourseSessionsInput;
 };
 
 
@@ -792,77 +791,6 @@ export type QuerySpecialtyArgs = {
 
 export type QueryStudieresultatenArgs = {
   PersoonID: Scalars['Int'];
-};
-
-export type AangemeldeCursusDeelname = {
-  __typename?: 'AangemeldeCursusDeelname';
-  CursusDeelnameID: Scalars['Int'];
-  CursusID: Scalars['Int'];
-  Titel: Scalars['String'];
-  Datum: Scalars['Date'];
-  Begintijd: Scalars['String'];
-  Eindtijd: Scalars['String'];
-  Prijs: Scalars['Float'];
-  Locatie: Scalars['String'];
-  Status: Scalars['String'];
-  IsDigitaalAanbod: Scalars['Boolean'];
-};
-
-export type CursusSessie = {
-  __typename?: 'CursusSessie';
-  CourseId: Scalars['Int'];
-  SpecialtyId: Scalars['Int'];
-  CourseCode: Scalars['String'];
-  Title: Scalars['String'];
-  Date: Scalars['Date'];
-  StartTime: Scalars['String'];
-  EndTime: Scalars['String'];
-  Price: Scalars['Float'];
-  LocationName: Scalars['String'];
-  LocationAddress?: Maybe<LocationAddress>;
-  Distance?: Maybe<Scalars['Int']>;
-  Competence: Scalars['String'];
-  Theme: Scalars['String'];
-  Organizer: Scalars['String'];
-  OrganizerEmail?: Maybe<Scalars['String']>;
-  OrganizerPhone?: Maybe<Scalars['String']>;
-  OrganizerWebsite?: Maybe<Scalars['String']>;
-  PromoText?: Maybe<Scalars['String']>;
-  Registered: Scalars['Boolean'];
-  RegisteredDate?: Maybe<Scalars['Date']>;
-  CanUnRegister: Scalars['Boolean'];
-};
-
-export type LocationAddress = {
-  __typename?: 'LocationAddress';
-  Street: Scalars['String'];
-  HouseNr: Scalars['String'];
-  HouseNrExtension?: Maybe<Scalars['String']>;
-  Zipcode?: Maybe<Scalars['String']>;
-  City?: Maybe<Scalars['String']>;
-  Email?: Maybe<Scalars['String']>;
-  Website?: Maybe<Scalars['String']>;
-};
-
-export type SearchCourseSessionsInput = {
-  /** Current course (to search others) */
-  currentCourseId?: Maybe<Scalars['Int']>;
-  /** KnowledgeAreaId to filter on */
-  knowledgeAreaId?: Maybe<Scalars['Int']>;
-  /** ThemeId to filter on */
-  themeId?: Maybe<Scalars['Int']>;
-  /** CompetenceId to filter on */
-  competenceId?: Maybe<Scalars['Int']>;
-  /** Date range, from */
-  from?: Maybe<Scalars['Date']>;
-  /** Date range, to */
-  to?: Maybe<Scalars['Date']>;
-  /** Is search for online courses only (default = false) */
-  isOnlineCourse: Scalars['Boolean'];
-  /** Zipcode, numbers only */
-  zipcodeNumbers?: Maybe<Scalars['Int']>;
-  /** Radius in Kilometers */
-  distanceRadius?: Maybe<Scalars['Int']>;
 };
 
 export type Mutation = {
