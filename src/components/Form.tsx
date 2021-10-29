@@ -34,6 +34,7 @@ const Form: React.FC<
       {...props}
       initialValues={props.schema ? schemaDefaults(props.schema) : props.initialValues}
       validationSchema={props.schema ? schemaValidations(props.schema) : props.validationSchema}
+      enableReinitialize={true}
     >
       {(formikProps: FormikProps<any>) => (
         <form
