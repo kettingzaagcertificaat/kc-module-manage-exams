@@ -7,9 +7,9 @@ import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { useExamVersionDocumentsQuery } from 'generated/graphql';
 import { toDutchDate } from '@erkenningen/ui/utils';
 
-import styles from './CourseReady.module.scss';
+import styles from './CourseReady.module.css';
 
-const CourseReady: React.FC<{}> = (props) => {
+const CourseReady = (): JSX.Element => {
   const { examVersionId } = useParams<any>();
   const { data: examVersion } = useExamVersionDocumentsQuery({
     variables: { input: { ExamenVersieID: +examVersionId } },

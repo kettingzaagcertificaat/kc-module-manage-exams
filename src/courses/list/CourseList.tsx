@@ -20,8 +20,7 @@ import { toDutchDate } from '@erkenningen/ui/utils';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { useConfirm } from '@erkenningen/ui/components/confirm';
 
-import styles from './CourseList.module.scss';
-import { FormikProps } from 'formik';
+import styles from './CourseList.module.css';
 import Form from 'components/Form';
 import { FormCalendar, FormItem, FormText } from '@erkenningen/ui/components/form';
 
@@ -45,7 +44,7 @@ type IFilter = {
 
 type IPaginationAndSort = IPagination & ISort & IFilter;
 
-const CourseList: React.FC<{}> = (props) => {
+const CourseList = (): JSX.Element => {
   const history = useHistory();
   const { search } = useLocation();
   const { showGrowl } = useGrowlContext();
@@ -155,7 +154,6 @@ const CourseList: React.FC<{}> = (props) => {
 
   useEffect(() => {
     getExams();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.pageNumber, pagination.pageSize, pagination.direction, pagination.field]);
 
   const setStateAndQueryParam = (updatePagination: IPaginationAndSort) => {
@@ -215,7 +213,7 @@ const CourseList: React.FC<{}> = (props) => {
               });
             }}
           >
-            {(formikProps: FormikProps<any>) => (
+            {() => (
               <>
                 <FormText name={'examCode'} label={'Examencode'} formControlClassName="col-sm-4" />
                 <FormText name={'title'} label={'Titel'} formControlClassName="col-sm-4" />

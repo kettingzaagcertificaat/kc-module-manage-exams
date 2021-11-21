@@ -16,7 +16,7 @@ import FormSelectGql from 'components/FormSelectGql';
 import { hasRole, Roles, UserContext } from 'shared/Auth';
 import CourseNewDetails from './CourseNewDetails';
 
-const CourseNewSelectSpecialty: React.FC<{}> = () => {
+const CourseNewSelectSpecialty = (): JSX.Element | null => {
   const { showGrowl } = useGrowlContext();
   const user = useContext(UserContext);
   const { loading: organizersLoading, data: organizers } = useSearchOrganizersQuery({
@@ -67,7 +67,7 @@ const CourseNewSelectSpecialty: React.FC<{}> = () => {
                       value: item.Value,
                     })) || []
                   }
-                  onChange={(e) => {
+                  onChange={() => {
                     formikProps.setFieldValue('VakID', undefined);
                     setSpecialtyId(undefined);
                   }}

@@ -14,7 +14,7 @@ import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
 import { addBusinessDays, addYears, startOfDay, subDays } from 'date-fns';
-import { FormikHelpers, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import {
   ExaminersDocument,
   ExaminersQuery,
@@ -53,7 +53,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
   });
 
   const [saveExam] = useSaveExamMutation({
-    onCompleted(data) {
+    onCompleted() {
       showGrowl({
         severity: 'success',
         summary: 'Examen aangemaakt',
@@ -132,7 +132,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
           ExaminatorPersoonID: [null, yup.number().required()],
           ExamenVersieID: [null, yup.number().required()],
         }}
-        onSubmit={async (values, actions: FormikHelpers<any>) => {
+        onSubmit={async (values) => {
           if (!specialty.Specialty) {
             return;
           }

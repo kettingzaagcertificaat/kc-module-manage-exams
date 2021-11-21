@@ -15,7 +15,7 @@ import { toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
 import { addBusinessDays, addYears, startOfDay, subYears } from 'date-fns';
-import { FormikHelpers, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import {
   ExaminersDocument,
   ExaminersQuery,
@@ -34,7 +34,7 @@ import { useConfirm } from '@erkenningen/ui/components/confirm';
 import { getTimeDisplay } from 'utils/time';
 import * as yup from 'yup';
 
-const CourseEdit: React.FC<{}> = (props) => {
+const CourseEdit = (): JSX.Element => {
   const [showAddLocationDialog, setShowAddLocationDialog] = useState<boolean>(false);
   const [currentForm, setCurrentForm] = useState<FormikProps<any>>();
   const { clearGrowl, showGrowl } = useGrowlContext();
@@ -59,7 +59,7 @@ const CourseEdit: React.FC<{}> = (props) => {
   });
 
   const [saveExam] = useSaveExamMutation({
-    onCompleted(data) {
+    onCompleted() {
       showGrowl({
         severity: 'success',
         summary: 'Examen gewijzigd',
@@ -77,7 +77,7 @@ const CourseEdit: React.FC<{}> = (props) => {
   });
 
   const [deleteExam] = useDeleteExamMutation({
-    onCompleted(data) {
+    onCompleted() {
       showGrowl({
         severity: 'success',
         summary: 'Examen verwijderd',
@@ -180,7 +180,7 @@ const CourseEdit: React.FC<{}> = (props) => {
           ExaminatorPersoonID: [session?.ExaminatorPersoon?.PersoonID, yup.number().required()],
           ExamenVersieID: [session?.ExamenVersie?.ExamenVersieID, yup.number().required()],
         }}
-        onSubmit={async (values, actions: FormikHelpers<any>) => {
+        onSubmit={async (values) => {
           clearGrowl();
 
           const result = await saveExam({

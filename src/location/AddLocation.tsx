@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { Dialog } from 'primereact/dialog';
 import { FormikProps, FormikHelpers } from 'formik';
 import * as yup from 'yup';
@@ -36,7 +36,7 @@ const AddLocation: React.FC<{
       });
       props.onHide(data.saveLocation.LocatieID);
     },
-    onError(e) {
+    onError() {
       showGrowl({
         severity: 'error',
         summary: 'Locatie niet aangemaakt',

@@ -14,7 +14,7 @@ import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { getTimeDisplay } from 'utils/time';
 import { toDutchDate, toDutchMoney } from '@erkenningen/ui/utils';
 
-const CourseDetails: React.FC<{}> = (props) => {
+const CourseDetails = (): JSX.Element => {
   const { showGrowl } = useGrowlContext();
   const history = useHistory();
 
