@@ -11,12 +11,13 @@ import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { Spinner } from '@erkenningen/ui/components/spinner';
 import { Panel } from '@erkenningen/ui/layout/panel';
 import { FormStaticItem } from '@erkenningen/ui/components/form';
-import { toDutchDate } from '@erkenningen/ui/utils';
+import { formatEnum, toDutchDate } from '@erkenningen/ui/utils';
 import Form from 'components/Form';
 import FormSelectGql from 'components/FormSelectGql';
 import { addBusinessDays, addYears, startOfDay, subYears } from 'date-fns';
 import { FormikProps } from 'formik';
 import {
+  CursusStatusEnum,
   ExaminersDocument,
   ExaminersQuery,
   SearchExamVersionsDocument,
@@ -143,6 +144,22 @@ const CourseEdit = (): JSX.Element => {
     );
   }
 
+  let canChange = false;
+  switch (course.Status) {
+    case CursusStatusEnum.Voorlopig:
+    case CursusStatusEnum.Goedgekeurd:
+    case CursusStatusEnum.ExamenAangemeld:
+      canChange = true;
+      if (course.Sessies && course.Sessies[0].Datum < new Date()) {
+        canChange = false;
+      }
+      break;
+  }
+  if (hasRole(Roles.Rector, user?.Roles)) {
+    // rector can change everything
+    // canChange = true;
+  }
+
   return (
     <>
       <Form
@@ -212,20 +229,30 @@ const CourseEdit = (): JSX.Element => {
         {(formikProps: FormikProps<any>) => (
           <>
             <Panel title="Examen wijzigen" className="form-horizontal">
+              <FormStaticItem label="Status" labelClassNames={'col-sm-4 col-md-3'}>
+                {formatEnum(course.Status)} {!canChange && '(kan niet meer worden gewijzigd)'}
+              </FormStaticItem>
+
               <FormStaticItem label="Vak" labelClassNames={'col-sm-4 col-md-3'}>
                 {course.Vak.Titel}
               </FormStaticItem>
               <FormStaticItem label="Geldigheid" labelClassNames={'col-sm-4 col-md-3'}>
                 {toDutchDate(course.Vak.MinimumDatum)} t/m {toDutchDate(course.Vak.MaximumDatum)}
               </FormStaticItem>
-              <FormText name={'Titel'} label={'Titel *'} />
-              <FormText name={'Promotietekst'} label={'Promotietekst *'} isTextArea={true} />
+              <FormText name={'Titel'} label={'Titel *'} readonly={!canChange} />
+              <FormText
+                name={'Promotietekst'}
+                label={'Promotietekst *'}
+                isTextArea={true}
+                readonly={!canChange}
+              />
               <FormCurrency
                 name={'Prijs'}
                 label={'Prijs per deelnemer *'}
                 formControlClassName="col-sm-2"
                 placeholder={'0,00'}
                 max={1000}
+                readOnly={!canChange}
               />
               <FormNumber
                 name={'MaximumCursisten'}
@@ -235,6 +262,7 @@ const CourseEdit = (): JSX.Element => {
                 useGrouping={false}
                 min={1}
                 max={9999}
+                readOnly={!canChange}
               />
               <FormText name={'Opmerkingen'} label={'Opmerkingen'} isTextArea={true} />
               <FormCalendar
@@ -247,20 +275,23 @@ const CourseEdit = (): JSX.Element => {
                     : addBusinessDays(new Date(), 4)
                 }
                 maxDate={addYears(new Date(), 50)}
+                readonly={!canChange}
               />
               <FormText
                 name={'Begintijd'}
                 label={'Begintijd *'}
                 placeholder="uu:mm"
                 formControlClassName="col-sm-3"
-                keyfilter="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                keyfilter={/(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/}
+                readonly={!canChange}
               />
               <FormText
                 name={'Eindtijd'}
                 label={'Eindtijd *'}
                 placeholder="uu:mm"
                 formControlClassName="col-sm-3"
-                keyfilter="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                keyfilter={/(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/}
+                readonly={!canChange}
               />
               <FormSelectGql
                 name={'LocatieID'}
@@ -268,6 +299,7 @@ const CourseEdit = (): JSX.Element => {
                 placeholder={'Selecteer een locatie'}
                 formControlClassName="col-sm-5"
                 filter={true}
+                readonly={!canChange}
                 mapResult={(data: SearchLocationsQuery) => {
                   return (
                     data.SearchLocations?.map((location) => ({
@@ -282,7 +314,7 @@ const CourseEdit = (): JSX.Element => {
                 <Button
                   className="mr-2"
                   label="Nieuwe locatie aanmaken"
-                  type="link"
+                  buttonType="link"
                   onClick={() => onNewLocationClick(formikProps)}
                 />
               </FormSelectGql>
@@ -312,6 +344,7 @@ const CourseEdit = (): JSX.Element => {
                   formControlClassName="col-sm-5"
                   filter={true}
                   gqlQuery={SearchExamVersionsDocument}
+                  readonly={!canChange}
                   variables={{
                     input: {
                       VakID: course.Vak.VakID || 0,
@@ -321,13 +354,15 @@ const CourseEdit = (): JSX.Element => {
                 />
               )}
               <FormItem label={' '}>
-                <Button label={'Opslaan'} buttonType="submit" icon="fas fa-check" />
-                <Button
-                  label={'Verwijderen'}
-                  icon="fas fa-trash"
-                  onClick={() => deleteCourse()}
-                  type={'danger'}
-                />
+                <Button label={'Opslaan'} type="submit" icon="fas fa-check" />
+                {canChange && (
+                  <Button
+                    label={'Verwijderen'}
+                    icon="fas fa-trash"
+                    onClick={() => deleteCourse()}
+                    buttonType={'danger'}
+                  />
+                )}
               </FormItem>
             </Panel>
           </>

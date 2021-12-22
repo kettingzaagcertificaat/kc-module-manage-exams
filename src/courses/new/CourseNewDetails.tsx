@@ -205,14 +205,14 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 label={'Begintijd *'}
                 placeholder="uu:mm"
                 formControlClassName="col-sm-3"
-                keyfilter="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                keyfilter={/(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/}
               />
               <FormText
                 name={'Eindtijd'}
                 label={'Eindtijd *'}
                 placeholder="uu:mm"
                 formControlClassName="col-sm-3"
-                keyfilter="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                keyfilter={/(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/}
               />
               <FormSelectGql
                 name={'LocatieID'}
@@ -234,7 +234,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 <Button
                   className="mr-2"
                   label="Nieuwe locatie aanmaken"
-                  type="link"
+                  buttonType="link"
                   onClick={() => onNewLocationClick(formikProps)}
                 />
               </FormSelectGql>
@@ -273,7 +273,7 @@ const CourseNewDetails: React.FC<{ specialtyId?: number }> = (props) => {
                 />
               )}
               <FormItem label={' '}>
-                <Button label={'Opslaan'} buttonType="submit" icon="pi pi-check" />
+                <Button label={'Opslaan'} type="submit" icon="pi pi-check" />
               </FormItem>
             </Panel>
           </>

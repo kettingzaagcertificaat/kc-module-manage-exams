@@ -23,7 +23,7 @@ const CourseReady = (): JSX.Element => {
         </Link>
 
         <Link to="/overzicht">
-          <Button label={'Naar overzicht'} type="secondary" icon="pi pi-list" />
+          <Button label={'Naar overzicht'} buttonType="secondary" icon="pi pi-list" />
         </Link>
       </Panel>
       {examVersion?.ExamVersionDocuments && (

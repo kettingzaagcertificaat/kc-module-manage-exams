@@ -9,20 +9,22 @@ import { Tooltip } from 'primereact/tooltip';
 import { Alert } from '@erkenningen/ui/components/alert';
 import { Button } from '@erkenningen/ui/components/button';
 import {
-  //  CursusDeelnameStatusEnum,
+  CursusStatusEnum,
   SortDirectionEnum,
   useDeleteExamMutation,
   useExamsLazyQuery,
 } from 'generated/graphql';
-import { DataTable } from '@erkenningen/ui/components/datatable';
+import { DataTable } from 'primereact/datatable';
 import { Panel } from '@erkenningen/ui/layout/panel';
 import { toDutchDate } from '@erkenningen/ui/utils';
 import { useGrowlContext } from '@erkenningen/ui/components/growl';
 import { useConfirm } from '@erkenningen/ui/components/confirm';
+import { formatEnum } from '@erkenningen/ui/utils';
 
 import styles from './CourseList.module.css';
 import Form from 'components/Form';
-import { FormCalendar, FormItem, FormText } from '@erkenningen/ui/components/form';
+import { FormCalendar, FormItem, FormSelect, FormText } from '@erkenningen/ui/components/form';
+import { DataTablePFSEvent, DataTableSortOrderType } from 'primereact/datatable';
 
 type IPagination = {
   pageNumber: number;
@@ -32,7 +34,7 @@ type IPagination = {
 
 type ISort = {
   field: string;
-  direction: number;
+  direction: DataTableSortOrderType;
 };
 
 type IFilter = {
@@ -40,6 +42,7 @@ type IFilter = {
   title?: string;
   from?: number;
   to?: number;
+  cursusStatus?: CursusStatusEnum;
 };
 
 type IPaginationAndSort = IPagination & ISort & IFilter;
@@ -64,9 +67,9 @@ const CourseList = (): JSX.Element => {
     if (parsed.field) {
       field = parsed.field as string;
     }
-    let direction = 1;
+    let direction: DataTableSortOrderType = -1;
     if (parsed.direction) {
-      direction = parsed.direction as number;
+      direction = parsed.direction as DataTableSortOrderType;
     }
 
     let examCode = '';
@@ -89,6 +92,11 @@ const CourseList = (): JSX.Element => {
       to = parsed.to as number;
     }
 
+    let cursusStatus = undefined;
+    if (parsed.cursusStatus) {
+      cursusStatus = parsed.cursusStatus as CursusStatusEnum;
+    }
+
     return {
       first: pageNumber * pageSize,
       pageNumber,
@@ -99,6 +107,7 @@ const CourseList = (): JSX.Element => {
       title,
       from,
       to,
+      cursusStatus,
     };
   };
 
@@ -119,6 +128,7 @@ const CourseList = (): JSX.Element => {
         title: pagination.title,
         from: pagination.from,
         to: pagination.to,
+        cursusStatus: pagination.cursusStatus,
       },
     },
     onError() {
@@ -164,7 +174,7 @@ const CourseList = (): JSX.Element => {
         updatePagination.examCode
       }&title=${updatePagination.title}&from=${updatePagination.from || ''}&to=${
         updatePagination.to || ''
-      }`,
+      }&cursusStatus=${updatePagination.cursusStatus || ''}`,
     });
     setPagination({ ...updatePagination });
   };
@@ -202,6 +212,10 @@ const CourseList = (): JSX.Element => {
               title: [pagination.title, yup.string().max(255)],
               from: [pagination.from ? new Date(pagination.from) : null, yup.date().nullable()],
               to: [pagination.to ? new Date(pagination.to) : null, yup.date().nullable()],
+              cursusStatus: [
+                pagination.cursusStatus ? pagination.cursusStatus : 'alle',
+                yup.string().nullable(),
+              ],
             }}
             onSubmit={(values: any) => {
               setStateAndQueryParam({
@@ -210,6 +224,7 @@ const CourseList = (): JSX.Element => {
                 title: values.title,
                 from: values.from?.getTime(),
                 to: values.to?.getTime(),
+                cursusStatus: values.cursusStatus === 'alle' ? null : values.cursusStatus,
               });
             }}
           >
@@ -229,8 +244,20 @@ const CourseList = (): JSX.Element => {
                   showButtonBar={true}
                   formControlClassName="col-sm-3 col-md-2"
                 />
+                <FormSelect
+                  name={'cursusStatus'}
+                  label={'Cursus status'}
+                  options={[
+                    { value: 'alle', label: 'Alle' },
+                    { value: CursusStatusEnum.Voorlopig, label: 'Voorlopig' },
+                    { value: CursusStatusEnum.Goedgekeurd, label: 'Goedgekeurd' },
+                    { value: CursusStatusEnum.ExamenAangemeld, label: 'Examen aangemeld' },
+                    { value: CursusStatusEnum.Betaald, label: 'Betaald' },
+                  ]}
+                  formControlClassName="col-sm-4"
+                />
                 <FormItem label={' '}>
-                  <Button label={'Zoeken'} buttonType="submit" />
+                  <Button label={'Zoeken'} icon="pi pi-search" type="submit" />
                 </FormItem>
               </>
             )}
@@ -242,27 +269,28 @@ const CourseList = (): JSX.Element => {
           lazy={true}
           dataKey="CursusCode"
           emptyMessage="Geen examens gevonden. Controleer filter criteria."
-          autoLayout={true}
+          // autoLayout={true}
+          responsiveLayout={'stack'}
           loading={loading}
           paginator={true}
           rows={pagination.pageSize || 10}
           rowsPerPageOptions={[10, 25, 50, 100]}
           first={pagination.first}
-          onPage={(e: { first: number; rows: number; page: number; pageCount: number }) => {
+          onPage={(e: DataTablePFSEvent) => {
             if (e.pageCount === 1) {
               return;
             }
 
             setStateAndQueryParam({
               ...pagination,
-              pageNumber: e.page,
+              pageNumber: e.page || 0,
               pageSize: e.rows,
               first: e.first,
             });
           }}
           sortField={pagination.field}
           sortOrder={pagination.direction}
-          onSort={(e: { sortField: string; sortOrder: number; multiSortMeta: any }) => {
+          onSort={(e: DataTablePFSEvent) => {
             setStateAndQueryParam({ ...pagination, field: e.sortField, direction: e.sortOrder });
           }}
           totalRecords={data?.Exams?.totalCount}
@@ -271,6 +299,7 @@ const CourseList = (): JSX.Element => {
         >
           <Column
             bodyClassName={styles.center}
+            bodyStyle={{ width: '92px' }}
             body={(row: any) => (
               <>
                 <Button
@@ -278,7 +307,7 @@ const CourseList = (): JSX.Element => {
                   icon="fas fa-info"
                   onClick={() => history.push(`/details/${row.CursusID}`)}
                   style={{ fontSize: '1rem' }}
-                  type={'info'}
+                  buttonType={'info'}
                 />
                 <Button
                   label={''}
@@ -287,23 +316,31 @@ const CourseList = (): JSX.Element => {
                   style={{ fontSize: '1rem' }}
                 />
 
-                <Button
-                  label={''}
-                  icon="fas fa-trash"
-                  onClick={() => deleteCourse(row)}
-                  style={{ fontSize: '1rem' }}
-                  type={'danger'}
-                />
+                {row.Status !== CursusStatusEnum.Betaald && (
+                  <Button
+                    label={''}
+                    icon="fas fa-trash"
+                    onClick={() => deleteCourse(row)}
+                    style={{ fontSize: '1rem' }}
+                    buttonType={'danger'}
+                  />
+                )}
               </>
             )}
           />
-          <Column field="CursusCode" header={'Examencode'} sortable={true} />
+          <Column
+            field="CursusCode"
+            header={'Examencode'}
+            sortable={true}
+            bodyStyle={{ width: '93px' }}
+          />
           <Column field="Titel" header={'Titel'} sortable={true} />
           <Column
             field="Datum"
             header={'Datum'}
             sortable={true}
             sortField={'Sessies:Datum'}
+            bodyStyle={{ width: '92px' }}
             body={(row: any) => toDutchDate(row.Sessies[0]?.Datum)}
           />
           <Column
@@ -318,11 +355,16 @@ const CourseList = (): JSX.Element => {
             }
           />
           <Column
+            field="Status"
+            header={'Status'}
+            sortable={true}
+            body={(row: any) => formatEnum(row.Status)}
+          ></Column>
+          <Column
             field="AantalCursusDeelnames"
             sortField={'AantalCursusDeelnames'}
             sortable={true}
-            headerStyle={{ width: '6rem' }}
-            bodyClassName={styles.center}
+            bodyClassName={styles.right}
             header={
               <>
                 <Tooltip target=".numParticipants" position={'top'} />

@@ -363,6 +363,7 @@ export type ExamenVersieDocument = {
 };
 
 export type ExamsInput = {
+  cursusStatus?: InputMaybe<CursusStatusEnum>;
   examCode?: InputMaybe<Scalars['SafeString']>;
   from?: InputMaybe<Scalars['Date']>;
   locationId?: InputMaybe<Scalars['Int']>;
@@ -525,7 +526,7 @@ export type Invoice = {
   CrediteurID: Scalars['Int'];
   CrediteurType: CrediteurTypeEnum;
   CreditFactuurID?: Maybe<Scalars['Int']>;
-  CreditFactuurNummer?: Maybe<Scalars['Int']>;
+  CreditFactuurNummer?: Maybe<Scalars['String']>;
   CreditInvoiceLink?: Maybe<Scalars['String']>;
   CursusCode: Scalars['String'];
   DebiteurID: Scalars['Int'];
@@ -544,7 +545,7 @@ export type Invoice = {
   Kenmerk?: Maybe<Scalars['String']>;
   KenmerkJaarFactuurNummer: Scalars['String'];
   OrigineleFactuurID?: Maybe<Scalars['Int']>;
-  OrigineleFactuurNummer?: Maybe<Scalars['Int']>;
+  OrigineleFactuurNummer?: Maybe<Scalars['String']>;
   OrigineleInvoiceLink?: Maybe<Scalars['String']>;
   ProductCode: Scalars['String'];
   StatusOpmerkingen?: Maybe<Scalars['String']>;
@@ -1365,7 +1366,7 @@ export type ExamsQueryVariables = Exact<{
 }>;
 
 
-export type ExamsQuery = { __typename?: 'Query', Exams?: { __typename?: 'CursusNodes', totalCount: number, pageInfo?: { __typename?: 'PageInfo', hasNextPage?: boolean, hasPreviousPage?: boolean }, nodes?: Array<{ __typename?: 'Cursus', CursusID: number, VakID?: number, Titel?: string, CursusCode?: string, AantalCursusDeelnames?: number, Sessies?: Array<{ __typename?: 'Sessie', SessieID: number, Datum: any, Locatie?: { __typename?: 'Locatie', LocatieID: number, Naam: string, Contactgegevens: { __typename?: 'Contactgegevens', ContactgegevensID: number, Woonplaats: string } } }>, CursusDeelnames?: Array<{ __typename?: 'CursusDeelname', Status: CursusDeelnameStatusEnum }> }> } };
+export type ExamsQuery = { __typename?: 'Query', Exams?: { __typename?: 'CursusNodes', totalCount: number, pageInfo?: { __typename?: 'PageInfo', hasNextPage?: boolean, hasPreviousPage?: boolean }, nodes?: Array<{ __typename?: 'Cursus', CursusID: number, VakID?: number, Titel?: string, CursusCode?: string, Status?: string, AantalCursusDeelnames?: number, Sessies?: Array<{ __typename?: 'Sessie', SessieID: number, Datum: any, Locatie?: { __typename?: 'Locatie', LocatieID: number, Naam: string, Contactgegevens: { __typename?: 'Contactgegevens', ContactgegevensID: number, Woonplaats: string } } }>, CursusDeelnames?: Array<{ __typename?: 'CursusDeelname', Status: CursusDeelnameStatusEnum }> }> } };
 
 export type ExamDetailsQueryVariables = Exact<{
   input: SearchExamInput;
@@ -1632,6 +1633,7 @@ export const ExamsDocument = gql`
       VakID
       Titel
       CursusCode
+      Status
       Sessies {
         SessieID
         Datum

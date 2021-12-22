@@ -71,6 +71,7 @@ query Exams($input: examsInput!) {
       VakID
       Titel
       CursusCode
+      Status
       Sessies {
         SessieID
         Datum

@@ -159,7 +159,7 @@ const AddLocation: React.FC<{
           <FormItem label={' '}>
             <Button
               label={'Opslaan'}
-              buttonType="submit"
+              type="submit"
               loading={formikProps.isSubmitting}
               icon="pi pi-check"
             />

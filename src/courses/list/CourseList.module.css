@@ -5,3 +5,11 @@
     text-align: left;
   }
 }
+
+.right {
+  text-align: right !important;
+
+  @media screen and (max-width: 40em) {
+    text-align: left;
+  }
+}

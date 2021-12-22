@@ -12,7 +12,7 @@ import { Col } from '@erkenningen/ui/layout/col';
 import { Alert } from '@erkenningen/ui/components/alert';
 import { FormStaticItem } from '@erkenningen/ui/components/form';
 import { getTimeDisplay } from 'utils/time';
-import { toDutchDate, toDutchMoney } from '@erkenningen/ui/utils';
+import { formatEnum, toDutchDate, toDutchMoney } from '@erkenningen/ui/utils';
 
 const CourseDetails = (): JSX.Element => {
   const { showGrowl } = useGrowlContext();
@@ -54,6 +54,16 @@ const CourseDetails = (): JSX.Element => {
 
   return (
     <>
+      <Button
+        label={'Bewerken'}
+        icon="fas fa-edit"
+        onClick={() => history.push(`/wijzig/${course.CursusID}`)}
+        style={{ marginRight: '1rem' }}
+      />
+      <Link style={{ lineHeight: '29px' }} to="/overzicht">
+        Terug naar overzicht
+      </Link>
+      <div style={{ height: '20px' }}></div>
       <Row>
         <Col size={'col-md-6'}>
           <Panel title="Informatie over het examen" className="form-horizontal">
@@ -119,7 +129,7 @@ const CourseDetails = (): JSX.Element => {
                       <td>{getTimeDisplay(session.Begintijd)}</td>
                       <td>{getTimeDisplay(session.Eindtijd)}</td>
                       <td>{session.Locatie?.Naam}</td>
-                      <td>{session.ExamenVersie?.ExamenType}</td>
+                      <td>{formatEnum(session.ExamenVersie?.ExamenType)}</td>
                       <td>{session.ExamenVersie?.ExamenOmschrijving}</td>
                       <td>{session.ExaminatorPersoon?.SortableFullName}</td>
                       <td>{session.Opmerkingen}</td>
@@ -191,7 +201,7 @@ const CourseDetails = (): JSX.Element => {
                       <tr key={index}>
                         <td>KC-{participation.Persoon.PersoonID}</td>
                         <td>{participation.Persoon.SortableFullName}</td>
-                        <td>{participation.Status}</td>
+                        <td>{formatEnum(participation.Status)}</td>
                       </tr>
                     ))}
                   </tbody>
