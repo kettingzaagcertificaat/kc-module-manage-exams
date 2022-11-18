@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.17",
-    "@erkenningen/config": "^1.0.7",
-    "@erkenningen/ui": "^7.0.2",
+    "@erkenningen/config": "1.0.7",
+    "@erkenningen/ui": "7.0.2",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/introspection": "^2.1.0",
@@ -27,7 +27,6 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "eslint-config-react-app": "6.0.0",
     "formik": "^2.2.9",
-    "gatsby-link": "^2.4.5",
     "graphql": "^15.3.0",
     "primeicons": "5.0.0",
     "primereact": "7.1.0",
