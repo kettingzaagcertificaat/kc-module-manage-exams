@@ -220,6 +220,8 @@ const CourseList = (): JSX.Element => {
             onSubmit={(values: any) => {
               setStateAndQueryParam({
                 ...pagination,
+                pageNumber: 0,
+                first: 0,
                 examCode: values.examCode,
                 title: values.title,
                 from: values.from?.getTime(),
@@ -269,7 +271,6 @@ const CourseList = (): JSX.Element => {
           lazy={true}
           dataKey="CursusCode"
           emptyMessage="Geen examens gevonden. Controleer filter criteria."
-          // autoLayout={true}
           responsiveLayout={'stack'}
           loading={loading}
           paginator={true}
