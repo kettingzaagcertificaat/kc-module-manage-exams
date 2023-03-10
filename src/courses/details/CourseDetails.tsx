@@ -73,7 +73,7 @@ const CourseDetails = (): JSX.Element => {
               {firstSession?.ExamenVersie?.ExamenVersieCode}
             </FormStaticItem>
             <FormStaticItem label="Titel">{course.Titel}</FormStaticItem>
-            <FormStaticItem label="Examendatum">{course.CursusID}</FormStaticItem>
+            <FormStaticItem label="Examendatum">{toDutchDate(firstSession?.Datum)}</FormStaticItem>
             <FormStaticItem label="Promotietekst">{course.Promotietekst}</FormStaticItem>
             <FormStaticItem label="Prijs">&euro; {toDutchMoney(course.Prijs)}</FormStaticItem>
           </Panel>
